@@ -6,16 +6,17 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-# This will be enabled once it doesn't do it while under load
-#  system.autoUpgrade = {
-#    enable = true;
-#    dates = "weekly";
-#    allowReboot = true;
-#  };
+  #  Can't enable this as I can't guarantee it doesn't do it under load.
+  #  system.autoUpgrade = {
+  #    enable = true;
+  #    dates = "weekly";
+  #    allowReboot = true;
+  #  };
 
   nix = {
     settings.auto-optimise-store = true;
@@ -40,7 +41,7 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-                       
+
   # Select internationalisation properties.
   time.timeZone = "Europe/Madrid";
   # locale
@@ -52,13 +53,15 @@
   console = {
     font = "Lat2-Terminus16";
     keyMap = "es";
-  #  useXkbConfig = true; # use xkbOptions in tty.
+    #  useXkbConfig = true; # use xkbOptions in tty.
   };
-  services.udev.extraRules = 
+  # Disable everything but the keyboard from waking up the computer.
+  # This is due to mouse sending wake up signals randomly sometimes.
+  services.udev.extraRules =
     ''
-    ACTION=="add", ATTRS{removable}=="removable", ATTRS{idVendor}!="413c", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
-    #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
-    #ACTION=="add", ATTR{power/wakeup}="disabled"
+      ACTION=="add", ATTRS{removable}=="removable", ATTRS{idVendor}!="413c", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
+      #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
+      #ACTION=="add", ATTR{power/wakeup}="disabled"
     '';
 
   # XServer, DM & DE
@@ -99,7 +102,7 @@
       tree
       discord
       bitwarden
-      
+      nixpkgs-fmt
       rofi
     ];
   };
