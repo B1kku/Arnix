@@ -21,13 +21,16 @@
     {
       formatter.x86_64-linux = pkgs.nixpkgs-fmt;
       nixosConfigurations = {
-        bikku = lib.nixosSystem {
+        Arnix = lib.nixosSystem {
           inherit system;
-          modules = [ ./configuration.nix ];
+          modules = [
+            ./configuration.nix
+            (args: { pkgs.overlays = import ./overlays args; })
+          ];
         };
       };
       homeConfigurations = {
-        bikku = home-manager.lib.homeManagerConfiguration {
+        Arnix = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs;
           modules = [
             {
