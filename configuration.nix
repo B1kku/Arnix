@@ -5,6 +5,9 @@
 { config, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (import ./overlays/nvim.nix)
+  ];
   imports =
     [
       # Include the results of the hardware scan.

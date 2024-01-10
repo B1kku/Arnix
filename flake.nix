@@ -1,6 +1,7 @@
 {
   description = "A very basic flake";
 
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     home-manager = {
@@ -25,7 +26,6 @@
           inherit system;
           modules = [
             ./configuration.nix
-            (args: { pkgs.overlays = import ./overlays args; })
           ];
         };
       };

@@ -1,8 +1,8 @@
-{ config, pkgs, lib, ... }
-( final: prev: {
-  neovim = prev.neovim.override {
-    extraPkgs = pkgs: with pkgs; [
+(final: prev: {
+  neovim = final.neovim.override {
+    buildInputs = pkgs: with pkgs; [
       fzf
+      xclip
     ];
   };
 })
