@@ -5,9 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  nixpkgs.overlays = [
-    (import ./overlays/nvim.nix)
-  ];
   imports =
     [
       # Include the results of the hardware scan.
@@ -105,20 +102,23 @@
       tree
       discord
       bitwarden
-      nixpkgs-fmt
       rofi
     ];
   };
-  programs.neovim.enable = true;
-  programs.neovim.defaultEditor = true;
+  nixpkgs.overlays = [
+    (import ./overlays/nvim.nix)
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
     tealdeer
   ];
+
+  #programs.neovim.defaultEditor = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

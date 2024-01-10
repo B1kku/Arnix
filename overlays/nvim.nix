@@ -1,8 +1,5 @@
 (final: prev: {
-  neovim = final.neovim.override {
-    buildInputs = pkgs: with pkgs; [
-      fzf
-      xclip
-    ];
-  };
+  neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs (old: { 
+    buildInputs = old.buildInputs ++ [prev.xclip];
+  });
 })
