@@ -5,11 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   #  Can't enable this as I can't guarantee it doesn't do it under load.
   #  system.autoUpgrade = {
@@ -57,12 +56,11 @@
   };
   # Disable everything but the keyboard from waking up the computer.
   # This is due to mouse sending wake up signals randomly sometimes.
-  services.udev.extraRules =
-    ''
-      ACTION=="add", ATTRS{removable}=="removable", ATTRS{idVendor}!="413c", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
-      #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
-      #ACTION=="add", ATTR{power/wakeup}="disabled"
-    '';
+  services.udev.extraRules = ''
+    ACTION=="add", ATTRS{removable}=="removable", ATTRS{idVendor}!="413c", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
+    #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
+    #ACTION=="add", ATTR{power/wakeup}="disabled"
+  '';
 
   # XServer, DM & DE
   services.xserver = {
@@ -80,7 +78,6 @@
   };
   # services.xserver.xkbOptions = "eurosign:e,caps:escape";
 
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -90,29 +87,27 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
+  nixpkgs.overlays = [ (import ./overlays/nvim.nix) ];
   nixpkgs.config.allowUnfree = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bikku = {
     isNormalUser = true;
     initialPassword = "potato";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-      tree
-      discord
-      bitwarden
-      rofi
-    ];
+    #    packages = with pkgs; [
+    #      firefox
+    #      tree
+    #      discord
+    #      bitwarden
+    #      rofi
+    #      #      neovim
+    #    ];
   };
-  nixpkgs.overlays = [
-    (import ./overlays/nvim.nix)
-  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #    neovim-unwrapped # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
     tealdeer

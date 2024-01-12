@@ -34,8 +34,7 @@ let
         ''ATTR{power/wakeup}="${wakeStr}"''
       ])));
 
-in
-{
+in {
   options.hardware.usb.wakeupDisabled = mkOption {
     description =
       "Prevent USB devices from waking the computer from sleep/hibernation.";
