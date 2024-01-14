@@ -9,13 +9,17 @@
       source = ./dotfiles/firefox/chrome;
       target = ".mozilla/firefox/weasel/chrome";
     };
+    ".nvim" = {
 
+      source = ./dotfiles/nvim;
+      target = ".config/nvim/";
+    };
   };
-  home.packages = with pkgs; [ htop firefox bitwarden discord rofi tree ];
+  home.packages = with pkgs; [ htop firefox bitwarden discord rofi tree glibc ];
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraPackages = with pkgs; [ xclip fzf fd ];
+    extraPackages = with pkgs; [ xclip fzf fd clang lua-language-server ];
   };
   programs.firefox = {
     enable = true;
@@ -25,7 +29,7 @@
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.toolbars.bookmarks.visibility" = "never";
-	"browser.startup.page" = 3;
+        "browser.startup.page" = 3;
       };
 
       extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
@@ -35,7 +39,7 @@
         skip-redirect
         forget_me_not
         firefox-translations
-	darkreader
+        darkreader
         #	betterttv
         #	return-youtube-dislikes
       ];
