@@ -5,21 +5,41 @@
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
   home.file = {
-    "weasel" = {
+    "weasel" = { # Firefox dotfiles
       source = ./dotfiles/firefox/chrome;
       target = ".mozilla/firefox/weasel/chrome";
     };
     ".nvim" = {
-
       source = ./dotfiles/nvim;
       target = ".config/nvim/";
     };
   };
-  home.packages = with pkgs; [ htop firefox bitwarden discord rofi tree glibc ];
+  home.packages = with pkgs; [
+    htop
+    firefox
+    bitwarden
+    discord
+    rofi
+    tree
+    glibc
+    peek
+  ];
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraPackages = with pkgs; [ xclip fzf fd clang lua-language-server ];
+    extraPackages = let
+      language-server-providers = with pkgs; [
+        lua-language-server
+        python311Packages.python-lsp-server
+      ];
+    in with pkgs;
+    [
+      xclip # System clipboard
+      fzf # Telescope dependency
+      ripgrep # Telescope softdep
+      fd # Telescope dependency?
+      clang # Telescope softdep
+    ] ++ language-server-providers;
   };
   programs.firefox = {
     enable = true;
@@ -29,7 +49,7 @@
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.toolbars.bookmarks.visibility" = "never";
-        "browser.startup.page" = 3;
+        "browser.startup.page" = 3; # Restore session on startup.
       };
 
       extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
