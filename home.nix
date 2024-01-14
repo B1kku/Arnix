@@ -4,6 +4,13 @@
   programs.home-manager.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
+  home.file = {
+    "weasel" = {
+      source = ./dotfiles/firefox/chrome;
+      target = ".mozilla/firefox/weasel/chrome";
+    };
+
+  };
   home.packages = with pkgs; [ htop firefox bitwarden discord rofi tree ];
   programs.neovim = {
     enable = true;
@@ -14,6 +21,12 @@
     enable = true;
     profiles.weasel = {
       search.default = "DuckDuckGo";
+      search.force = true;
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.toolbars.bookmarks.visibility" = "never";
+	"browser.startup.page" = 3;
+      };
 
       extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
         ublock-origin
@@ -22,6 +35,7 @@
         skip-redirect
         forget_me_not
         firefox-translations
+	darkreader
         #	betterttv
         #	return-youtube-dislikes
       ];
