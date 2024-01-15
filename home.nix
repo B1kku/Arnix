@@ -2,6 +2,7 @@
 
 {
   programs.home-manager.enable = true;
+  programs.bash.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
   home.file = {
@@ -20,8 +21,7 @@
     bitwarden
     discord
     rofi
-    tree
-    glibc
+    lf
     peek
   ];
   programs.neovim = {
@@ -30,11 +30,12 @@
     extraPackages = let
       language-server-providers = with pkgs; [
         lua-language-server
+        jdt-language-server
         python311Packages.python-lsp-server
       ];
     in with pkgs;
     [
-      xclip # System clipboard
+      xclip # System clipboard x11 only.
       fzf # Telescope dependency
       ripgrep # Telescope softdep
       fd # Telescope dependency?
