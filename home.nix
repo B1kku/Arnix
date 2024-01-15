@@ -1,8 +1,6 @@
 { config, pkgs, inputs, ... }:
 
 {
-  programs.home-manager.enable = true;
-  programs.bash.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
   home.file = {
@@ -15,14 +13,21 @@
       target = ".config/nvim/";
     };
   };
+  programs.home-manager.enable = true;
+  programs.bash.enable = true;
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     htop
     firefox
     bitwarden
-    discord
-    rofi
+    # discord
+    vesktop
+    # rofi
     lf
+    neofetch
     peek
+    fira-code-nerdfont
+    prismlauncher
   ];
   programs.neovim = {
     enable = true;
