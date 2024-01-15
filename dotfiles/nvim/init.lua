@@ -1,5 +1,6 @@
 --[[ init.lua ]]
 --
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -13,14 +14,25 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local globals = vim.g
+
+globals.mapleader = " "
+globals.maplocalleader = " "
 
 -- IMPORTS --
 require("vars")     -- Variables
-require("ftplugin") -- Filetypes definitions.
+require("ftplugin") -- Filetypes definitions
 require("opts")     -- Options
 require("keys")     -- Keymaps
+require("nixos")    -- Sets g.nixvars won't do anything if not on NixOS
+
+local lazy_config = {
+  change_detection = { notify = false },
+  ui = { border = globals.border }
+}
+if globals.nixvars and globals.nixvars.config_dir then
+  lazy_config.lockfile = globals.nixvars.config_dir
+end
 
 require("lazy").setup(
   {
@@ -28,8 +40,5 @@ require("lazy").setup(
     { import = "plugins" },
     { import = "lsp" }
   },
-  {
-    change_detection = { notify = false },
-    ui = { border = vim.g.border }
-  }
+  lazy_config
 )

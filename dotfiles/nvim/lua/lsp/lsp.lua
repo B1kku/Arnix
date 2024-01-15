@@ -6,9 +6,12 @@ return {
       "williamboman/mason-lspconfig.nvim"
     },
     config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "jdtls", "pylsp" }
-      })
+      local mason_installs = { automatic_installation = true }
+      -- Don't install lsps on nix, nix handles it.
+      if vim.g.nixvars then
+        mason_installs.automatic_installation = false
+      end
+      require("mason-lspconfig").setup(mason_installs)
 
       local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()

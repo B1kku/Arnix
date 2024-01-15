@@ -4,9 +4,7 @@ return {
   build = ":MasonUpdate",
   lazy = false,
   config = function()
-    require("mason").setup {
-      -- Prefer system installed LSPs, mainly for portability with NixOS
-      PATH = "append";
+    local mason_config = {
       pip = {
         upgrade_pip = true
       },
@@ -14,5 +12,11 @@ return {
         border = vim.g.border
       }
     }
+
+    -- Prefer system installed LSPs, mainly for portability with NixOS
+    if vim.g.nixvars then
+      mason_config.PATH = "append"
+    end
+    require("mason").setup(mason_config)
   end
 }
