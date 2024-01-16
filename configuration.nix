@@ -54,7 +54,7 @@
   services.xserver = {
     enable = true;
     libinput.mouse.accelProfile = "flat";
-    layout = "es";
+    layout = "${config.console.keyMap}";
     displayManager = {
       lightdm = {
         enable = true;
@@ -64,11 +64,37 @@
     };
     desktopManager.gnome.enable = true;
   };
+  environment.gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
+    ++ (with pkgs.gnome; [
+      cheese
+      #gnome-music
+      gedit
+      epiphany
+      geary
+      gnome-characters
+      tali
+      iagno
+      hitori
+      atomix
+      yelp
+      gnome-contacts
+      gnome-initial-setup
+    ]);
+  programs.dconf.enable = true;
   # services.xserver.xkbOptions = "eurosign:e,caps:escape";
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+  };
+  # sound.enable = true;
 
   #nixpkgs.overlays = [ (import ./overlays/nvim.nix) ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -84,7 +110,12 @@
     users.bikku = import ./home.nix;
   };
 
-  environment.systemPackages = with pkgs; [ wget git tealdeer ];
+  environment.systemPackages = with pkgs; [
+    gnome.gnome-tweaks
+    wget
+    git
+    tealdeer
+  ];
 
   # Don't change randomly, used for internals.
   system.stateVersion = "23.05";
