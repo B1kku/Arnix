@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   home.username = "bikku";
@@ -29,6 +29,28 @@
     fira-code-nerdfont
     prismlauncher
   ];
+
+  dconf.settings = with lib.hm.gvariant; {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      enable-hot-corners = true;
+    };
+    "org/gnome/mutter" = {
+      edge-tiling = true;
+      dynamic-workspaces = false;
+      workspaces-only-on-primary = false;
+    };
+    "org/gnome/desktop/wm/preferences" = { num-workspaces = 4; };
+    "org/gnome/shell/app-switcher" = { current-workspace-only = false; };
+    "org/gnome/settings-daemon/plugins/color" = {
+      night-light-enabled = true;
+      night-light-temperature = mkUint32 3700;
+    };
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      mic-mute = [ "<Alt>z" ];
+      next = [ "<Alt>KP_Right" ];
+    };
+  };
   programs.neovim = {
     enable = true;
     defaultEditor = true;
