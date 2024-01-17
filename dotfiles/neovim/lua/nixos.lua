@@ -6,7 +6,7 @@ if (nix_path) then
   end
 
   vim.g.nixvars = {
-    config_dir = nixos_config .. "/dotfiles/nvim/lazy-lock.json"
+    config_dir = nixos_config .. "/dotfiles/neovim/lazy-lock.json"
   }
 end
 

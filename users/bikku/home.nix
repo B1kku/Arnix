@@ -18,6 +18,7 @@
     peek
     fira-code-nerdfont
     prismlauncher
+    steam
   ];
   # config.services.xserver.desktopManager.gnome.enable = true;
   dconf.settings = with lib.hm.gvariant; {
