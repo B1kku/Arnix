@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }: {
   home.file.".nvim" = {
     source = ./neovim;
-    target = ".config/neovim/";
+    target = ".config/nvim/";
   };
 
   programs.neovim = {
