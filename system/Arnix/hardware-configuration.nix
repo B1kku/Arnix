@@ -2,8 +2,8 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-
-{
+let ssd-options = [ "noatime" "nodiratime" "discard" ];
+in {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
@@ -13,18 +13,20 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c93f6d0e-21ee-41b3-a99b-2e1fab589e01";
+    device = "/dev/disk/by-label/NixOS";
     fsType = "ext4";
+    options = ssd-options;
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8D9C-069B";
+    device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/54ee3d6b-eff3-4998-aadf-505c68d7b8ce";
+    device = "/dev/disk/by-label/Home";
     fsType = "ext4";
+    options = ssd-options;
   };
 
   swapDevices = [ ];

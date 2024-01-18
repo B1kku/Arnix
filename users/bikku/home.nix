@@ -20,6 +20,7 @@
     prismlauncher
   ];
   # config.services.xserver.desktopManager.gnome.enable = true;
+  # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -38,6 +39,10 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       mic-mute = [ "<Alt>z" ];
+      volume-up = [ "<Alt>KP_Up" ];
+      volume-down = [ "<Alt>KP_Down" ];
+      previous = [ "<Alt>KP_Left" ];
+      play = [ "<Alt>KP_Begin" ];
       next = [ "<Alt>KP_Right" ];
     };
   };
