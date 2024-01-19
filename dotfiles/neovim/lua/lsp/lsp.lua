@@ -10,9 +10,8 @@ return {
       -- Don't install lsps on nix, nix handles it.
       if vim.g.nixvars then
         mason_installs.automatic_installation = false
+        require("mason-lspconfig").setup(mason_installs)
       end
-      require("mason-lspconfig").setup(mason_installs)
-
       local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -23,9 +22,9 @@ return {
         capabilities = capabilities,
         settings = require("lsp.languages.lua").settings
       })
-      lspconfig.pylsp.setup({
+      lspconfig.pyright.setup({
         capabilities = capabilities,
-        settings = require("lsp.languages.python").settings
+        -- settings = require("lsp.languages.python").settings
       })
       --Keymaps
       --TODO: Add as on attach.

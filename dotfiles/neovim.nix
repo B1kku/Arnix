@@ -11,7 +11,7 @@
       language-server-providers = with pkgs; [
         lua-language-server
         jdt-language-server
-        python311Packages.python-lsp-server
+        nodePackages.pyright
       ];
     in with pkgs;
     [
