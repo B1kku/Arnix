@@ -1,9 +1,23 @@
-{ lib, ...}:
+{ lib, pkgs, ...}:
 
 {
+  home.packages = with pkgs.gnomeExtensions; [
+    blur-my-shell
+    gsconnect
+    media-controls
+    just-perfection
+  ];
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = [
+       "blur-my-shell@aunetx"
+       "gsconnect@andyholmes.github.io"
+       # "just-perfection-desktop@just-perfection"
+      ];
+    };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       enable-hot-corners = true;

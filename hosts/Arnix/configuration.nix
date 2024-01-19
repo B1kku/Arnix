@@ -27,7 +27,19 @@
 
   #Networking
   networking.hostName = "Arnix"; # Define your hostname.
-
+  networking = {
+    # for GSConnect
+    firewall = {
+      allowedTCPPortRanges = [{
+        from = 1714;
+        to = 1764;
+      }];
+      allowedUDPPortRanges = [{
+        from = 1714;
+        to = 1764;
+      }];
+    };
+  };
   # Select internationalisation properties.
   time.timeZone = "Europe/Madrid";
   # locale
