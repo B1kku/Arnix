@@ -1,9 +1,10 @@
-{ lib, pkgs, ...}:
+{ lib, pkgs, ... }:
 
 {
   home.packages = with pkgs.gnomeExtensions; [
     blur-my-shell
-    gsconnect
+    pkgs.valent
+    valent
     media-controls
     just-perfection
   ];
@@ -12,10 +13,12 @@
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      enabled-extensions = [
-       "blur-my-shell@aunetx"
-       "gsconnect@andyholmes.github.io"
-       # "just-perfection-desktop@just-perfection"
+      # TODO: Do this automatically from a list of enabled extensions.
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        "${blur-my-shell.passthru.extensionUuid}"
+        "${just-perfection.passthru.extensionUuid}"
+        "${media-controls.passthru.extensionUuid}"
+        "${valent.passthru.extensionUuid}"
       ];
     };
     "org/gnome/desktop/interface" = {
