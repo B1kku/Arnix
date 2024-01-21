@@ -28,6 +28,7 @@
       nixosConfigurations = {
         Arnix = lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs pkgs home-manager; };
           modules = [ ./hosts/Arnix/configuration.nix ];
         };
       };
