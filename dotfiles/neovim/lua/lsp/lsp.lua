@@ -23,8 +23,12 @@ return {
         settings = require("lsp.languages.lua").settings
       })
       lspconfig.pyright.setup({
-        capabilities = capabilities,
+        capabilities = capabilities
         -- settings = require("lsp.languages.python").settings
+      })
+      lspconfig.jdtls.setup({
+        capabilities = capabilities,
+        cmd = require("lsp.languages.java").cmd
       })
       --Keymaps
       --TODO: Add as on attach.
