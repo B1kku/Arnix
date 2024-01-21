@@ -19,14 +19,15 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        overlays = [ (import ./overlays/pkgs.nix )];
       };
       lib = nixpkgs.lib;
+      
     in {
       formatter.x86_64-linux = pkgs.nixfmt;
       nixosConfigurations = {
         Arnix = lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit pkgs inputs home-manager; };
           modules = [ ./hosts/Arnix/configuration.nix ];
         };
       };

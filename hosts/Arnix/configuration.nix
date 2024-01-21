@@ -116,9 +116,9 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    # useGlobalPkgs = true;
+    # useUserPackages = true;
+    extraSpecialArgs = { inherit pkgs inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
 
