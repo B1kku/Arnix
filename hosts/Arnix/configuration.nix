@@ -28,15 +28,15 @@
   #Networking
   networking.hostName = "Arnix"; # Define your hostname.
   networking = {
-    # for GSConnect
+    # Valent
     firewall = {
       allowedTCPPortRanges = [{
-        from = 1714;
-        to = 1764;
+        from = 1716;
+        to = 1716;
       }];
       allowedUDPPortRanges = [{
-        from = 1714;
-        to = 1764;
+        from = 1716;
+        to = 1716;
       }];
     };
   };

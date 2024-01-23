@@ -1,6 +1,5 @@
 { lib, pkgs, ... }:
-let
-  terminal-font = "FiraCode Nerd Font";
+let terminal-font = "FiraCode Nerd Font";
 in {
   programs.alacritty = {
     enable = true;

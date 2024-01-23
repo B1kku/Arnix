@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, python3, lombok}:
+{ lib, stdenv, fetchurl, python3, lombok }:
 
 let timestamp = "202401111522";
 in stdenv.mkDerivation (finalAttrs: {
@@ -16,7 +16,6 @@ in stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     # Used for the included wrapper
     python3
-    lombok
   ];
 
   postPatch = ''
