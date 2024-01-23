@@ -10,7 +10,8 @@
     extraPackages = let
       language-server-providers = with pkgs; [
         lua-language-server
-        jdt-language-server
+        zulu17 # Jdtls now requires java. NO, it won't once it gets merged.
+        jdtls # I added lombok in there so I don't have to bother about it.
         nodePackages.pyright
       ];
     in with pkgs;

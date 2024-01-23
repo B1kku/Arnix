@@ -5,6 +5,7 @@ return {
     dependencies = {
       "williamboman/mason-lspconfig.nvim"
     },
+    -- vim.lsp.get_log_path() to get the log path.
     config = function()
       local mason_installs = { automatic_installation = true }
       -- Don't install lsps on nix, nix handles it.
@@ -26,10 +27,10 @@ return {
         capabilities = capabilities
         -- settings = require("lsp.languages.python").settings
       })
-      lspconfig.jdtls.setup({
-        capabilities = capabilities,
-        cmd = require("lsp.languages.java").cmd
-      })
+      -- lspconfig.jdtls.setup({
+      --   capabilities = capabilities,
+      --   cmd = require("lsp.languages.java").cmd
+      -- })
       --Keymaps
       --TODO: Add as on attach.
       vim.api.nvim_create_autocmd("LspAttach", {

@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, python3 }:
+{ lib, stdenv, fetchurl, python3, lombok}:
 
 let timestamp = "202401111522";
 in stdenv.mkDerivation (finalAttrs: {
@@ -16,13 +16,16 @@ in stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     # Used for the included wrapper
     python3
+    lombok
   ];
 
   postPatch = ''
     # We store the plugins, config, and features folder in different locations
     # than in the original package.
+    # NOTE: Also inject lombok, ugly, but idc, maybe once this gets merged I'll do it properly.
     substituteInPlace bin/jdtls.py \
-      --replace "jdtls_base_path = Path(__file__).parent.parent" "jdtls_base_path = Path(\"$out/share/java/jdtls/\")"
+      --replace "jdtls_base_path = Path(__file__).parent.parent" "jdtls_base_path = Path(\"$out/share/java/jdtls/\")" \
+      --replace "\"java.base/java.lang=ALL-UNNAMED\"" "\"java.base/java.lang=ALL-UNNAMED\", \"-javaagent:${lombok}/share/java/lombok.jar\""
   '';
 
   installPhase = let
