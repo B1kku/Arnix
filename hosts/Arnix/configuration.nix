@@ -91,6 +91,7 @@
       yelp
       gnome-contacts
       gnome-initial-setup
+      gnome-terminal
     ]);
   programs.dconf.enable = true;
   # services.xserver.xkbOptions = "eurosign:e,caps:escape";

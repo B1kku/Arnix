@@ -8,13 +8,15 @@
     ../../dotfiles/firefox.nix 
     ../../dotfiles/neovim.nix 
     ../../dotfiles/gnome.nix
+    ../../dotfiles/alacritty.nix
   ];
+  programs.zsh.enable = true;
   programs.bash.enable = true;
+
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     htop
     bitwarden
-    # discord
     vesktop
     # rofi
     lf
