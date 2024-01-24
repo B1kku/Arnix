@@ -13,13 +13,14 @@
     ../../dotfiles/neovim.nix
     ../../dotfiles/gnome.nix
     ../../dotfiles/alacritty.nix
-    ../../dotfiles/discord.nix
   ];
   programs.zsh.enable = true;
   programs.bash.enable = true;
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
+    mlocate
+    vesktop
     htop
     bitwarden
     lf

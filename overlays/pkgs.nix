@@ -2,22 +2,21 @@ final: prev: {
 
   jdtls = final.callPackage ../packages/jdtls { };
 
-/* For some reason this just removes vesktop, even from path, even if it does evaluate it
+# For some reason this just removes vesktop, even from path, even if it does evaluate it
   vesktop = prev.vesktop.overrideAttrs {
     desktopItems = [
-      (final.makeDesktopItem {
-        name = "vesktop";
+      (prev.makeDesktopItem {
+        name = "vencorddesktop";
         desktopName = "Discord";
-        exec = "vesktop %U";
+        exec = "vencorddesktop %U";
         icon = "discord";
-        startupWMClass = "Vesktop";
+        startupWMClass = "Discord";
         genericName = "Internet Messenger";
         keywords = [ "discord" "vencord" "electron" "chat" ];
         categories = [ "Network" "InstantMessaging" "Chat" ];
       })
     ];
   };
-*/
   gnomeExtensions = prev.gnomeExtensions // {
     valent = prev.gnomeExtensions.valent.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
