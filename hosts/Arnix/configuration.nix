@@ -67,6 +67,8 @@
     enable = true;
     libinput.mouse.accelProfile = "flat";
     layout = "${config.console.keyMap}";
+    excludePackages = [ pkgs.xterm ];
+    # TODO: Switch to SDDM
     displayManager = {
       lightdm = {
         enable = true;

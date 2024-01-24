@@ -1,6 +1,12 @@
 { lib, pkgs, ... }:
 let terminal-font = "FiraCode Nerd Font";
 in {
+
+  home.packages = [
+    (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
+      exec "${lib.getExe pkgs.alacritty}" -e "$@"
+    '')
+  ];
   programs.alacritty = {
     enable = true;
 
