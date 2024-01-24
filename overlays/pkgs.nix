@@ -1,5 +1,7 @@
 final: prev: {
+
   jdtls = final.callPackage ../packages/jdtls { };
+
   gnomeExtensions = prev.gnomeExtensions // {
     valent = prev.gnomeExtensions.valent.overrideAttrs (old: {
       src = prev.fetchFromGitHub {

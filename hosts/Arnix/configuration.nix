@@ -22,8 +22,13 @@
   };
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
+    efi.canTouchEfiVariables = true;
+  };
 
   #Networking
   networking.hostName = "Arnix"; # Define your hostname.
@@ -78,25 +83,30 @@
     };
     desktopManager.gnome.enable = true;
   };
-  environment.gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
-    ++ (with pkgs.gnome; [
-      cheese
-      #gnome-music
-      gedit
-      epiphany
-      geary
-      gnome-characters
-      tali
-      iagno
-      hitori
-      atomix
-      yelp
-      gnome-contacts
-      gnome-initial-setup
-      gnome-terminal
-    ]);
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+    gnome-text-editor
+    gnome-connections
+    gnome-console
+  ]) ++ (with pkgs.gnome; [
+    cheese
+    #gnome-music
+    gedit
+    epiphany
+    geary
+    tali
+    iagno
+    hitori
+    atomix
+    yelp
+    simple-scan
+    gnome-characters
+    gnome-contacts
+    gnome-initial-setup
+    gnome-terminal
+  ]);
   programs.dconf.enable = true;
-  # services.xserver.xkbOptions = "eurosign:e,caps:escape";
 
   # Enable sound.
   hardware.pulseaudio.enable = false;
@@ -110,8 +120,6 @@
     #jack.enable = true;
   };
   # sound.enable = true;
-
-  #nixpkgs.overlays = [ (import ./overlays/nvim.nix) ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bikku = {
     isNormalUser = true;
