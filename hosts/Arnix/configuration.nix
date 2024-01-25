@@ -121,7 +121,9 @@
   };
   # sound.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.zsh.enable = true;
   users.users.bikku = {
+    shell = pkgs.zsh;
     isNormalUser = true;
     initialPassword = "potato";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.

@@ -13,9 +13,11 @@ return {
       -- Bash hangs sometimes so this is a workaround to kill the terminal when it's being dumb
       keymap(bufnr, "t", "<C-x>", [[<cmd>TermExec cmd=exit<CR>]], { silent = true })
     end
+
     require("toggleterm").setup({
       direction = "horizontal",
-      shell = "bash",
+      -- shell = "bash",
+      
       start_in_insert = true,
       on_open = function(term)
         set_terminal_keymaps(term.bufnr)

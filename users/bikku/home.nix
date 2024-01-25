@@ -1,9 +1,7 @@
 { config, lib, pkgs, inputs, home, ... }:
 
 {
-  # TODO: Alacritty
-  # TODO: ZSH
-  # TODO: Starship
+  # TODO: Rsync + sshfs
   # TODO: TMux
   programs.home-manager.enable = true;
   home.username = "bikku";
@@ -14,9 +12,22 @@
     ../../dotfiles/gnome.nix
     ../../dotfiles/alacritty.nix
   ];
-  programs.zsh.enable = true;
-  programs.bash.enable = true;
-
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    shellAliases = {
+      arnix-rebuild = "sudo nixos-rebuild switch";
+      arnix-update = "nix flake update /etc/nixos";
+    };
+  };
+  # programs.bash.enable = true;
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  # No sftpman integration yet on 23.11
+  # programs.sftpman
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     mlocate

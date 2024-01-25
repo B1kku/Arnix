@@ -9,8 +9,8 @@ in {
   ];
   programs.alacritty = {
     enable = true;
-
     settings = {
+      # shell.program = "${pkgs.zsh}/bin/zsh";
       window = {
         decorations = "None";
         opacity = 0.75;
