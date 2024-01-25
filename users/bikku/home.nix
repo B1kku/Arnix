@@ -11,6 +11,7 @@
     ../../dotfiles/neovim.nix
     ../../dotfiles/gnome.nix
     ../../dotfiles/alacritty.nix
+    ../../dotfiles/sshfs.nix
   ];
   programs.zsh = {
     enable = true;

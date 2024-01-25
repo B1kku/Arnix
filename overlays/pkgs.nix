@@ -3,8 +3,8 @@ final: prev: {
   jdtls = final.callPackage ../packages/jdtls { };
 
   # Will change from vencorddesktop to vesktop once it updates.
-  vesktop = prev.vesktop.overrideAttrs (old:{
-    nativeBuildInputs =  old.nativeBuildInputs ++  [ prev.imagemagick ];
+  vesktop = prev.vesktop.overrideAttrs (old: {
+    nativeBuildInputs = old.nativeBuildInputs ++ [ prev.imagemagick ];
     desktopItems = [
       (prev.makeDesktopItem {
         name = "vencorddesktop";
