@@ -22,12 +22,25 @@
   };
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 5;
+  boot = {
+    kernelParams = [
+      "logo.nologo"
+      "fbcon=nodefer"
+      "bgrt_disable"
+      "vt.global_cursor_default=0"
+      "quiet"
+      "systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "splash"
+    ];
+    plymouth = { enable = true; };
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
+      efi.canTouchEfiVariables = true;
     };
-    efi.canTouchEfiVariables = true;
   };
 
   #Networking

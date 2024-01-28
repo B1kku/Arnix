@@ -12,6 +12,7 @@
     ../../dotfiles/gnome.nix
     ../../dotfiles/alacritty.nix
     ../../dotfiles/sshfs.nix
+    ../../dotfiles/lf.nix
   ];
   programs.zsh = {
     enable = true;
@@ -36,7 +37,6 @@
     vesktop
     htop
     bitwarden
-    lf
     neofetch
     peek
     fira-code-nerdfont
