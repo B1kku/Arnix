@@ -44,6 +44,16 @@ final: prev: {
         hash = "sha256-jm+TYqgCalFgjJf0CJ2poFa1W0OS192DVI7DOxjEY+g=";
       };
     });
+    taskwhisperer = prev.gnomeExtensions.taskwhisperer.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "cinatic";
+        repo = "taskwhisperer";
+        rev = "79307d385f81e9d7a5d822f72fff74f50c96ceba";
+        hash = "sha256-zWCzGVHVBZqwheT4k9XTBs1OqoWzHRe/RA6Ws2kIuoQ=";
+      };
+      nativeBuildInputs = with prev; [ gettext glib ];
+      patches = [ ];
+    });
   };
 
 }

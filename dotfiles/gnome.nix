@@ -2,11 +2,13 @@
 
 {
   home.packages = with pkgs.gnomeExtensions; [
-    blur-my-shell
     pkgs.valent
+    pkgs.taskwarrior
+    blur-my-shell
     valent
     media-controls
     just-perfection
+    taskwhisperer
   ];
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
@@ -19,6 +21,7 @@
         "${just-perfection.passthru.extensionUuid}"
         "${media-controls.passthru.extensionUuid}"
         "${valent.passthru.extensionUuid}"
+        "${taskwhisperer.passthru.extensionUuid}"
       ];
     };
     "org/gnome/desktop/interface" = {
