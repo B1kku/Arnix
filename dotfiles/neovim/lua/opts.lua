@@ -54,5 +54,6 @@ vim.o.clipboard = 'unnamedplus' --System clipboard integration.
 --   pattern = { "*" },
 --   command = "normal zx",
 -- })
+vim.o.sessionoptions = "curdir,folds,help,tabpages,winsize"
 -- vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 -- vim.o.hidden = false

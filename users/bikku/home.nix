@@ -35,6 +35,7 @@
     mlocate
     rsync
     vesktop
+    maven
     htop
     bitwarden
     neofetch
