@@ -38,7 +38,8 @@ local function rename_session()
   vim.ui.input({ prompt = 'Rename ' .. session .. " to:" }, function(input)
     if input then
       input = format_name(input)
-      os.rename(directory .. "\\" .. session, directory .. "\\" .. input)
+      -- Is there no better way to do this? This breaks on windows...
+      os.rename(directory .. "/" .. session, directory .. "/" .. input)
       -- MiniSessions.setup()
       selected.value = input
       selected.display = format_name(selected.value)
