@@ -8,6 +8,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    vimAlias = true;
     extraPackages = let
       language-server-providers = with pkgs; [
         lua-language-server

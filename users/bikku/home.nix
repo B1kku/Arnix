@@ -13,6 +13,7 @@
     ../../dotfiles/alacritty.nix
     ../../dotfiles/sshfs.nix
     ../../dotfiles/lf.nix
+    ../../dotfiles/games.nix
   ];
   programs.zsh = {
     enable = true;
