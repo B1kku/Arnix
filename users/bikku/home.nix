@@ -43,6 +43,7 @@
     peek
     fira-code-nerdfont
     prismlauncher
+    qbittorrent
   ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";

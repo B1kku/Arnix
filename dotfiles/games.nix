@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }:
 let
-  lutris = (pkgs.lutris.override {
+  custom-lutris = (pkgs.lutris.override {
     extraPkgs = pkgs: with pkgs; [wineWowPackages.stableFull];
     extraLibraries = pkgs:
       with pkgs; [
@@ -129,5 +129,5 @@ let
       ];
   });
 in {
-  home.packages = [ lutris pkgs.winetricks pkgs.wineWowPackages.stableFull ];
+  home.packages = with pkgs; [ custom-lutris winetricks wineWowPackages.stableFull steam-run ];
 }

@@ -34,7 +34,7 @@
       "rd.udev.log_level=3"
       "splash"
     ];
-    plymouth = { enable = true; };
+    # plymouth = { enable = true; };
     loader = {
       systemd-boot = {
         enable = true;
@@ -148,7 +148,8 @@
     extraSpecialArgs = { inherit pkgs inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
-
+  programs.steam.enable = true;
+  hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   environment.systemPackages = with pkgs; [
     gnome.gnome-tweaks
     wget
