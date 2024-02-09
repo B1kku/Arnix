@@ -17,9 +17,12 @@ let
 in {
   xdg.configFile = lib.attrsets.mapAttrs' (name: value: {
     name = "lutris-${name}";
-    value = let 
+    value = let
       config = (lib.recursiveUpdate {
-        system = { locale = ""; disable_runtime = true; };
+        system = {
+          locale = "";
+          disable_runtime = true;
+        };
         ${name} = { runner_executable = "${value.package}/bin/${name}"; };
       } (lib.optionalAttrs (value ? "config") value.config));
     in {
