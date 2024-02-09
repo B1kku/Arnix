@@ -1,28 +1,21 @@
 { lib, pkgs, ... }:
-
-{
-  home.packages = with pkgs.gnomeExtensions; [
-    pkgs.valent
-    pkgs.taskwarrior
+let
+  gnome-extensions = with pkgs.gnomeExtensions; [
     blur-my-shell
     valent
     media-controls
     just-perfection
     taskwhisperer
   ];
+in {
+  home.packages = with pkgs; [ valent taskwarrior ] ++ gnome-extensions;
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      # TODO: Do this automatically from a list of enabled extensions.
-      enabled-extensions = with pkgs.gnomeExtensions; [
-        "${blur-my-shell.passthru.extensionUuid}"
-        "${just-perfection.passthru.extensionUuid}"
-        "${media-controls.passthru.extensionUuid}"
-        "${valent.passthru.extensionUuid}"
-        "${taskwhisperer.passthru.extensionUuid}"
-      ];
+      enabled-extensions =
+        map (extension: "${extension.passthru.extensionUuid}") gnome-extensions;
     };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
