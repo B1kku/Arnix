@@ -1,5 +1,4 @@
-{...}:
-{
+{ ... }: {
   services.udev.extraHwdb = ''
     evdev:name:BDA NSW wired controller:*
       KEYBOARD_KEY_90002=btn_c      # A 
