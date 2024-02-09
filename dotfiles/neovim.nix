@@ -1,9 +1,9 @@
 { inputs, pkgs, ... }:
 
 {
-  home.file.".nvim" = {
+  xdg.configFile.".nvim" = {
     source = ./neovim;
-    target = ".config/nvim/";
+    target = "nvim/";
   };
   programs.neovim = {
     enable = true;

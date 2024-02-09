@@ -1,9 +1,9 @@
 { pkgs, lib, ... }:
 
 {
-  home.file.".lficons" = {
+  xdg.configFile.".lficons" = {
     source = ./lf/icons;
-    target = ".config/lf/icons";
+    target = "lf/icons";
   };
 
   programs.lf = {
