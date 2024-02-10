@@ -23,7 +23,7 @@ in {
           locale = "";
           disable_runtime = true;
         };
-        ${name} = { runner_executable = "${value.package}/bin/${name}"; };
+        ${name} = { runner_executable = lib.getExe value.package; };
       } (lib.optionalAttrs (value ? "config") value.config));
     in {
       target = "lutris/runners/${name}.yml";
@@ -36,6 +36,5 @@ in {
     winetricks
     wineWowPackages.stableFull
     steam-run
-    cemu
   ];
 }
