@@ -15,14 +15,16 @@
     ../../dotfiles/lf.nix
     ../../dotfiles/games.nix
   ];
+  # Same case as enabling bash, let home manager add variables to it.
+  xsession.enable = true;
+  home.shellAliases = {
+      arnix-rebuild = "sudo nixos-rebuild switch";
+      arnix-update = "nix flake update /etc/nixos";
+  };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    shellAliases = {
-      arnix-rebuild = "sudo nixos-rebuild switch";
-      arnix-update = "nix flake update /etc/nixos";
-    };
   };
   # programs.bash.enable = true;
   programs.starship = {

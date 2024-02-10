@@ -9,6 +9,9 @@ let
   ];
 in {
   home.packages = with pkgs; [ valent taskwarrior ] ++ gnome-extensions;
+  home.sessionVariables = {
+    GTK_THEME = "Adwaita:dark";
+  };
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
