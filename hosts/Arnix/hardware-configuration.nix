@@ -28,7 +28,17 @@ in {
     fsType = "ext4";
     options = ssd-options;
   };
+ 
 
+  fileSystems."/run/media/bikku/Data-HDD" = {
+    device = "/dev/disk/by-label/Data-HDD";
+    fsType = "ntfs-3g";
+  };
+
+  fileSystems."/run/media/bikku/Data-SSD" = {
+    device = "/dev/disk/by-label/Data-SSD";
+    fsType = "ntfs-3g";
+  };
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
