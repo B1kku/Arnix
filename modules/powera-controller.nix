@@ -9,8 +9,8 @@
       KEYBOARD_KEY_90006=btn_tl     # R
       KEYBOARD_KEY_90007=btn_tr     # LT
       KEYBOARD_KEY_90008=btn_tl2    # RT
-      KEYBOARD_KEY_9000b=btn_start  # L
-      KEYBOARD_KEY_9000c=btn_mode   # R
+      KEYBOARD_KEY_9000b=btn_start  # L Joystick
+      KEYBOARD_KEY_9000c=btn_mode   # R Joystick
       KEYBOARD_KEY_9000e=btn_tr2    # Select
       KEYBOARD_KEY_9000d=btn_select # Start
   '';
