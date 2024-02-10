@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, home-manager, inputs, ... }:
+{ config, lib, pkgs, home-manager, inputs, ... }:
 
 {
   imports = [
@@ -11,8 +11,17 @@
     ../../modules/powera-controller.nix
     home-manager.nixosModules.home-manager
   ];
+  # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.channel.enable = false;
+  environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
+
+
   nix = {
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+    };
     gc = {
       automatic = true;
       dates = "weekly";
