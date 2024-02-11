@@ -1,8 +1,8 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, pkgs, pkgs-unstable, lib, ... }:
 let
-  custom-lutris = (pkgs.lutris.override {
-    extraPkgs = pkgs:
-      with pkgs; [
+  custom-lutris = (pkgs-unstable.lutris.override {
+    extraPkgs = pkgs-unstable:
+      with pkgs-unstable; [
         wineWowPackages.stableFull
         gamemode
         mangohud
@@ -10,8 +10,8 @@ let
       ];
   });
   # Add any lutris extra runners here, can also configure with runner.config
-  lutris-runners = with pkgs; {
-    cemu.package = cemu;
+  lutris-runners = with pkgs-unstable; {
+    cemu.package = pkgs.cemu; # Wouldn't work unstable, idk why.
     yuzu.package = yuzu-early-access;
   };
 in {
@@ -31,7 +31,7 @@ in {
     };
   }) lutris-runners;
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     custom-lutris
     winetricks
     wineWowPackages.stableFull

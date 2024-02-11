@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, lib, pkgs, home-manager, inputs, ... }:
+{ config, lib, pkgs, pkgs-unstable, home-manager, inputs, ... }:
 
 {
   imports = [
@@ -154,10 +154,13 @@
   home-manager = {
     # useGlobalPkgs = true;
     # useUserPackages = true;
-    extraSpecialArgs = { inherit pkgs inputs; };
+    extraSpecialArgs = { inherit pkgs pkgs-unstable inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    package = pkgs-unstable.steam;
+  };
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   environment.systemPackages = with pkgs; [
     gnome.gnome-tweaks
@@ -165,7 +168,6 @@
     git
     tealdeer
   ];
-
   # Don't change randomly, used for internals.
   system.stateVersion = "23.05";
 

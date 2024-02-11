@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, home, ... }:
+{ config, lib, pkgs, pkgs-unstable, inputs, home, ... }:
 
 {
   # TODO: Rsync + sshfs
