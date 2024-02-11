@@ -12,11 +12,18 @@
     ../../dotfiles/gnome.nix
     ../../dotfiles/alacritty.nix
     ../../dotfiles/sshfs.nix
-    ../../dotfiles/lf.nix
+    # ../../dotfiles/lf.nix
     ../../dotfiles/games.nix
+    # ../../dotfiles/directories.nix
   ];
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    documents = "/run/media/bikku/Data-SSD/Documents/";
+    download = "/run/media/bikku/Data-HDD/Downloads/";
+  };
   home.shellAliases = {
       arnix-rebuild = "sudo nixos-rebuild switch";
       arnix-update = "nix flake update /etc/nixos";
@@ -33,6 +40,10 @@
   };
   # No sftpman integration yet on 23.11
   # programs.sftpman
+  programs.yazi = {
+    enable = true;
+    package = pkgs-unstable.yazi;
+  };
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     mlocate
@@ -45,7 +56,7 @@
     peek
     fira-code-nerdfont
     prismlauncher
-    qbittorrent
+    deluge
   ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
