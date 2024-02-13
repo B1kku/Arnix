@@ -159,7 +159,7 @@
   };
   programs.steam = {
     enable = true;
-    package = pkgs-unstable.steam;
+    # package = pkgs-unstable.steam;
   };
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   environment.systemPackages = with pkgs; [
