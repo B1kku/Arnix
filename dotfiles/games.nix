@@ -7,6 +7,7 @@ let
         gamemode
         mangohud
         winetricks
+        gamescope
       ];
   });
   # Add any lutris extra runners here, can also configure with runner.config
