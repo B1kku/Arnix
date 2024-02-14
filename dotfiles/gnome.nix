@@ -7,6 +7,7 @@ let
     just-perfection
     taskwhisperer
     alttab-mod
+    switch-workspace
   ];
 in {
   home.packages = with pkgs; [ valent taskwarrior ] ++ gnome-extensions;
@@ -26,6 +27,9 @@ in {
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
+    "org/gnome/shell/extensions/switchWorkSpace" = { 
+      switch-workspace = ["<Super>Tab"];
+    };
     "org/gnome/shell/extensions/altTab-mod" = {
       current-monitor-only= true;
       current-workspace-only= true;
@@ -64,10 +68,13 @@ in {
       night-light-temperature = mkUint32 3700;
     };
     "org/gnome/desktop/wm/keybindings" = {
-      switch-to-workspace-1 = [ "<Control><Alt>1" ];
-      switch-to-workspace-2 = [ "<Control><Alt>2" ];
-      switch-to-workspace-3 = [ "<Control><Alt>3" ];
-      switch-to-workspace-4 = [ "<Control><Alt>4" ];
+      # switch-to-workspace-rigth = [ "<Super><Shift>Tab" ];
+      # switch-to-workspace-left = [ "<Super>Tab" ];
+      switch-applications = [ "<Alt>Tab" ];
+      switch-to-workspace-1 = [ "<Alt>1" ];
+      switch-to-workspace-2 = [ "<Alt>2" ];
+      switch-to-workspace-3 = [ "<Alt>3" ];
+      switch-to-workspace-4 = [ "<Alt>4" ];
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       mic-mute = [ "<Alt>z" ];
