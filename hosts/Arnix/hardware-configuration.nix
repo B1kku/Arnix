@@ -28,7 +28,6 @@ in {
     fsType = "ext4";
     options = ssd-options;
   };
- 
 
   fileSystems."/run/media/bikku/Data-HDD" = {
     device = "/dev/disk/by-label/Data-HDD";

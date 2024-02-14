@@ -12,9 +12,8 @@
     ../../dotfiles/gnome.nix
     ../../dotfiles/alacritty.nix
     ../../dotfiles/sshfs.nix
-    # ../../dotfiles/lf.nix
     ../../dotfiles/games.nix
-    # ../../dotfiles/directories.nix
+    ../../dotfiles/tmux.nix
   ];
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
@@ -25,15 +24,14 @@
     download = "/run/media/bikku/Data-HDD/Downloads/";
   };
   home.shellAliases = {
-      arnix-rebuild = "sudo nixos-rebuild switch";
-      arnix-update = "nix flake update /etc/nixos";
+    arnix-rebuild = "sudo nixos-rebuild switch";
+    arnix-update = "nix flake update /etc/nixos";
   };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
   };
-  # programs.bash.enable = true;
   programs.starship = {
     enable = true;
     enableZshIntegration = true;

@@ -16,7 +16,6 @@
   nix.channel.enable = false;
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
 
-
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -143,8 +142,8 @@
     #jack.enable = true;
   };
   # sound.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  programs.zsh.enable = true;
   users.users.bikku = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -162,6 +161,9 @@
     # package = pkgs-unstable.steam;
   };
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
+  programs.gamemode.enable = true;
+  programs.zsh.enable = true;
+
   environment.systemPackages = with pkgs; [
     gnome.gnome-tweaks
     wget
