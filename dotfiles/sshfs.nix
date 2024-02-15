@@ -2,7 +2,7 @@
 
 {
   home.packages = [ pkgs.sshfs ];
-  programs.zsh.shellAliases = {
+  home.shellAliases = {
     opsidianfs =
       "sshfs -o follow_symlinks opsidian:/home/OPsidian ~/OPsidian/home";
     opsidianfs-umount = "umount ~/OPsidian/home";
