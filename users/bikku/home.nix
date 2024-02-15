@@ -1,8 +1,6 @@
 { config, lib, pkgs, pkgs-unstable, inputs, home, ... }:
 
 {
-  # TODO: Rsync + sshfs
-  # TODO: TMux
   programs.home-manager.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
@@ -35,6 +33,9 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+  };
+  programs.lazygit = {
+    enable = true;
   };
   # No sftpman integration yet on 23.11
   # programs.sftpman

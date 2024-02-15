@@ -1,14 +1,35 @@
-{ inputs, pkgs, ... }:
-
-{
-  xdg.configFile.".nvim" = {
-    source = ./neovim;
-    target = "nvim/";
+{ lib, pkgs, ... }:
+let
+  nix-mixin = "-- Code injected by Home Manager for NixOS --\n"
+    + (lib.generators.toLua {asBindings = true;} {
+    "vim.g.nixvars" = {
+      config_dir = "/etc/nixos";
+    };
+  });
+in {
+  # Home manager won't write to init.lua otherwise
+  # But it's also used to inject nix specific options
+  # into init.lua, in this case through extraLuaConfig.
+  # If the root gets bigger I'll map these, but it's unlikely.
+  xdg.configFile = {
+    "nvim/lua" = {
+      source = ./neovim/lua;
+    };
+    "nvim/ftplugin" = {
+      source = ./neovim/ftplugin;
+    };
+    "nvim/init.lua" = {
+      text = builtins.readFile ./neovim/init.lua;
+    };
   };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     vimAlias = true;
+    # plugins = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
+
+    extraLuaConfig = nix-mixin;
     extraPackages = let
       language-server-providers = with pkgs; [
         lua-language-server

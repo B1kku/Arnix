@@ -1,5 +1,4 @@
---[[ init.lua ]]
---
+--[[ init.lua ]]--
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -24,14 +23,16 @@ require("vars")     -- Variables
 require("ftplugin") -- Filetypes definitions
 require("opts")     -- Options
 require("keys")     -- Keymaps
-require("nixos")    -- Sets g.nixvars won't do anything if not on NixOS
 
 local lazy_config = {
   change_detection = { notify = false },
   ui = { border = globals.border }
 }
+
+-- Set lazy-lock.json to original path of config directory.
+-- This is due to home manager linking from store which is read-only.
 if globals.nixvars and globals.nixvars.config_dir then
-  lazy_config.lockfile = globals.nixvars.config_dir
+  lazy_config.lockfile = globals.nixvars.config_dir .. "/lazy-lock.json"
 end
 
 require("lazy").setup(
