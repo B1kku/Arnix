@@ -1,7 +1,11 @@
 return {
   -- Maps programming objects to a tree like structure, for easier interaction with them.
   "nvim-treesitter/nvim-treesitter",
+  enabled = true,
   config = function()
+    if (vim.g.nixvars) then
+      require('nvim-treesitter.install').compilers = { "gcc" }
+    end
     require("nvim-treesitter.configs").setup({
       auto_install = true,
       highlight = {
@@ -24,6 +28,8 @@ return {
       },
       ensure_installed = {
         "json",
+        "vimdoc",
+        "yaml",
         "lua",
         "python",
         "nix",
