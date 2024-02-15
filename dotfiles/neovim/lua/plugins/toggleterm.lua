@@ -8,6 +8,7 @@ return {
   config = function()
     local function set_terminal_keymaps(bufnr)
       local keymap = vim.api.nvim_buf_set_keymap
+      keymap(bufnr, "t", "<esc>", [[<cmd>stopinsert<CR>]], {silent = true})
       keymap(bufnr, "t", "qq", [[<cmd>ToggleTerm<CR>]], { silent = true })
       keymap(bufnr, "t", "<C-w><Up>", [[<cmd>wincmd k<CR>]], { silent = true })
     end
