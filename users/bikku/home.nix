@@ -34,9 +34,7 @@
     enable = true;
     enableZshIntegration = true;
   };
-  programs.lazygit = {
-    enable = true;
-  };
+  programs.lazygit = { enable = true; };
   # No sftpman integration yet on 23.11
   # programs.sftpman
   programs.yazi = {
