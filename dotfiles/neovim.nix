@@ -37,6 +37,7 @@ let
     "text/x-c++"
   ];
 in {
+  # TODO: Research remote neovim, to pipe files from yazi into neovim.
   # Home manager won't write to init.lua otherwise
   # But it's also used to inject nix specific options
   # into init.lua, in this case through extraLuaConfig.
@@ -46,7 +47,10 @@ in {
     "nvim/ftplugin".source = ./neovim/ftplugin;
     "nvim/init.lua".text = builtins.readFile ./neovim/init.lua;
   };
-
+  home.shellAliases = {
+    neovim-test =
+      "rm -rf ~/.config/nvim; ln -s /etc/nixos/dotfiles/neovim/ ~/.config/nvim";
+  };
   programs.neovim = {
     enable = true;
     defaultEditor = true;

@@ -12,6 +12,7 @@
     ../../dotfiles/sshfs.nix
     ../../dotfiles/games.nix
     ../../dotfiles/tmux.nix
+    ../../dotfiles/yazi.nix
   ];
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
@@ -37,10 +38,6 @@
   programs.lazygit = { enable = true; };
   # No sftpman integration yet on 23.11
   # programs.sftpman
-  programs.yazi = {
-    enable = true;
-    package = pkgs-unstable.yazi;
-  };
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     mlocate
