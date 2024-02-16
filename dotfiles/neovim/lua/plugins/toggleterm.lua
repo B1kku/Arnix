@@ -1,21 +1,34 @@
 return {
   -- Better terminal integration, although a bit rough is very complete --
   "akinsho/toggleterm.nvim",
-  -- Don"t like default mapping config, can't limit modes.
   keys = {
-    { "<leader>t", "<cmd>ToggleTerm<CR>", "n", silent = true, desc = "Open terminal" }
+    { "<leader>t",  "<cmd>ToggleTerm<CR>",           "n", silent = true, desc = "Open terminal" },
+    { "<leader>g",  "<cmd>lua Lazygit:toggle()<CR>", "n", silent = true, desc = "Open LazyGit" },
+    { "<leader>n", "<cmd>lua Yazi:toggle()<CR>",    "n", silent = true, desc = "Open Yazi" }
   },
   config = function()
+    local Terminal = require('toggleterm.terminal').Terminal
     local function set_terminal_keymaps(bufnr)
       local keymap = vim.api.nvim_buf_set_keymap
-      keymap(bufnr, "t", "<esc>", [[<cmd>stopinsert<CR>]], {silent = true})
+      keymap(bufnr, "t", "<esc>", [[<cmd>stopinsert<CR>]], { silent = true })
       keymap(bufnr, "t", "qq", [[<cmd>ToggleTerm<CR>]], { silent = true })
       keymap(bufnr, "t", "<C-w><Up>", [[<cmd>wincmd k<CR>]], { silent = true })
     end
 
+    Yazi = Terminal:new({
+      cmd = "yazi",
+      direction = "float",
+      hidden = true
+    })
+
+    Lazygit = Terminal:new({
+      cmd = "lazygit",
+      direction = "float",
+      hidden = true
+    })
+
     require("toggleterm").setup({
       direction = "horizontal",
-      -- shell = "bash",
       start_in_insert = true,
       on_open = function(term)
         set_terminal_keymaps(term.bufnr)

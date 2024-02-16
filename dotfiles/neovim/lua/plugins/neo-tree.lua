@@ -6,6 +6,7 @@ return {
       -- "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     },
+    enabled = false,
     keys = {
       { "n", [[<cmd>Neotree float<CR>]], desc = "Open NeoTree" }
     },
