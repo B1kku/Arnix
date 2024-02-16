@@ -31,7 +31,11 @@
   };
 
   # Use the systemd-boot EFI boot loader.
+
   boot = {
+    # Enable SysRq to recover from freezes.
+    # All enabled for now, while I figure out why or if it's fixed.
+    kernel.sysctl."kernel.sysrq" = 1;
     kernelParams = [
       "logo.nologo"
       "fbcon=nodefer"
@@ -56,15 +60,16 @@
   networking.hostName = "Arnix"; # Define your hostname.
   networking = {
     # Valent
+    # Only local
     firewall = {
-      allowedTCPPortRanges = [{
-        from = 1716;
-        to = 1716;
-      }];
-      allowedUDPPortRanges = [{
-        from = 1716;
-        to = 1716;
-      }];
+      extraCommands = ''
+        iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
+        iptables -A nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
+      '';
+      extraStopCommands = ''
+        iptables -D nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
+        iptables -D nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
+      '';
     };
   };
   # Select internationalisation properties.
