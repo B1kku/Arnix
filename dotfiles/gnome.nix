@@ -27,12 +27,12 @@ in {
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
-    "org/gnome/shell/extensions/switchWorkSpace" = { 
-      switch-workspace = ["<Super>Tab"];
+    "org/gnome/shell/extensions/switchWorkSpace" = {
+      switch-workspace = [ "<Super>Tab" ];
     };
     "org/gnome/shell/extensions/altTab-mod" = {
-      current-monitor-only= true;
-      current-workspace-only= true;
+      current-monitor-only = true;
+      current-workspace-only = true;
       # current-monitor-only-window = true;
       # current-workspace-only-window = true;
       remove-delay = true;
@@ -41,9 +41,7 @@ in {
       workspace-wrap-around = true;
       animation = 4;
     };
-    "org/gnome/shell/extensions/blur-my-shell" = {
-      hacks-level = 0;
-    };
+    "org/gnome/shell/extensions/blur-my-shell" = { hacks-level = 0; };
     "org/gnome/shell/extensions/blur-my-shell/overview" = {
       style-components = 3;
     };
