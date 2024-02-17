@@ -46,10 +46,15 @@ in {
     "nvim/lua".source = ./neovim/lua;
     "nvim/ftplugin".source = ./neovim/ftplugin;
     "nvim/init.lua".text = builtins.readFile ./neovim/init.lua;
+    "nvim/nvim-remote-wrapper.sh" = {
+      source = ./neovim/nvim-remote-wrapper.sh;
+      executable = true;
+    }
   };
   home.shellAliases = {
-    neovim-test =
+    nvim-test =
       "rm -rf ~/.config/nvim; ln -s /etc/nixos/dotfiles/neovim/ ~/.config/nvim";
+    nvim-clean = "rm -rf ~/.config/nvim";
   };
   programs.neovim = {
     enable = true;

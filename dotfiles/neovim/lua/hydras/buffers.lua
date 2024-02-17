@@ -7,7 +7,7 @@ local lualine = require("lualine")
 local cmd = require('hydra.keymap-util').cmd
 
 local hint = [[
-  Patata
+  Buffers
 ]]
 
 Hydra({

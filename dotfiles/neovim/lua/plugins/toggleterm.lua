@@ -14,15 +14,15 @@ return {
       keymap(bufnr, "t", "qq", [[<cmd>ToggleTerm<CR>]], { silent = true })
       keymap(bufnr, "t", "<C-w><Up>", [[<cmd>wincmd k<CR>]], { silent = true })
     end
-
+    local nvim_integration = "EDITOR=" .. vim.fn.stdpath("config") .. "/nvim-remote-wrapper.sh"
     Yazi = Terminal:new({
-      cmd = "yazi",
+      cmd = nvim_integration .. " yazi",
       direction = "float",
       hidden = true
     })
 
     Lazygit = Terminal:new({
-      cmd = "lazygit",
+      cmd = nvim_integration .. " lazygit",
       direction = "float",
       hidden = true
     })
