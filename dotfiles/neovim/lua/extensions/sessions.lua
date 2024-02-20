@@ -8,8 +8,6 @@ local function format_name(name)
 end
 
 local function get_detected_names()
-  -- Reload sessions
-  MiniSessions.setup()
   local sessions_list = {}
   local sessions = MiniSessions.detected
   if sessions ~= nil then
