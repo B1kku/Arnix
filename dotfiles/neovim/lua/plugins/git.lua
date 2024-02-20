@@ -1,4 +1,6 @@
 return {
+  -- Remove this eventually?
+  -- I use lazygit anyways
   {
     -- Git integration --
     "tpope/vim-fugitive"

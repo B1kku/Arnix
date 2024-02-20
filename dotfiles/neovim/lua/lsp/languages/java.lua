@@ -33,7 +33,7 @@ end
 
 
 M.cmd = {
-  'jdt-language-server',
+  'jdtls',
   '-configuration',
   get_jdtls_config_dir(),
   '-data',
