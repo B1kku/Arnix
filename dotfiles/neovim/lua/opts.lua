@@ -3,6 +3,8 @@
 local opt = vim.opt
 local cmd = vim.api.nvim_command
 
+vim.g.loaded_netrwPlugin = 0  -- Disable netrw
+
 --  Context  --
 opt.number = true         -- Show line numbers
 opt.relativenumber = true -- Show relative line numbers
