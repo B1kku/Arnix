@@ -8,6 +8,7 @@ let
     taskwhisperer
     alttab-mod
     switch-workspace
+    color-picker
   ];
 in {
   home.packages = with pkgs; [ valent taskwarrior ] ++ gnome-extensions;

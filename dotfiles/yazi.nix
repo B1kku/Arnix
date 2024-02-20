@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs-unstable, config, ... }: {
   home.shellAliases = { lf = "yazi"; };
   programs.yazi = {
     enable = true;
@@ -10,5 +10,5 @@
       };
     };
   };
-
 }
+
