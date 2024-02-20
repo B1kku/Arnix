@@ -1,7 +1,7 @@
 final: prev: {
   # No longer necessary when updated, will need a wrapper to call with lombok instead.
   jdtls = final.callPackage ../packages/jdtls { };
-
+  bedrock-mc = final.callPackage ../packages/bedrock-mc { };
   # Will change from vencorddesktop to vesktop once it updates.
   vesktop = prev.vesktop.overrideAttrs (old: {
     nativeBuildInputs = old.nativeBuildInputs ++ [ prev.imagemagick ];

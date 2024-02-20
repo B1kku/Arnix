@@ -82,6 +82,8 @@
     fira-code-nerdfont
     prismlauncher
     deluge
+    libnotify
+    bedrock-mc
   ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
