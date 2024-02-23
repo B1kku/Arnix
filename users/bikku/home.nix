@@ -1,4 +1,3 @@
-{ config, lib, pkgs, pkgs-unstable, inputs, home, ... }:
 { config, osConfig, lib, pkgs, pkgs-unstable, inputs, ... }:
 
 {
@@ -16,15 +15,10 @@
     ../../dotfiles/tmux.nix
     ../../dotfiles/yazi.nix
     ../../dotfiles/lazygit.nix
+    ./dirs.nix
   ];
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = true;
-    documents = "/run/media/bikku/Data-SSD/Documents/";
-    download = "/run/media/bikku/Data-HDD/Downloads/";
-  };
   home.shellAliases = {
     arnix-rebuild = "sudo nixos-rebuild switch";
     arnix-update = "nix flake update /etc/nixos";
