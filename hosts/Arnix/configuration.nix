@@ -60,7 +60,7 @@
   networking.hostName = "Arnix"; # Define your hostname.
   networking = {
     # Valent
-    # Only local
+    # Only local 
     firewall = {
       extraCommands = ''
         iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
@@ -73,7 +73,7 @@
     };
   };
   # Select internationalisation properties.
-  time.timeZone = "Europe/Madrid";
+  time.timeZone = "Europe/Brussels";
   # locale
   i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocaleSettings = {
@@ -156,9 +156,9 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
   home-manager = {
-    # useGlobalPkgs = true;
-    # useUserPackages = true;
-    extraSpecialArgs = { inherit pkgs pkgs-unstable inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = {inherit pkgs-unstable inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
   programs.steam = {

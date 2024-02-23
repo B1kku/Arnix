@@ -5,16 +5,16 @@
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
   imports = [
-    ../../dotfiles/firefox.nix
-    ../../dotfiles/neovim.nix
-    ../../dotfiles/gnome.nix
-    ../../dotfiles/alacritty.nix
-    ../../dotfiles/sshfs.nix
     ../../dotfiles/colors.nix
     ../../dotfiles/games.nix
     ../../dotfiles/tmux.nix
     ../../dotfiles/yazi.nix
     ../../dotfiles/lazygit.nix
+    ../../dotfiles/sshfs.nix
+    ../../dotfiles/alacritty.nix
+    ../../dotfiles/firefox.nix
+    ../../dotfiles/neovim.nix
+    ../../dotfiles/gnome.nix
     ./dirs.nix
   ];
   # Same case as enabling bash, let home manager add variables to it.
@@ -52,7 +52,7 @@
     prismlauncher
     deluge
     libnotify
-    bedrock-mc
+    cage
   ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";

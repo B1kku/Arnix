@@ -1,4 +1,4 @@
-{ lib, pkgs, pkgs-unstable, config, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 let
   TOMLgenerator = pkgs.formats.toml { };
   terminal-font = "FiraCode Nerd Font";

@@ -1,5 +1,6 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, inputs, ... }:
 let
+  # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
   gnome-extensions = with pkgs.gnomeExtensions; [
     blur-my-shell
     valent
@@ -12,17 +13,17 @@ let
   ];
 in {
   home.packages = with pkgs; [ valent taskwarrior ] ++ gnome-extensions;
-  # home.sessionVariables = {
-  #   GTK_THEME = "Adwaita:dark";
-  # };
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;
+    # theme = {
+    #   name = "${config.colorScheme.slug}";
+    #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
+    # };
     font = {
       package = pkgs.noto-fonts;
       name = "NotoSans";
     };
-
     theme = { name = "Adwaita-dark"; };
   };
   # config.services.xserver.desktopManager.gnome.enable = true;
