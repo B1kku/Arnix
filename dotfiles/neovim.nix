@@ -1,6 +1,6 @@
-{ lib, pkgs, pkgs-unstable, ... }:
+{ lib, pkgs, pkgs-unstable, config, ... }:
 let
-  nix-mixin = ''
+  nixvars = ''
     -- Code injected by Home Manager for NixOS --
   '' + (lib.generators.toLua { asBindings = true; } {
     "vim.g.nixvars" = { config_dir = "/etc/nixos"; };
@@ -10,6 +10,7 @@ let
     jdk17 # Jdtls now requires java. NO, it won't once it gets merged.
     jdtls # I added lombok in there so I don't have to bother about it.
     nodePackages.pyright
+    nixd
   ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.
@@ -60,7 +61,7 @@ in {
     enable = true;
     defaultEditor = true;
     vimAlias = true;
-    extraLuaConfig = nix-mixin;
+    extraLuaConfig = nixvars;
     extraPackages = lsps ++ deps;
   };
 
