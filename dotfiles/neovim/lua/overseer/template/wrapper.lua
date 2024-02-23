@@ -21,6 +21,7 @@ local wrapper_template = {
   desc = "Chain templates together",
   builder = function(params)
     return {
+      name = "Parent task",
       cmd = { "echo" },
       args = { "Starting Tasks" },
       components = { { "dependencies", task_names = params.tasks, sequential = params.sequential }, "on_exit_set_status" },

@@ -1,5 +1,6 @@
 return {
   name = "Maven Package",
+  desc = "Package with Maven",
   builder = function(params)
     return {
       cmd = { "mvn" },
@@ -7,7 +8,6 @@ return {
       components = { {"on_complete_notify", system = "always"}, "default" }
     }
   end,
-  desc = "Package with Maven",
   -- tags = (overseer.TAG.BUILD),
   condition = {
     callback = function(search)

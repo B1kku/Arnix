@@ -27,7 +27,7 @@ return {
       bundles = {
         autostart_on_load = false
       },
-      templates = { "builtin", "java.maven", "java.test", "wrapper" },
+      templates = { "builtin", "java.maven", "java.test", "deploy.rsync", "wrapper" },
       task_list = {
         direction = "bottom",
         bindings = {
