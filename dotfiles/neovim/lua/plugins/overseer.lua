@@ -11,7 +11,7 @@ return {
       bundles = {
         autostart_on_load = false
       },
-      templates = { "builtin", "java.maven", "java.test" },
+      templates = { "builtin", "java.maven", "java.test", "wrapper" },
       task_list = {
         direction = "bottom"
       },
@@ -25,7 +25,5 @@ return {
         win_opts = win_opts
       }
     })
-    -- overseer.register_template(require("overseer.template.wrapper"))
-    overseer.load_template("wrapper")
   end,
 }

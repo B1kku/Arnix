@@ -1,24 +1,24 @@
+local overseer = require("overseer")
 local template = require("overseer.template")
-
 local cwd = nil;
 
-local templates_list = {}
-local update_templates = function()
-  templates_list = {}
+local function get_templates()
+  local templates_list = {}
+  if (cwd == nil) then return { "Not loaded yet" } end
   template.list(
-    { tags = nil, dir = vim.fn.getcwd(), nil },
+    { dir = cwd },
     function(templates)
       for _, tmpl in ipairs(templates) do
         table.insert(templates_list, tmpl.name)
       end
     end
   )
-  vim.notify(vim.inspect(templates_list))
+  return templates_list
 end
 
-
-return {
+local wrapper_template = {
   name = "Wrapper",
+  desc = "Chain templates together",
   builder = function(params)
     return {
       cmd = { "echo" },
@@ -26,27 +26,31 @@ return {
       components = { { "dependencies", task_names = params.tasks, sequential = params.sequential }, "on_exit_set_status" },
     }
   end,
-  desc = "Chain tasks toguether",
   params = {
     tasks = {
       type = "list",
+      order = 1,
       subtype = {
         type = "enum",
-        choices = templates_list
+        choices = get_templates()
       }
     },
     sequential = {
       type = "boolean"
     }
   },
-  condition = {
-    callback = function(search)
-      if (cwd ~= vim.fn.getcwd()) then
-        cwd = vim.fn.getcwd()
-        update_templates()
-      end
-      return true;
-    end
-
-  }
 }
+
+local condition = {
+  callback = function(search)
+    if (cwd ~= vim.fn.getcwd()) then
+      cwd = vim.fn.getcwd()
+      wrapper_template.params.tasks.subtype.choices = get_templates()
+      overseer.register_template(wrapper_template)
+    end
+    return true
+  end
+}
+
+wrapper_template.condition = condition
+return wrapper_template
