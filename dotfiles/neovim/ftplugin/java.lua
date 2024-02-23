@@ -48,12 +48,12 @@ local cmd = {
 --[[ TODO: Add windows support again...?
 I pretty much scrapped a huge part of the config since I don't rely on mason anymore.
 Idk if some of the options passed were part of the culprit for some issues.
-Won't touch more options if I don't need to, lombok is added through nixos.]]--
+Won't touch more options if I don't need to, lombok is added through nixos.]]
 local config = {
-    cmd = cmd,
-    root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+  cmd = cmd,
+  root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+  capabilities = require("cmp_nvim_lsp").default_capabilities()
 }
 require('jdtls').start_or_attach(config)
 -- This is due to nix's jdtls package being called jdt-language-server, not jdtls like it should... ._.
-
 
