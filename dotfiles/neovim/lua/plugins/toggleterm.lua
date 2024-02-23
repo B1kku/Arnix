@@ -7,6 +7,9 @@ return {
     { "<leader>n", "<cmd>lua Yazi:toggle()<CR>",    "n", silent = true, desc = "Open Yazi" }
   },
   config = function()
+    local Terminal = require('toggleterm.terminal').Terminal
+    local nvim_integration = "EDITOR=" .. vim.fn.stdpath("config") .. "/nvim-remote-wrapper.sh"
+    local terminals = {}
 
     local function set_terminal_keymaps(terminal)
       local keymap = vim.api.nvim_buf_set_keymap
@@ -21,10 +24,9 @@ return {
       })
       keymap(bufnr, "t", "<C-w><Up>", [[<cmd>wincmd k<CR>]], { silent = true })
     end
-    local Terminal = require('toggleterm.terminal').Terminal
-    local nvim_integration = "EDITOR=" .. vim.fn.stdpath("config") .. "/nvim-remote-wrapper.sh"
+
     Yazi = Terminal:new({
-      cmd = nvim_integration .. " yazi " .. vim.fn.getcwd(),
+      cmd = nvim_integration .. " yazi",
       direction = "float",
       hidden = true,
       on_open = function(term)
@@ -38,6 +40,26 @@ return {
       hidden = true,
       on_open = function(term)
         set_terminal_keymaps(term)
+      end
+    })
+
+    table.insert(terminals, Lazygit)
+    table.insert(terminals, Yazi)
+    -- Refresh cwd of these terminals too
+    vim.api.nvim_create_autocmd({ "DirChanged" }, {
+      callback = function()
+        local cwd = vim.fn.getcwd()
+        for _, term in ipairs(terminals) do
+          if (term.dir == nil) then
+            goto continue
+          end
+          if (term.dir == cwd) then
+            goto continue
+          end
+          term:change_dir(cwd)
+          term:shutdown()
+          ::continue::
+        end
       end
     })
 
