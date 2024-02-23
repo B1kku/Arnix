@@ -50,9 +50,7 @@ let
     };
   };
 in {
-  imports = [
-    inputs.nix-colors.homeManagerModules.default
-  ];
+  imports = [ inputs.nix-colors.homeManagerModules.default ];
   # colorScheme = inputs.nix-colors.colorSchemes.stella;
   # colorScheme = inputs.nix-colors.colorSchemes.spaceduck;
   # colorScheme = inputs.nix-colors.colorSchemes.harmonic16-dark;

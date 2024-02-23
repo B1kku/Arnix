@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
@@ -7,7 +6,9 @@
     download = "/run/media/bikku/Data-HDD/Downloads/";
   };
   home.file = {
-    Documents.source = config.lib.file.mkOutOfStoreSymlink "${config.xdg.userDirs.documents}";
-    Downloads.source = config.lib.file.mkOutOfStoreSymlink "${config.xdg.userDirs.download}";
+    Documents.source =
+      config.lib.file.mkOutOfStoreSymlink "${config.xdg.userDirs.documents}";
+    Downloads.source =
+      config.lib.file.mkOutOfStoreSymlink "${config.xdg.userDirs.download}";
   };
 }

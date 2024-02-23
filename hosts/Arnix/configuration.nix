@@ -158,9 +158,11 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = {inherit pkgs-unstable inputs; };
+    extraSpecialArgs = { inherit pkgs-unstable inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
+
+  virtualisation.waydroid.enable = true;
   programs.steam = {
     enable = true;
     # package = pkgs-unstable.steam;
