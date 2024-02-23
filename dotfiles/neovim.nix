@@ -3,7 +3,7 @@ let
   nixvars = ''
     -- Code injected by Home Manager for NixOS --
   '' + (lib.generators.toLua { asBindings = true; } {
-    "vim.g.nixvars" = { config_dir = "/etc/nixos"; };
+    "vim.g.nixvars" = { config_dir = "/etc/nixos/dotfiles/neovim"; };
   });
   lsps = with pkgs; [
     lua-language-server
