@@ -50,15 +50,10 @@ return {
       callback = function()
         local cwd = vim.fn.getcwd()
         for _, term in ipairs(terminals) do
-          if (term.dir == nil) then
-            goto continue
+          if (term.dir and term.dir ~= cwd) then
+            term:change_dir(cwd)
+            term:shutdown()
           end
-          if (term.dir == cwd) then
-            goto continue
-          end
-          term:change_dir(cwd)
-          term:shutdown()
-          ::continue::
         end
       end
     })
