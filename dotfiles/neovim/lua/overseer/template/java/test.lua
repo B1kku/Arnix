@@ -4,7 +4,7 @@ return {
     return {
       cmd = { "echo" },
       args = { "done" },
-      components = { {"on_complete_notify", system = "always"}, "default" }
+      components = { { "on_complete_notify" }, "default" },
     }
   end,
   desc = "Just debug",
