@@ -5,7 +5,7 @@ return {
     return {
       cmd = { "mvn" },
       args = { "package" },
-      components = { {"on_complete_notify", system = "always"}, "default" }
+      components = { "default" }
     }
   end,
   -- tags = (overseer.TAG.BUILD),

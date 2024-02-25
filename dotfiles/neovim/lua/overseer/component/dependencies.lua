@@ -73,6 +73,7 @@ return {
                 local dependency_id = dependency_id_start + #task.metadata.dependencies_ids
                 new_task.metadata.dependency_id = dependency_id
                 table.insert(task.metadata.dependencies_ids, dependency_id)
+                new_task:remove_component("on_complete_dispose")
               end
               self.task_lookup[i] = new_task.id
               new_task:add_component({ "on_success_complete_dependency", task_id = task.id })

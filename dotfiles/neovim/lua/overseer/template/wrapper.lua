@@ -24,11 +24,11 @@ local wrapper_template = {
       name = "Parent task",
       cmd = { "echo" },
       args = { "Starting Tasks" },
-      components = { { "dependencies", task_names = params.tasks, sequential = params.sequential }, "on_exit_set_status" },
+      components = { { "dependencies", task_names = params.templates, sequential = params.sequential }, "on_exit_set_status", "on_complete_notify" },
     }
   end,
   params = {
-    tasks = {
+    templates = {
       type = "list",
       order = 1,
       subtype = {
@@ -39,14 +39,14 @@ local wrapper_template = {
     sequential = {
       type = "boolean"
     }
-  },
+  }
 }
 
 local condition = {
   callback = function(search)
     if (cwd ~= vim.fn.getcwd()) then
       cwd = vim.fn.getcwd()
-      wrapper_template.params.tasks.subtype.choices = get_templates()
+      wrapper_template.params.templates.subtype.choices = get_templates()
       overseer.register_template(wrapper_template)
     end
     return true
