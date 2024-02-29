@@ -42,7 +42,7 @@ return {
             local opts = { buffer = true, desc = desc }
             vim.keymap.set(mode, lhs, rhs, opts)
           end
-          bufmap("n", "<leader>sf", vim.lsp.buf.format, "Format current file")
+          -- bufmap("n", "<leader>sf", vim.lsp.buf.format, "Format current file")
           bufmap("n", "K", vim.lsp.buf.hover, "Display information of symbol")
           bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
           bufmap("n", "gD", vim.lsp.buf.declaration, "Go to declaration")

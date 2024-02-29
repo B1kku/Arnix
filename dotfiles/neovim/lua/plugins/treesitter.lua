@@ -2,6 +2,7 @@ return {
   -- Maps programming objects to a tree like structure, for easier interaction with them.
   "nvim-treesitter/nvim-treesitter",
   enabled = true,
+  build = ":TSUpdate",
   config = function()
     if (vim.g.nixvars) then
       require('nvim-treesitter.install').compilers = { "gcc" }
