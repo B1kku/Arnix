@@ -69,9 +69,8 @@ return {
     -- Java lsp plugin. --
     "mfussenegger/nvim-jdtls",
     ft = "java",
-    config = function ()
-      local javaconfig = require("lsp.languages.java")
-      require("jdtls").start_or_attach(javaconfig)
-    end
+    -- config = function ()
+    --   require("lsp.languages.java")
+    -- end
   }
 }
