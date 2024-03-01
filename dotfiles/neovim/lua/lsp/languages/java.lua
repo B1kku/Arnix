@@ -1,6 +1,5 @@
--- This is due to nix's jdtls package being called jdt-language-server, not jdtls like it should... ._.
-local M = {}
 local util = require 'lspconfig.util'
+
 local env = {
   HOME = vim.loop.os_homedir(),
   XDG_CACHE_HOME = os.getenv 'XDG_CACHE_HOME',
@@ -21,7 +20,6 @@ end
 local function get_jdtls_workspace_dir()
   return util.path.join(get_jdtls_cache_dir(), 'workspace')
 end
-
 local function get_jdtls_jvm_args()
   local args = {}
   for a in string.gmatch((env.JDTLS_JVM_ARGS or ''), '%S+') do
@@ -31,8 +29,7 @@ local function get_jdtls_jvm_args()
   return unpack(args)
 end
 
-
-M.cmd = {
+local cmd = {
   'jdtls',
   '-configuration',
   get_jdtls_config_dir(),
@@ -40,4 +37,14 @@ M.cmd = {
   get_jdtls_workspace_dir(),
   get_jdtls_jvm_args(),
 }
-return M
+
+
+--[[ TODO: Add windows support again...?
+I pretty much scrapped a huge part of the config since I don't rely on mason anymore.
+Idk if some of the options passed were part of the culprit for some issues.
+Won't touch more options if I don't need to, lombok is added through nixos.]]
+return {
+  cmd = cmd,
+  root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+  capabilities = require("cmp_nvim_lsp").default_capabilities()
+}
