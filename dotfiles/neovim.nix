@@ -12,6 +12,12 @@ let
     nodePackages.pyright
     nixd
   ];
+  formatters = with pkgs; [
+    astyle
+  ];
+  linters = with pkgs; [
+    checkstyle
+  ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.
     fzf # Telescope dependency
@@ -62,7 +68,7 @@ in {
     defaultEditor = true;
     vimAlias = true;
     extraLuaConfig = nixvars;
-    extraPackages = lsps ++ deps;
+    extraPackages = lsps ++ formatters ++ linters ++ deps;
   };
 
   xdg.desktopEntries.nvim = {
