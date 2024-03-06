@@ -3,7 +3,7 @@ return {
   config = function()
     local lint = require("lint")
     lint.linters_by_ft = {
-      java = { "checkstyle" }
+      -- java = { "checkstyle" }
     }
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
       callback = function()

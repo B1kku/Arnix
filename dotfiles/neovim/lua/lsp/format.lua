@@ -4,9 +4,13 @@ return {
     { "<leader>sf", [[<cmd>lua require("conform").format({lsp_fallback = true, async = true})<CR>]], desc = "Format file" }
   },
   config = function()
-    require("conform").setup({
+    local conform = require("conform")
+    conform.formatters["google-java-format"] = {
+      prepend_args = {"-a"}
+    }
+    conform.setup({
       formatters_by_ft = {
-        java = { "astyle" }
+        java = { "google-java-format" }
       }
     })
   end

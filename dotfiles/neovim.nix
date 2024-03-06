@@ -13,10 +13,10 @@ let
     nixd
   ];
   formatters = with pkgs; [
-    astyle
+    google-java-format
   ];
   linters = with pkgs; [
-    checkstyle
+    # checkstyle
   ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.
