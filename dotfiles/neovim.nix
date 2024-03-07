@@ -16,12 +16,11 @@ let
     nodePackages.pyright
     nixd
   ];
-  formatters = with pkgs; [
-    google-java-format
-  ];
-  linters = with pkgs; [
-    # checkstyle
-  ];
+  formatters = with pkgs; [ google-java-format ];
+  linters = with pkgs;
+    [
+      # checkstyle
+    ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.
     fzf # Telescope dependency

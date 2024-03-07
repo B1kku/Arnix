@@ -13,7 +13,7 @@ let
   # Add any lutris extra runners here, can also configure with runner.config
   lutris-runners = with pkgs-unstable; {
     cemu.package = pkgs.cemu; # Wouldn't work unstable, idk why.
-    ryujinx.package = ryujinx; #RIP
+    ryujinx.package = ryujinx; # RIP
   };
 in {
   xdg.configFile = lib.attrsets.mapAttrs' (name: value: {

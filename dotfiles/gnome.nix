@@ -12,7 +12,8 @@ let
     color-picker
   ];
 in {
-  home.packages = with pkgs; [ pkgs-unstable.valent taskwarrior ] ++ gnome-extensions;
+  home.packages = with pkgs;
+    [ pkgs-unstable.valent taskwarrior ] ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;

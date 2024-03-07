@@ -1,6 +1,3 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
-{
-  programs.tmux = {
-    enable = true;
-  };
+{ config, lib, pkgs, pkgs-unstable, ... }: {
+  programs.tmux = { enable = true; };
 }
