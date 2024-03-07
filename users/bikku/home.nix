@@ -42,7 +42,7 @@
   home.packages = with pkgs; [
     mlocate
     rsync
-    vesktop
+    pkgs-unstable.vesktop
     maven
     htop
     bitwarden
