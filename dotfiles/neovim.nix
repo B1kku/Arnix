@@ -1,5 +1,9 @@
 { lib, pkgs, pkgs-unstable, config, ... }:
 let
+  jdtls = pkgs.writeShellScriptBin "jdtls" ''
+    ${pkgs-unstable.jdt-language-server}/bin/jdtls \
+    --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
+  '';
   nixvars = ''
     -- Code injected by Home Manager for NixOS --
   '' + (lib.generators.toLua { asBindings = true; } {
