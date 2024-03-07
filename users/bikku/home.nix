@@ -11,6 +11,7 @@
     ../../dotfiles/yazi.nix
     ../../dotfiles/lazygit.nix
     ../../dotfiles/sshfs.nix
+    ../../dotfiles/vesktop.nix
     ../../dotfiles/alacritty.nix
     ../../dotfiles/firefox.nix
     ../../dotfiles/neovim.nix
@@ -42,7 +43,6 @@
   home.packages = with pkgs; [
     mlocate
     rsync
-    pkgs-unstable.vesktop
     maven
     htop
     bitwarden
