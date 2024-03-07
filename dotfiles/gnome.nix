@@ -1,9 +1,9 @@
-{ lib, pkgs, config, inputs, ... }:
+{ lib, pkgs, pkgs-unstable, config, inputs, ... }:
 let
   # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
   gnome-extensions = with pkgs.gnomeExtensions; [
     blur-my-shell
-    valent
+    pkgs-unstable.gnomeExtensions.valent
     media-controls
     just-perfection
     taskwhisperer
@@ -12,7 +12,7 @@ let
     color-picker
   ];
 in {
-  home.packages = with pkgs; [ valent taskwarrior ] ++ gnome-extensions;
+  home.packages = with pkgs; [ pkgs-unstable.valent taskwarrior ] ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;
