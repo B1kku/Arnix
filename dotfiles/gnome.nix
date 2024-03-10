@@ -13,7 +13,7 @@ let
   ];
 in {
   home.packages = with pkgs;
-    [ pkgs-unstable.valent taskwarrior ] ++ gnome-extensions;
+    [ pkgs-unstable.valent taskwarrior gnome.pomodoro ] ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;

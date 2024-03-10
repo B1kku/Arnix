@@ -37,13 +37,17 @@
     enable = true;
     enableZshIntegration = true;
   };
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
   # No sftpman integration yet on 23.11
   # programs.sftpman
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     mlocate
     rsync
-    maven
     htop
     bitwarden
     neofetch
