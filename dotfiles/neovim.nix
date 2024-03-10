@@ -1,7 +1,10 @@
 { lib, pkgs, pkgs-unstable, config, ... }:
 let
+  jdtls-jdk = pkgs.jdk17;
   jdtls = pkgs.writeShellScriptBin "jdtls" ''
-    ${pkgs-unstable.jdt-language-server}/bin/jdtls \
+    ${
+      pkgs-unstable.jdt-language-server.override { jdk = jdtls-jdk; }
+    }/bin/jdtls \
     --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
   '';
   nixvars = ''
