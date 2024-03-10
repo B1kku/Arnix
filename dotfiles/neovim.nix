@@ -1,20 +1,19 @@
 { lib, pkgs, pkgs-unstable, config, ... }:
 let
-  jdtls-jdk = pkgs.jdk17;
   jdtls = pkgs.writeShellScriptBin "jdtls" ''
-    ${
-      pkgs-unstable.jdt-language-server.override { jdk = jdtls-jdk; }
-    }/bin/jdtls \
+    ${pkgs-unstable.jdt-language-server}/bin/jdtls \
     --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
   '';
   nixvars = ''
     -- Code injected by Home Manager for NixOS --
   '' + (lib.generators.toLua { asBindings = true; } {
-    "vim.g.nixvars" = { config_dir = "/etc/nixos/dotfiles/neovim"; };
+    "vim.g.nixvars" = {
+      config_dir = "/etc/nixos/dotfiles/neovim";
+      java17 = "${pkgs.jdk17}";
+    };
   });
   lsps = with pkgs; [
     lua-language-server
-    jdk17 # Jdtls now requires java. NO, it won't once it gets merged.
     jdtls # I added lombok in there so I don't have to bother about it.
     nodePackages.pyright
     nixd

@@ -1,6 +1,7 @@
 -- This is due to nix's jdtls package being called jdt-language-server, not jdtls like it should... ._.
-local M = {}
+-- I'm half sure nix wrapper for jdtls doesn't give a crap about data directory.
 local util = require 'lspconfig.util'
+
 local env = {
   HOME = vim.loop.os_homedir(),
   XDG_CACHE_HOME = os.getenv 'XDG_CACHE_HOME',
@@ -19,9 +20,9 @@ local function get_jdtls_config_dir()
 end
 
 local function get_jdtls_workspace_dir()
-  return util.path.join(get_jdtls_cache_dir(), 'workspace')
+  local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+  return util.path.join(get_jdtls_cache_dir(), project_name)
 end
-
 local function get_jdtls_jvm_args()
   local args = {}
   for a in string.gmatch((env.JDTLS_JVM_ARGS or ''), '%S+') do
@@ -31,8 +32,7 @@ local function get_jdtls_jvm_args()
   return unpack(args)
 end
 
-
-M.cmd = {
+local cmd = {
   'jdtls',
   '-configuration',
   get_jdtls_config_dir(),
@@ -40,4 +40,22 @@ M.cmd = {
   get_jdtls_workspace_dir(),
   get_jdtls_jvm_args(),
 }
-return M
+local config = {
+  cmd = cmd,
+  root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  settings = {
+    java = {
+      configuration = {
+        runtimes = {
+          {
+            name = "JavaSE-17",
+            path = vim.g.nixvars.java17 .. "/lib/openjdk/",
+            default = true
+          },
+        }
+      }
+    }
+  }
+}
+return config
