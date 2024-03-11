@@ -5,7 +5,7 @@ let
   alacritty-config = {
     window = {
       decorations = "None";
-      opacity = 1;
+      opacity = 0.75;
       startup_mode = "Maximized";
     };
     font = {

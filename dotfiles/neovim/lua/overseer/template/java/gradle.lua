@@ -5,7 +5,7 @@ return {
     return {
       cmd = { "gradle" },
       args = { "build" },
-      components = { "default" }
+      components = { "direnv", "default" }
     }
   end,
   -- tags = (overseer.TAG.BUILD),
