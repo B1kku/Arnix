@@ -27,9 +27,9 @@ return {
         capabilities = capabilities
         -- settings = require("lsp.languages.python").settings
       })
-      lspconfig.nixd.setup({
-        capabilities = capabilities
-      })
+      -- lspconfig.nixd.setup({ TODO: Currently vulnerable package
+      --   capabilities = capabilities
+      -- })
       -- lspconfig.jdtls.setup({
       --   capabilities = capabilities,
       --   cmd = require("lsp.languages.java").cmd

@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running `nixos-help`).
 
 { config, lib, pkgs, pkgs-unstable, home-manager, inputs, ... }:
-
 {
   imports = [
     # Include the results of the hardware scan.
@@ -162,7 +161,7 @@
     users.bikku = import ../../users/bikku/home.nix;
   };
 
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true;
   programs.steam = {
     enable = true;
     # package = pkgs-unstable.steam;
