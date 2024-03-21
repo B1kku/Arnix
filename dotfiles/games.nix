@@ -1,13 +1,14 @@
 { inputs, pkgs, pkgs-unstable, lib, ... }:
 let
   custom-lutris = (pkgs-unstable.lutris.override {
-    extraPkgs = pkgs-unstable:
-      with pkgs-unstable; [
-        wineWowPackages.stableFull
+    extraLibraries = pkgs-unstable:
+      with pkgs-unstable;
+      [
+        # wineWowPackages.stableFull
         gamemode
-        mangohud
-        winetricks
-        gamescope
+        # mangohud
+        # winetricks
+        # gamescope
       ];
   });
   # Add any lutris extra runners here, can also configure with runner.config

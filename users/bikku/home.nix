@@ -51,7 +51,8 @@
     htop
     bitwarden
     neofetch
-    peek
+    # peek
+    obs-studio
     fira-code-nerdfont
     prismlauncher
     deluge
