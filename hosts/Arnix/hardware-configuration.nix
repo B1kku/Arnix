@@ -2,7 +2,9 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-let ssd-options = [ "noatime" "nodiratime" "discard" ];
+let
+  ssd-options = [ "noatime" "nodiratime" "discard" ];
+  NTFS-options = [ "uid=1000" "gid=1000" "umask=0000" ];
 in {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -32,11 +34,13 @@ in {
   fileSystems."/run/media/bikku/Data-HDD" = {
     device = "/dev/disk/by-label/Data-HDD";
     fsType = "ntfs-3g";
+    options = NTFS-options;
   };
 
   fileSystems."/run/media/bikku/Data-SSD" = {
     device = "/dev/disk/by-label/Data-SSD";
     fsType = "ntfs-3g";
+    options = NTFS-options; # NTFS doesn't support ssd-options.
   };
   swapDevices = [ ];
 

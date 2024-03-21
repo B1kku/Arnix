@@ -2,8 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, lib, pkgs, pkgs-unstable, home-manager, inputs, ... }:
-{
+{ config, lib, pkgs, pkgs-unstable, home-manager, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -28,9 +27,7 @@
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
-
   # Use the systemd-boot EFI boot loader.
-
   boot = {
     # Enable SysRq to recover from freezes.
     # All enabled for now, while I figure out why or if it's fixed.
