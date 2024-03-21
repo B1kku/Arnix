@@ -16,6 +16,7 @@ let
     lua-language-server
     jdtls # I added lombok in there so I don't have to bother about it.
     nodePackages.pyright
+    nodePackages.bash-language-server
     nixd
   ];
   formatters = with pkgs; [ google-java-format ];
