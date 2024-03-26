@@ -1,22 +1,36 @@
 { inputs, pkgs, pkgs-unstable, lib, ... }:
 let
   custom-lutris = (pkgs-unstable.lutris.override {
-    extraLibraries = pkgs-unstable:
-      with pkgs-unstable;
-      [
-        # wineWowPackages.stableFull
+    extraPkgs = pkgs-unstable:
+      with pkgs-unstable; [
         gamemode
-        # mangohud
-        # winetricks
-        # gamescope
+        mangohud
+        winetricks
+        gamescope
       ];
+    # extraLibraries = pkgs-unstable: with pkgs-unstable; [ ];
   });
   # Add any lutris extra runners here, can also configure with runner.config
   lutris-runners = with pkgs-unstable; {
     cemu.package = pkgs.cemu; # Wouldn't work unstable, idk why.
     ryujinx.package = ryujinx; # RIP
   };
+  # Any wine versions to link to lutris wines.
+  # Remember to disable lutris runtime. 
+  # Don't think it's worth it to configure the entirety of lutris just for that.
+  wine-pkgs = with pkgs-unstable; [
+    inputs.nix-gaming.packages.${pkgs.system}.wine-ge
+    wineWowPackages.stableFull
+  ];
 in {
+  home.file = lib.listToAttrs (map (wine-pkg: {
+    name = wine-pkg.name;
+    value = {
+      # Sue me if you want, lutris won't take multiple wine packages otherwise.
+      target = ".local/share/lutris/runners/wine/${wine-pkg.name}";
+      source = wine-pkg;
+    };
+  }) wine-pkgs);
   xdg.configFile = lib.attrsets.mapAttrs' (name: value: {
     name = "lutris-${name}";
     value = let
@@ -35,8 +49,7 @@ in {
 
   home.packages = with pkgs-unstable; [
     custom-lutris
-    winetricks
-    wineWowPackages.stableFull
     steam-run
+    winetricks
   ];
 }
