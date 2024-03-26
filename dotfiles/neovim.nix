@@ -30,6 +30,7 @@ let
     ripgrep # Telescope softdep
     fd # Telescope dependency?
     gcc # Treesitter fails to compile yaml otherwise.
+    gnumake # Telescope fzf
     clang # Telescope softdep
   ];
   mimeTypes = [

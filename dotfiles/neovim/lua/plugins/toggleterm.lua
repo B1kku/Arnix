@@ -59,7 +59,7 @@ return {
     })
 
     require("toggleterm").setup({
-      direction = "horizontal",
+      direction = "float",
       start_in_insert = true,
       autochdir = true,
       on_open = function(term)
