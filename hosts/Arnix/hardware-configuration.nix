@@ -51,6 +51,7 @@ in {
   # networking.interfaces.enp7s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  # Why the hell was this by default. Am I missing something?
+  # And why knowing this is off by default had me going through a trail of options.
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;     # lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
