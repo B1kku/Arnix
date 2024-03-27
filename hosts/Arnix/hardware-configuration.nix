@@ -33,14 +33,13 @@ in {
 
   fileSystems."/run/media/bikku/Data-HDD" = {
     device = "/dev/disk/by-label/Data-HDD";
-    fsType = "ntfs-3g";
-    options = NTFS-options;
+    fsType = "ext4";
   };
 
   fileSystems."/run/media/bikku/Data-SSD" = {
     device = "/dev/disk/by-label/Data-SSD";
-    fsType = "ntfs-3g";
-    options = NTFS-options; # NTFS doesn't support ssd-options.
+    fsType = "ext4";
+    options = ssd-options;
   };
   swapDevices = [ ];
 
