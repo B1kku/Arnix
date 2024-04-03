@@ -10,7 +10,6 @@ return {
     local Terminal = require('toggleterm.terminal').Terminal
     local nvim_integration = "EDITOR=" .. vim.fn.stdpath("config") .. "/nvim-remote-wrapper.sh"
     local terminals = {}
-
     local function set_terminal_keymaps(terminal)
       local keymap = vim.api.nvim_buf_set_keymap
       local bufnr = terminal.bufnr
@@ -25,23 +24,40 @@ return {
       keymap(bufnr, "t", "<C-w><Up>", [[<cmd>wincmd k<CR>]], { silent = true })
     end
 
-    Yazi = Terminal:new({
-      cmd = nvim_integration .. " yazi",
+    local default_opts = {
       direction = "float",
       hidden = true,
+      float_opts = {
+        border = (vim.g.border == "rounded") and "curved" or vim.g.border
+      },
       on_open = function(term)
         set_terminal_keymaps(term)
       end
-    })
+    }
 
-    Lazygit = Terminal:new({
-      cmd = nvim_integration .. " lazygit",
-      direction = "float",
-      hidden = true,
-      on_open = function(term)
-        set_terminal_keymaps(term)
-      end
-    })
+    require("toggleterm").setup(
+      vim.tbl_extend("force", default_opts, {
+        start_in_insert = true,
+        autochdir = true,
+        highlights = {
+          FloatBorder = {
+            link = "TelescopeBorder"
+          }
+        }
+      })
+    )
+
+    Yazi = Terminal:new(
+      vim.tbl_extend("force", default_opts, {
+        cmd = nvim_integration .. " yazi"
+      })
+    )
+
+    Lazygit = Terminal:new(
+      vim.tbl_extend("force", default_opts, {
+        cmd = nvim_integration .. " lazygit"
+      })
+    )
 
     table.insert(terminals, Lazygit)
     table.insert(terminals, Yazi)
@@ -57,20 +73,5 @@ return {
         end
       end
     })
-
-    require("toggleterm").setup({
-      direction = "float",
-      start_in_insert = true,
-      autochdir = true,
-      on_open = function(term)
-        set_terminal_keymaps(term)
-      end,
-      highlights = {
-        FloatBorder = {
-          link = "TelescopeBorder"
-        }
-      }
-    })
-    -- vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
   end
 }
