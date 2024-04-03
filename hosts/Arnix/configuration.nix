@@ -14,6 +14,13 @@
   nix.channel.enable = false;
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
 
+  system.replaceRuntimeDependencies = [
+    {
+      original = pkgs.xz;
+      replacement = inputs.nixpkgs-staging-next.legacyPackages.${pkgs.system}.xz;
+    }
+  ];
+
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -51,7 +58,7 @@
       efi.canTouchEfiVariables = true;
     };
   };
-
+  
   #Networking
   networking.hostName = "Arnix"; # Define your hostname.
   networking = {
