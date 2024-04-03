@@ -3,7 +3,7 @@ let
   # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
   gnome-extensions = with pkgs.gnomeExtensions; [
     blur-my-shell
-    pkgs-unstable.gnomeExtensions.valent
+    # pkgs-unstable.gnomeExtensions.valent
     media-controls
     just-perfection
     taskwhisperer
@@ -13,7 +13,7 @@ let
   ];
 in {
   home.packages = with pkgs;
-    [ pkgs-unstable.valent taskwarrior gnome.pomodoro ] ++ gnome-extensions;
+    [ /* pkgs-unstable.valent */ taskwarrior gnome.pomodoro ] ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;
