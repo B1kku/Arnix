@@ -2,7 +2,12 @@
   programs.lazygit = {
     enable = true;
     settings = {
+      git = {
+        autoFetch = true;
+      };
       gui = {
+        border = "rounded";
+        nerdFontsVersion = "3";
         theme = with config.colorScheme.palette; {
           activeBorderColor = [ "#${base0D}" "bold" ];
           inactiveBorderColor = [ "#${base03}" ];
