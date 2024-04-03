@@ -62,6 +62,7 @@
   #Networking
   networking.hostName = "Arnix"; # Define your hostname.
   networking = {
+    nameservers = [ "1.1.1.1" ];
     # Valent
     # Only local 
     firewall = {

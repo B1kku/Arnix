@@ -57,7 +57,7 @@
     prismlauncher
     deluge
     libnotify
-    cage
+    # cage
   ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";

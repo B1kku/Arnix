@@ -4,7 +4,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 let
   ssd-options = [ "noatime" "nodiratime" "discard" ];
-  NTFS-options = [ "uid=1000" "gid=1000" "umask=0000" ];
 in {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
