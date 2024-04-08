@@ -3,6 +3,7 @@ let
   # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
   gnome-extensions = with pkgs.gnomeExtensions; [
     blur-my-shell
+    # https://github.com/NixOS/nixpkgs/issues/301380
     # pkgs-unstable.gnomeExtensions.valent
     media-controls
     just-perfection
