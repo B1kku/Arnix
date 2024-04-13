@@ -5,7 +5,7 @@ return {
     return {
       cmd = { "mvn" },
       args = { "package" },
-      components = { "direnv", "default" }
+      components = { "default" }
     }
   end,
   -- tags = (overseer.TAG.BUILD),
