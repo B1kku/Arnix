@@ -162,7 +162,6 @@
   # virtualisation.waydroid.enable = true;
   programs.steam = {
     enable = true;
-    # package = pkgs-unstable.steam;
   };
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   programs.gamemode.enable = true;
