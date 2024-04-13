@@ -19,6 +19,7 @@ let
     nodePackages.bash-language-server
     gopls
     go
+    clang-tools
     nixd
   ];
   formatters = with pkgs; [ google-java-format ];

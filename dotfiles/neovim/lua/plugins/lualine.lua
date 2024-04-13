@@ -2,7 +2,7 @@ return {
   -- Bar at the bottom with info --
   "nvim-lualine/lualine.nvim",
   config = function()
-    local components = require("extensions.lualine")
+    local components = require("modules.lualine")
     local active_register = components.active_register
     local center_component = components.center_component
     local lsp_name = components.lsp_name

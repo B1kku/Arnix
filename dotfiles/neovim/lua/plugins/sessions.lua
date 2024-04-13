@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.sessions',
   config = function()
-    local overseer_sessions = require("extensions.overseer-sessions")
+    local sessions_module = require("modules.sessions")
     require('mini.sessions').setup {
       autoread = false,
       autowrite = true,
@@ -12,16 +12,14 @@ return {
       },
       hooks = {
         pre = {
-          write = overseer_sessions.pre_write,
-          read = overseer_sessions.pre_read
+          write = sessions_module.pre_write,
+          read = sessions_module.pre_read
         },
         post = {
-          read = overseer_sessions.post_read
+          read = sessions_module.post_read
         }
       }
     }
-
-    local sessions = require("extensions.sessions")
     local keys = {
       delete = "<C-d>",
       save = "<C-s>",
@@ -29,8 +27,9 @@ return {
     }
     -- Override minisessions' picker
     MiniSessions.select = function()
-      sessions.open(keys)
+      require("modules.sessions.sessions_picker").open(keys)
     end
+    -- TODO: Move to top
     vim.keymap.set('n', '<leader>st', MiniSessions.select)
   end
 }

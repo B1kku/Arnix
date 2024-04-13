@@ -19,27 +19,16 @@ return {
       -- LSP configs go here.
       -- Java is on ftplugin.
       -- Lua LSP. --
+      local lsp_list = { "pyright", "bashls", "nixd", "gopls", "clangd" }
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
         settings = require("lsp.languages.lua").settings
       })
-      lspconfig.pyright.setup({
-        capabilities = capabilities
-        -- settings = require("lsp.languages.python").settings
-      })
-      lspconfig.bashls.setup({
-        capabilities = capabilities
-      })
-      lspconfig.nixd.setup({
-        capabilities = capabilities
-      })
-      lspconfig.gopls.setup({
-        capabilities = capabilities
-      })
-      -- lspconfig.jdtls.setup({
-      --   capabilities = capabilities,
-      --   cmd = require("lsp.languages.java").cmd
-      -- })
+      for _, value in ipairs(lsp_list) do
+        lspconfig[value].setup({
+          capabilities = capabilities
+        })
+      end
       --Keymaps
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "LSP actions",

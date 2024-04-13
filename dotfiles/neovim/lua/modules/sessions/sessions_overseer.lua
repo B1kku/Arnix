@@ -1,6 +1,5 @@
 local M = {}
 local overseer = require("overseer");
-
 local function get_cwd_as_name()
   local dir = vim.fn.getcwd(0)
   return dir:gsub("[^A-Za-z0-9]", "_")
