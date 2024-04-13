@@ -33,6 +33,9 @@ return {
       lspconfig.nixd.setup({
         capabilities = capabilities
       })
+      lspconfig.gopls.setup({
+        capabilities = capabilities
+      })
       -- lspconfig.jdtls.setup({
       --   capabilities = capabilities,
       --   cmd = require("lsp.languages.java").cmd

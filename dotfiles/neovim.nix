@@ -17,6 +17,8 @@ let
     jdtls # I added lombok in there so I don't have to bother about it.
     nodePackages.pyright
     nodePackages.bash-language-server
+    gopls
+    go
     nixd
   ];
   formatters = with pkgs; [ google-java-format ];
