@@ -1,0 +1,29 @@
+/** Makes the toolbar (bar that pops up when you press alt) show below the urlbar as a small bar.  **/
+/* It also contains the close button, since I hide all buttons and I rarely need them, that's a good place for me */
+/* Variables, redefine at the main file */
+:root {
+  --toolbar-border-radius: 25px;
+  --toolbar-top-separation: 50px;
+  /* --toolbar-bgcolor; */
+}
+#titlebar{
+  /* Idk how to apply this only to menubar as it won't work */
+  z-index: 1 !important; /* Appear in front of website content */
+}
+
+#toolbar-menubar {
+  background-color: var(--toolbar-bgcolor) !important;
+  box-shadow: 0 0 0 3px rgba(114, 113, 195, 0.5); /* TODO: Get a proper color variable instead */
+  align-self: center;
+  align-items: center;
+  position: absolute;
+  opacity: 0;
+  top: 0px;
+  border-radius: var(--toolbar-border-radius);
+  transition: all 250ms;
+}
+
+#toolbar-menubar:not([inactive="true"]) {
+  top: var(--toolbar-top-separation);
+  opacity: 1;
+}

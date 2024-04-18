@@ -1,0 +1,40 @@
+/** Hide tabs in favor of sidebar tabs **/
+/* Variables, redefine if needed */
+:root {
+  --sidebar-expanded-width: 300px;
+  --sidebar-collapsed-width: 30px;
+}
+/* Hide tabs */
+#TabsToolbar {
+  display: none;
+}
+/* Hide sidebar logo and resizer */
+#sidebar-box[sidebarcommand=_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action] > #sidebar-header,
+#sidebar-box[sidebarcommand=_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action] + #sidebar-splitter {
+  display: none;
+}
+/* Hide the small border between top bar and content */
+#navigator-toolbox {
+  border-bottom: 0px !important;
+}
+
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] {
+  min-width: var(--sidebar-collapsed-width) !important;
+  width: var(--sidebar-collapsed-width) !important;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 250ms;
+}
+
+/* Pretty sure I took this from https://github.com/vipintom/stealthFox */
+/* Make the sidebar inside (pinned tabs, etc...) as large as the max, 
+* so it doesn't wrap them downwards  when collapsed */
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] #sidebar {
+  width: var(--sidebar-expanded-width);
+}
+/* Expand on hover */
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:hover {
+  width: var(--sidebar-expanded-width) !important;
+  margin-right: calc((var(--sidebar-expanded-width) - var(--sidebar-collapsed-width)) * -1) !important;
+}
+
