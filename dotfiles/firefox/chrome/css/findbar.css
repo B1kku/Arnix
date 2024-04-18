@@ -1,0 +1,49 @@
+findbar {
+  position: absolute;
+  min-width: 100% !important;
+  transform: translateY(-40px);
+  border-top: none !important; 
+  overflow: visible;
+}
+.findbar-container {
+  justify-content: center !important;
+    overflow: visible !important;
+}
+.findbar-textbox {
+  height: 35px;
+  border-radius: 25px !important;
+  width: 30vw !important;
+  text-align: center;
+}
+.findbar-closebutton.tabbable.close-icon {
+  position: absolute;
+}
+.findbar-label.found-matches {
+  position: absolute;
+  transform: translateY(50px);
+  background-color: var(--toolbar-bgcolor);
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.findbar-find-previous.tabbable {
+  order: -1;
+}
+.findbar-highlight.tabbable {
+  order: 0;
+}
+.findbar-entire-word.tabbable {
+  order: 1;
+}
+hbox[anonid="findbar-textbox-wrapper"] {
+  order: 2;
+}
+.findbar-match-diacritics.tabbable {
+  order: 3;
+}
+.findbar-case-sensitive.tabbable {
+  order: 4;
+}
+.findbar-label.findbar-find-status {
+  display: none;
+}

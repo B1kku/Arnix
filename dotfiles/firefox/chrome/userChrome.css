@@ -1,5 +1,6 @@
 @import "css/sidebar-base.css";
 @import "css/toolbar.css";
+@import "css/findbar.css";
 :root {
   --toolbar-border-radius: 25px;
   --toolbar-top-separation: 50px;

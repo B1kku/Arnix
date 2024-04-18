@@ -1,5 +1,5 @@
 /** Hide tabs in favor of sidebar tabs **/
-/* Variables, redefine if needed */
+/* Variables, redefine on userChrome if wanted */
 :root {
   --sidebar-expanded-width: 300px;
   --sidebar-collapsed-width: 30px;
