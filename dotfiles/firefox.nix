@@ -1,15 +1,20 @@
 { inputs, pkgs, ... }:
-
-{
+let firefox-profile = "weasel";
+in {
   home.packages = [ pkgs.firefox ];
 
-  home.file."weasel" = {
+  home.file.${firefox-profile} = {
     source = ./firefox/chrome;
-    target = ".mozilla/firefox/weasel/chrome";
+    target = ".mozilla/firefox/${firefox-profile}/chrome";
+  };
+  home.shellAliases = {
+    firefox-test =
+      "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome; ln -s /etc/nixos/dotfiles/firefox/chrome/ ~/.mozilla/firefox/${firefox-profile}/chrome";
+    firefox-clean = "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome/";
   };
   programs.firefox = {
     enable = true;
-    profiles.weasel = {
+    profiles.${firefox-profile} = {
       search.default = "DuckDuckGo";
       search.force = true;
       settings = {
