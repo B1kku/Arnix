@@ -13,7 +13,10 @@
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.channel.enable = false;
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
-
+  # Auto update db.
+  services.locate = {
+    enable = true;
+  };
   nix = {
     settings = {
       auto-optimise-store = true;
