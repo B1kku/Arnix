@@ -14,9 +14,6 @@
   nix.channel.enable = false;
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
   # Auto update db.
-  services.locate = {
-    enable = true;
-  };
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -161,11 +158,12 @@
     extraSpecialArgs = { inherit pkgs-unstable inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
-
-  # virtualisation.waydroid.enable = true;
-  programs.steam = {
-    enable = true;
+  powerManagement = {
+    cpuFreqGovernor = "ondemand";
+    # powertop.enable = true;
   };
+  # virtualisation.waydroid.enable = true;
+  programs.steam = { enable = true; };
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   programs.gamemode.enable = true;
   programs.zsh.enable = true;

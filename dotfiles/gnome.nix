@@ -11,6 +11,9 @@ let
     alttab-mod
     switch-workspace
     color-picker
+    quick-settings-audio-panel
+    fly-pie
+    pkgs-unstable.gnomeExtensions.smart-auto-move
   ];
 in {
   home.packages = with pkgs;
