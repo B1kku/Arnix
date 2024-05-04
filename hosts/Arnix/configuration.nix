@@ -44,9 +44,13 @@
     ];
     # plymouth = { enable = true; };
     loader = {
-      systemd-boot = {
+      grub = {
         enable = true;
+        efiSupport = true;
         configurationLimit = 5;
+        useOSProber = true;
+        memtest86.enable = true;
+        device = "nodev";
       };
       efi.canTouchEfiVariables = true;
     };
