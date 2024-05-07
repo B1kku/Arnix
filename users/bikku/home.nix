@@ -12,7 +12,8 @@
     ../../dotfiles/lazygit.nix
     ../../dotfiles/sshfs.nix
     ../../dotfiles/vesktop.nix
-    ../../dotfiles/alacritty.nix
+    # ../../dotfiles/alacritty.nix
+    ../../dotfiles/wezterm.nix
     ../../dotfiles/firefox.nix
     ../../dotfiles/neovim.nix
     ../../dotfiles/gnome.nix
