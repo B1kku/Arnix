@@ -21,6 +21,10 @@ in {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.toolbars.bookmarks.visibility" = "never";
         "browser.startup.page" = 3; # Restore session on startup.
+        # Finally found a workaround for this stupid issue where if you drag
+        # on sidebery it stops counting as :hover (gnome only, ofc)
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1818517 
+        "widget.gtk.ignore-bogus-leave-notify" = 1;
       };
 
       extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
