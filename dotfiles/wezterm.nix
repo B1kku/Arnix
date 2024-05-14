@@ -1,7 +1,7 @@
 { config, lib, pkgs, pkgs-unstable, ... }: {
   home.packages = [
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
-      exec "${lib.getExe pkgs-unstable.alacritty}" -e "$@"
+      exec "${lib.getExe pkgs.wezterm}" -e "$@"
     '')
   ];
   xdg.configFile."wezterm" = {
