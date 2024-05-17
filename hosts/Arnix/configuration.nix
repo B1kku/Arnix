@@ -167,7 +167,10 @@
     # powertop.enable = true;
   };
   # virtualisation.waydroid.enable = true;
-  programs.steam = { enable = true; };
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
+  };
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
