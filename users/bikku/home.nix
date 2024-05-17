@@ -13,6 +13,7 @@
     ../../dotfiles/sshfs.nix
     ../../dotfiles/vesktop.nix
     # ../../dotfiles/alacritty.nix
+    ../../dotfiles/zsh.nix
     ../../dotfiles/wezterm.nix
     ../../dotfiles/firefox.nix
     ../../dotfiles/neovim.nix
@@ -24,15 +25,6 @@
   home.shellAliases = {
     arnix-rebuild = "sudo nixos-rebuild switch";
     arnix-update = "nix flake update /etc/nixos";
-  };
-  programs.zsh = {
-    enable = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    localVariables = {
-      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE =
-        "fg=#${config.colorscheme.palette.base0C}";
-    };
   };
   programs.starship = {
     enable = true;
