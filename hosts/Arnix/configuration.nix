@@ -9,16 +9,9 @@
     ../../modules/powera-controller.nix
     home-manager.nixosModules.home-manager
   ];
-  # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
-  nix.registry.nixpkgs.flake = inputs.nixpkgs;
-  nix.channel.enable = false;
-  environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
   # Auto update db.
   nix = {
-    settings = {
-      auto-optimise-store = true;
-      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
-    };
+    settings.auto-optimise-store = true;
     gc = {
       automatic = true;
       dates = "weekly";
