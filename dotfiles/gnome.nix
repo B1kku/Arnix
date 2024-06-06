@@ -12,25 +12,28 @@ let
     switch-workspace
     color-picker
     quick-settings-audio-panel
-    fly-pie
-    pkgs-unstable.gnomeExtensions.smart-auto-move
+    smart-auto-move
   ];
 in {
   home.packages = with pkgs;
-    [ /* pkgs-unstable.valent */ taskwarrior gnome.pomodoro ] ++ gnome-extensions;
+    [ # pkgs-unstable.valent
+      taskwarrior
+      gnome.pomodoro
+    ] ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
-  gtk = {
-    enable = true;
-    # theme = {
-    #   name = "${config.colorScheme.slug}";
-    #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
-    # };
-    font = {
-      package = pkgs.noto-fonts;
-      name = "NotoSans";
-    };
-    theme = { name = "Adwaita-dark"; };
-  };
+  # TODO: 24.05 BORKED !!
+  # gtk = {
+  #   enable = true;
+  #   # theme = {
+  #   #   name = "${config.colorScheme.slug}";
+  #   #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
+  #   # };
+  #   font = {
+  #     package = pkgs.noto-fonts;
+  #     name = "NotoSans";
+  #   };
+  #   theme = { name = "Adwaita-dark"; };
+  # };
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings = with lib.hm.gvariant; {
@@ -61,6 +64,7 @@ in {
       color-scheme = "prefer-dark";
       enable-hot-corners = true;
     };
+    "org/gnome/desktop/peripherals/mouse" = {accel-profile = "flat"; };
     "org/gnome/mutter" = {
       edge-tiling = true;
       dynamic-workspaces = false;

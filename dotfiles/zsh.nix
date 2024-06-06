@@ -11,7 +11,7 @@ in {
       ignoreAllDups = true;
       size = 1000;
     };
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     historySubstringSearch.enable = true;
     plugins = with pkgs; map toZshPlugin [ zsh-syntax-highlighting ];

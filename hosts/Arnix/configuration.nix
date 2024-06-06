@@ -94,12 +94,12 @@
     #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
     #ACTION=="add", ATTR{power/wakeup}="disabled"
   '';
-
+  services.displayManager.defaultSession = "gnome";
   # XServer, DM & DE
+  services.libinput.mouse.accelProfile = "flat";
   services.xserver = {
     enable = true;
-    libinput.mouse.accelProfile = "flat";
-    layout = "${config.console.keyMap}";
+    xkb.layout = "${config.console.keyMap}";
     excludePackages = [ pkgs.xterm ];
     # TODO: Switch to SDDM
     displayManager = {
@@ -107,33 +107,10 @@
         enable = true;
         greeters.enso.enable = true;
       };
-      defaultSession = "gnome";
     };
     desktopManager.gnome.enable = true;
   };
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-    gnome-text-editor
-    gnome-connections
-    gnome-console
-  ]) ++ (with pkgs.gnome; [
-    cheese
-    #gnome-music
-    gedit
-    epiphany
-    geary
-    tali
-    iagno
-    hitori
-    atomix
-    yelp
-    simple-scan
-    gnome-characters
-    gnome-contacts
-    gnome-initial-setup
-    gnome-terminal
-  ]);
+  services.gnome.core-utilities.enable = false;
   programs.dconf.enable = true;
 
   # Enable sound.
