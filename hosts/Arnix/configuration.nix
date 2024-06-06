@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, lib, pkgs, pkgs-unstable, home-manager, inputs, ... }: {
+{ config, pkgs, pkgs-unstable, home-manager, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -23,8 +23,7 @@
   # Use the systemd-boot EFI boot loader.
   boot = {
     # Enable SysRq to recover from freezes.
-    # All enabled for now, while I figure out why or if it's fixed.
-    kernel.sysctl."kernel.sysrq" = 1;
+    # kernel.sysctl."kernel.sysrq" = 1;
     kernelParams = [
       "logo.nologo"
       "fbcon=nodefer"
@@ -50,21 +49,21 @@
   };
 
   #Networking
-  networking.hostName = "Arnix"; # Define your hostname.
+  networking.hostName = "Arnix";
   networking = {
     nameservers = [ "1.1.1.1" ];
     # Valent
     # Only local 
-    firewall = {
-      extraCommands = ''
-        iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
-        iptables -A nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
-      '';
-      extraStopCommands = ''
-        iptables -D nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
-        iptables -D nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
-      '';
-    };
+    # firewall = {
+    #   extraCommands = ''
+    #     iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
+    #     iptables -A nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
+    #   '';
+    #   extraStopCommands = ''
+    #     iptables -D nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
+    #     iptables -D nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
+    #   '';
+    # };
   };
   # Select internationalisation properties.
   time.timeZone = "Europe/Brussels";
@@ -87,9 +86,9 @@
     #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
     #ACTION=="add", ATTR{power/wakeup}="disabled"
   '';
-  services.displayManager.defaultSession = "gnome";
   # XServer, DM & DE
   services.libinput.mouse.accelProfile = "flat";
+  services.displayManager.defaultSession = "gnome";
   services.xserver = {
     enable = true;
     xkb.layout = "${config.console.keyMap}";
@@ -104,7 +103,6 @@
     desktopManager.gnome.enable = true;
   };
   services.gnome.core-utilities.enable = false;
-  programs.dconf.enable = true;
 
   # Enable sound.
   hardware.pulseaudio.enable = false;
@@ -114,43 +112,30 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
   };
-  # sound.enable = true;
+  powerManagement.cpuFreqGovernor = "ondemand";
+  environment.systemPackages = with pkgs; [ wget git tealdeer ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bikku = {
     shell = pkgs.zsh;
     isNormalUser = true;
     initialPassword = "potato";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" ];
   };
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
+  };
+
+  programs.gamemode.enable = true;
+  programs.zsh.enable = true;
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit pkgs-unstable inputs; };
     users.bikku = import ../../users/bikku/home.nix;
   };
-  powerManagement = {
-    cpuFreqGovernor = "ondemand";
-    # powertop.enable = true;
-  };
-  # virtualisation.waydroid.enable = true;
-  programs.steam = {
-    enable = true;
-    extraCompatPackages = [ pkgs.proton-ge-bin ];
-  };
-  hardware.steam-hardware.enable = pkgs.lib.mkForce false;
-  programs.gamemode.enable = true;
-  programs.zsh.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    gnome.gnome-tweaks
-    wget
-    git
-    tealdeer
-  ];
   # Don't change randomly, used for internals.
   system.stateVersion = "23.05";
 
