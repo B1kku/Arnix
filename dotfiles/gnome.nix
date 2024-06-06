@@ -7,7 +7,7 @@ let
     # pkgs-unstable.gnomeExtensions.valent
     media-controls
     just-perfection
-    taskwhisperer
+    # taskwhisperer # TODO: 24.05 BORKED !!
     alttab-mod
     switch-workspace
     color-picker
@@ -15,11 +15,10 @@ let
     smart-auto-move
   ];
 in {
-  home.packages = with pkgs;
-    [ # pkgs-unstable.valent
-      taskwarrior
-      gnome.pomodoro
-    ] ++ gnome-extensions;
+  home.packages = (with pkgs; [ # pkgs-unstable.valent
+    # taskwarrior
+    gnome.pomodoro
+  ]) ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
   # TODO: 24.05 BORKED !!
   # gtk = {
@@ -36,10 +35,10 @@ in {
   # };
   # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
-  dconf.settings = with lib.hm.gvariant; {
-    "org/gnome/shell/extensions/switchWorkSpace" = {
-      switch-workspace = [ "<Super>Tab" ];
-    };
+
+  dconf.settings = let inherit (lib.hm.gvariant) mkUint32;
+  in {
+    "org/gnome/shell/extensions/switchWorkSpace".switch-workspace = [ "<Super>Tab" ];
     "org/gnome/shell/extensions/altTab-mod" = {
       current-monitor-only = true;
       current-workspace-only = true;
@@ -52,9 +51,7 @@ in {
       animation = 4;
     };
     "org/gnome/shell/extensions/blur-my-shell" = { hacks-level = 0; };
-    "org/gnome/shell/extensions/blur-my-shell/overview" = {
-      style-components = 3;
-    };
+    "org/gnome/shell/extensions/blur-my-shell/overview".style-components = 3;
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions =
@@ -64,7 +61,7 @@ in {
       color-scheme = "prefer-dark";
       enable-hot-corners = true;
     };
-    "org/gnome/desktop/peripherals/mouse" = {accel-profile = "flat"; };
+    "org/gnome/desktop/peripherals/mouse".accel-profile = "flat";
     "org/gnome/mutter" = {
       edge-tiling = true;
       dynamic-workspaces = false;
@@ -94,5 +91,4 @@ in {
       next = [ "<Alt>KP_Right" ];
     };
   };
-
 }
