@@ -1,6 +1,4 @@
-{ config, osConfig, lib, pkgs, pkgs-unstable, inputs, ... }:
-
-{
+{ config, osConfig, lib, pkgs, pkgs-unstable, inputs, ... }: {
   programs.home-manager.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
@@ -12,13 +10,13 @@
     ../../dotfiles/lazygit.nix
     ../../dotfiles/sshfs.nix
     ../../dotfiles/vesktop.nix
-    # ../../dotfiles/alacritty.nix
     ../../dotfiles/zsh.nix
     ../../dotfiles/wezterm.nix
     ../../dotfiles/firefox.nix
     ../../dotfiles/neovim.nix
     ../../dotfiles/gnome.nix
     ./dirs.nix
+    # ../../dotfiles/alacritty.nix
   ];
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
@@ -38,20 +36,28 @@
   # No sftpman integration yet on 23.11
   # programs.sftpman
   fonts.fontconfig.enable = true;
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     mlocate
     rsync
     htop
     bitwarden
     neofetch
-    # peek
     obs-studio
     fira-code-nerdfont
     prismlauncher
     deluge
     libnotify
-    # cage
-  ];
+    loupe # Image viewer
+  ]) ++ (with pkgs.gnome; [
+    baobab # Disk space info
+    nautilus # File browser
+    gnome-clocks # Alarms
+    gnome-weather # Weather applet
+    gnome-music
+    gnome-calculator
+    gnome-system-monitor
+    gnome-tweaks
+  ]);
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
 }

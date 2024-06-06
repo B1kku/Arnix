@@ -93,13 +93,7 @@
     enable = true;
     xkb.layout = "${config.console.keyMap}";
     excludePackages = [ pkgs.xterm ];
-    # TODO: Switch to SDDM
-    displayManager = {
-      lightdm = {
-        enable = true;
-        greeters.enso.enable = true;
-      };
-    };
+    displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
   services.gnome.core-utilities.enable = false;
