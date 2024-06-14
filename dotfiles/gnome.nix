@@ -1,23 +1,27 @@
 { lib, pkgs, pkgs-unstable, config, inputs, ... }:
 let
   # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
-  gnome-extensions = with pkgs.gnomeExtensions; [
+  gnome-extensions = (with pkgs.gnomeExtensions; [
     blur-my-shell
     # https://github.com/NixOS/nixpkgs/issues/301380
     # pkgs-unstable.gnomeExtensions.valent
     media-controls
     just-perfection
-    taskwhisperer
+    # taskwhisperer # TODO: 24.05 BORKED !!
     alttab-mod
     switch-workspace
     color-picker
     quick-settings-audio-panel
-    fly-pie
-    pkgs-unstable.gnomeExtensions.smart-auto-move
-  ];
+    smart-auto-move
+  ]);
 in {
-  home.packages = with pkgs;
-    [ /* pkgs-unstable.valent */ taskwarrior gnome.pomodoro ] ++ gnome-extensions;
+  home.packages = gnome-extensions;
+  /* ++ (with pkgs;
+     [ # pkgs-unstable.valent
+       # taskwarrior
+       # gnome.pomodoro
+     ]);
+  */
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;
@@ -25,18 +29,16 @@ in {
     #   name = "${config.colorScheme.slug}";
     #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
     # };
-    font = {
-      package = pkgs.noto-fonts;
-      name = "NotoSans";
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
     };
-    theme = { name = "Adwaita-dark"; };
   };
-  # config.services.xserver.desktopManager.gnome.enable = true;
   # dconf watch / & dconf dump > ... for debugging
-  dconf.settings = with lib.hm.gvariant; {
-    "org/gnome/shell/extensions/switchWorkSpace" = {
-      switch-workspace = [ "<Super>Tab" ];
-    };
+  dconf.settings = let inherit (lib.hm.gvariant) mkUint32;
+  in {
+    "org/gnome/shell/extensions/switchWorkSpace".switch-workspace =
+      [ "<Super>Tab" ];
     "org/gnome/shell/extensions/altTab-mod" = {
       current-monitor-only = true;
       current-workspace-only = true;
@@ -44,14 +46,23 @@ in {
       # current-workspace-only-window = true;
       remove-delay = true;
     };
+    "org/gnome/shell/extensions/mediacontrols" = {
+      show-label = false;
+      show-control-icons-seek-forward = false;
+      show-control-icons-seek-backward = false;
+      extension-position = "Left";
+      extension-index = mkUint32 1;
+    };
+    "org/gnome/shell/extensions/smart-auto-move" = {
+      sync-frequency = 5000;
+      save-frequency = 5000;
+    };
     "org/gnome/shell/extensions/just-perfection" = {
       workspace-wrap-around = true;
       animation = 4;
     };
     "org/gnome/shell/extensions/blur-my-shell" = { hacks-level = 0; };
-    "org/gnome/shell/extensions/blur-my-shell/overview" = {
-      style-components = 3;
-    };
+    "org/gnome/shell/extensions/blur-my-shell/overview".style-components = 3;
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions =
@@ -61,13 +72,14 @@ in {
       color-scheme = "prefer-dark";
       enable-hot-corners = true;
     };
+    "org/gnome/desktop/peripherals/mouse".accel-profile = "flat";
     "org/gnome/mutter" = {
       edge-tiling = true;
       dynamic-workspaces = false;
       workspaces-only-on-primary = false;
     };
     "org/gnome/desktop/wm/preferences" = { num-workspaces = 4; };
-    "org/gnome/shell/app-switcher" = { current-workspace-only = false; };
+    "org/gnome/shell/app-switcher".current-workspace-only = true;
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
       night-light-temperature = mkUint32 3700;
@@ -90,5 +102,4 @@ in {
       next = [ "<Alt>KP_Right" ];
     };
   };
-
 }
