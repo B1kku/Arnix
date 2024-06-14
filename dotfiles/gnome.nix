@@ -20,22 +20,18 @@ in {
     gnome.pomodoro
   ]) ++ gnome-extensions;
   # This should be more of a general config, tells apps what to use.
-  # TODO: 24.05 BORKED !!
-  # gtk = {
-  #   enable = true;
-  #   # theme = {
-  #   #   name = "${config.colorScheme.slug}";
-  #   #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
-  #   # };
-  #   font = {
-  #     package = pkgs.noto-fonts;
-  #     name = "NotoSans";
-  #   };
-  #   theme = { name = "Adwaita-dark"; };
-  # };
-  # config.services.xserver.desktopManager.gnome.enable = true;
+  gtk = {
+    enable = true;
+    # theme = {
+    #   name = "${config.colorScheme.slug}";
+    #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
+    # };
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
+    };
+  };
   # dconf watch / & dconf dump > ... for debugging
-
   dconf.settings = let inherit (lib.hm.gvariant) mkUint32;
   in {
     "org/gnome/shell/extensions/switchWorkSpace".switch-workspace = [ "<Super>Tab" ];
