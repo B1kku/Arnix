@@ -5,6 +5,7 @@ local mux = wezterm.mux
 config = {
   -- color_scheme = 'AdventureTime',
   automatically_reload_config = true,
+  hide_mouse_cursor_when_typing = false,
   window_background_opacity = 0.75,
   hide_tab_bar_if_only_one_tab = true,
   window_decorations = "NONE",
