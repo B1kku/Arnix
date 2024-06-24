@@ -114,7 +114,6 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     initialPassword = "potato";
-    extraGroups = [ "wheel" ];
   };
   programs.steam = {
     enable = true;

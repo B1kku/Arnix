@@ -41,7 +41,7 @@
     rsync
     htop
     bitwarden
-    neofetch
+    fastfetch
     obs-studio
     fira-code-nerdfont
     prismlauncher
