@@ -1,71 +1,92 @@
+local function load_lsps(lsp_list, default_config)
+  local lsp_config_dir = "lsp.lsp-config."
+  local lspconfig = require("lspconfig")
+  local function load_lsp(lsp)
+    local config_found, lsp_config = pcall(require, lsp_config_dir .. lsp)
+    lsp_config = config_found and lsp_config or {}
+    lspconfig[lsp].setup(vim.tbl_deep_extend("force", default_config, lsp_config))
+  end
+  vim.tbl_map(load_lsp, lsp_list)
+end
+
+-- Set LSP Icons
+local function set_signs(lsp_signs)
+  for type, icon in pairs(lsp_signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  end
+end
+
+-- Given a list of {mode, key, action, opts, (extra_opts)},
+-- add said keymap when the lsp attaches.
+local function set_keymaps_on_attach(keymaps)
+  local function set_keymap(keymap)
+    local mode = keymap[1]
+    local key = keymap[2]
+    local action = keymap[3]
+    local opts = { buffer = true, desc = keymap[4] }
+    local extra_opts = keymap[5]
+    if extra_opts then
+      opts = vim.tbl_extend("force", opts, extra_opts)
+    end
+    vim.keymap.set(mode, key, action, opts)
+  end
+  vim.api.nvim_create_autocmd("LspAttach", {
+    desc = "LSP Keymaps",
+    callback = function()
+      vim.tbl_map(set_keymap, keymaps)
+    end
+  })
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    dependencies = {
+    dependencies = vim.g.nixvars and {} or {
       "williamboman/mason-lspconfig.nvim"
     },
-    -- vim.lsp.get_log_path() to get the log path.
     config = function()
-      local mason_installs = { automatic_installation = true }
       -- Don't install lsps on nix, nix handles it.
-      if vim.g.nixvars then
-        mason_installs.automatic_installation = false
-        require("mason-lspconfig").setup(mason_installs)
-      end
-      local lspconfig = require("lspconfig")
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-      -- LSP configs go here.
-      -- Java is on ftplugin.
-      -- Lua LSP. --
-      local lsp_list = { "pyright", "bashls", "nixd", "gopls", "clangd" }
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-        settings = require("lsp.languages.lua").settings
-      })
-      for _, value in ipairs(lsp_list) do
-        lspconfig[value].setup({
-          capabilities = capabilities
+      if not vim.g.nixvars then
+        require("mason-lspconfig").setup({
+          automatic_installation = true
         })
       end
-      --Keymaps
-      vim.api.nvim_create_autocmd("LspAttach", {
-        desc = "LSP actions",
-        callback = function()
-          local bufmap = function(mode, lhs, rhs, desc)
-            local opts = { buffer = true, desc = desc }
-            vim.keymap.set(mode, lhs, rhs, opts)
-          end
-          -- bufmap("n", "<leader>sf", vim.lsp.buf.format, "Format current file")
-          bufmap("n", "K", vim.lsp.buf.hover, "Display information of symbol")
-          bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
-          bufmap("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-          bufmap("n", "gi", vim.lsp.buf.implementation, "Get implementations")
-          bufmap("n", "go", vim.lsp.buf.type_definition, "Go to definition")
-          bufmap("n", "gr", vim.lsp.buf.references, "Get references")
-          bufmap("n", "gs", vim.lsp.buf.signature_help, "Get signature info")
-          bufmap("n", "gl", vim.diagnostic.open_float, "Get diagnostics on float")
-          bufmap("n", "<F2>", vim.lsp.buf.rename, "Rename")
-          bufmap("n", "<F4>", vim.lsp.buf.code_action, "Get code actions")
-          bufmap("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-          bufmap("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
-        end
-      })
-      -- Set LSP Icons
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      -- List of lsp to be loaded, if lsp_config_dir + lsp_name matches a file,
+      -- it will override the default config.
+      local lsp_list = { "pyright", "bashls", "nixd", "gopls", "clangd", "lua_ls" }
+      local default_config = { capabilities = capabilities }
+      -- Map of signs for the LSP.
       local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
+
+      local keymaps = {
+        { "n", "K",    vim.lsp.buf.hover,           "Display information of symbol" },
+        { "n", "gd",   vim.lsp.buf.definition,      "Go to definition" },
+        { "n", "gD",   vim.lsp.buf.declaration,     "Go to declaration" },
+        { "n", "gi",   vim.lsp.buf.implementation,  "Get implementations" },
+        { "n", "go",   vim.lsp.buf.type_definition, "Go to definition" },
+        { "n", "gr",   vim.lsp.buf.references,      "Get references" },
+        { "n", "gs",   vim.lsp.buf.signature_help,  "Get signature info" },
+        { "n", "gl",   vim.diagnostic.open_float,   "Get diagnostics on float" },
+        { "n", "<F2>", vim.lsp.buf.rename,          "Rename" },
+        { "n", "<F4>", vim.lsp.buf.code_action,     "Get code actions" },
+        { "n", "[d",   vim.diagnostic.goto_prev,    "Previous diagnostic" },
+        { "n", "]d",   vim.diagnostic.goto_next,    "Next diagnostic" },
+      }
+
+      load_lsps(lsp_list, default_config)
+      set_signs(signs)
+      set_keymaps_on_attach(keymaps)
     end
   },
   {
     -- Java lsp plugin. --
+    -- I'm not sure why, but loading the config from here won't work
+    -- Instead it's loaded from ftplugin/java
     "mfussenegger/nvim-jdtls",
-    ft = "java",
-    -- config = function ()
-    --   require("lsp.languages.java")
-    -- end
+    ft = "java"
   }
 }
