@@ -2,6 +2,10 @@ return {
   -- Plugin for comment keymaps mainly --
   "numToStr/Comment.nvim",
   config = function()
+    local ft = require('Comment.ft')
+
+    ft.sml = {"(* %s *)", "(* %s *)"}
+
     require("Comment").setup({
       mappings = {
         basic = false,

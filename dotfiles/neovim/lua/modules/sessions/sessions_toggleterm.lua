@@ -4,7 +4,7 @@ M.post_read = function()
   for _, term in pairs(Terminals) do
     term.dir = vim.fn.getcwd()
     term:shutdown()
-    if term.on_create ~= nil then
+    if term.on_create then
       term:on_create(term)
     end
   end

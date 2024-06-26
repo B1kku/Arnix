@@ -1,5 +1,4 @@
 return {
-  -- Better terminal integration, although a bit rough is very complete --
   "akinsho/toggleterm.nvim",
   keys = {
     { "<leader>t", "<cmd>ToggleTerm<CR>",                          "n", silent = true, desc = "Open terminal" },
@@ -58,7 +57,5 @@ return {
       })
     )
     Terminals = toggleterm_module.create_terminals(Terminal, terminal_list, default_terminal_opts)
-    -- Refresh cwd of these terminals too
-    -- Should probably only do this on session change
   end
 }

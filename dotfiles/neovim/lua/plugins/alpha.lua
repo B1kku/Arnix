@@ -35,10 +35,7 @@ return {
       [[⠻⠿⠇⠀⠀⠀⠸⢿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡇⠀ ⠘⣿⡇⠀]],
     }
 
-    local function footer()
-      return os.date("%A %d | %B %m")
-    end
-    dashboard.section.footer.val = footer()
+    dashboard.section.footer.val = os.date("%A %d | %B %m")
 
     local restore_latest = ":lua MiniSessions.read(MiniSessions.get_latest())<CR>"
 

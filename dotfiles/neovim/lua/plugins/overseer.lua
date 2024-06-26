@@ -19,7 +19,6 @@ return {
       end
     end
 
-    vim.o.exrc = true
     local win_opts = {
       winblend = 0,
     }
@@ -44,5 +43,5 @@ return {
         win_opts = win_opts
       }
     })
-  end,
+  end
 }

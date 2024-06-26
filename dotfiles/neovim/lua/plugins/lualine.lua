@@ -8,6 +8,7 @@ return {
     local lsp_name = components.lsp_name
     local lsp_progress = components.lsp_progress
 
+    ---@diagnostic disable-next-line: different-requires
     require("lualine").setup {
       options = {
         theme = require("themes.lualine.nightfox"),

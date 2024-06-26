@@ -1,10 +1,8 @@
-local jdtls_ok = pcall(require, "jdtls")
+local jdtls_ok, jdtls = pcall(require, "jdtls")
 if not jdtls_ok then
   vim.notify "JDTLS not found, install with `:MasonInstall jdtls`"
   return
 end
-local config = require("lsp.languages.java")
+local config = require("lsp.lsp-config.jdtls")
 
-require('jdtls').start_or_attach(config)
--- This is due to nix's jdtls package being called jdt-language-server, not jdtls like it should... ._.
-
+jdtls.start_or_attach(config)
