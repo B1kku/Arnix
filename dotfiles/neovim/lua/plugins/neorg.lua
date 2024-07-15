@@ -10,7 +10,12 @@ return {
             engine = "nvim-cmp"
           }
         },
-        ["core.concealer"] = {},
+        ["core.concealer"] = {
+          config = {
+            folds = true
+          },
+          init_open_folds = "auto"
+        },
         ["core.dirman"] = {
           config = {
             workspaces = {

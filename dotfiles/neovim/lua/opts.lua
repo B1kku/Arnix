@@ -16,7 +16,9 @@ opt.wrap = true           -- Wrap lines when they reach border
 opt.breakindent = true    -- Keep indent for wrapped lines
 opt.laststatus = 3        -- Make statusline global <3
 opt.cmdheight = 0         -- Make cmdline dynamic
-
+opt.conceallevel = 2    -- Allow concealed text, unless there's a replacement
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 --  Filetypes  --
 opt.encoding = "utf8"     -- String encoding to use
 opt.fileencoding = "utf8" -- File encoding to use
@@ -47,6 +49,7 @@ opt.undofile = true                             -- Enable persistent undo.
 
 -- Misc --
 vim.o.clipboard = 'unnamedplus' --System clipboard integration.
+
 -- Folding with treesitter
 -- opt.foldmethod = "syntax"
 -- opt.foldexpr = "nvim_treesitter#foldexpr()"
