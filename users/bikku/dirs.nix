@@ -1,14 +1,17 @@
-{ config, ... }: {
+{ config, ... }:
+let media = "/run/media/bikku/";
+in {
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
-    documents = "/run/media/bikku/Data-SSD/Documents/";
-    download = "/run/media/bikku/Data-HDD/Downloads/";
+    documents = media + "Data-SSD/Documents/";
+    download = media + "Data-HDD/Downloads/";
   };
-  home.file = {
-    Documents.source =
-      config.lib.file.mkOutOfStoreSymlink "${config.xdg.userDirs.documents}";
-    Downloads.source =
-      config.lib.file.mkOutOfStoreSymlink "${config.xdg.userDirs.download}";
+  home.file = let
+    inherit (config.lib.file) mkOutOfStoreSymlink;
+    inherit (config.xdg.userDirs) documents download;
+  in {
+    Documents.source = mkOutOfStoreSymlink "${documents}";
+    Downloads.source = mkOutOfStoreSymlink "${download}";
   };
 }
