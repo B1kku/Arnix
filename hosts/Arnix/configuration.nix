@@ -23,7 +23,7 @@
   # Use the systemd-boot EFI boot loader.
   boot = {
     # Enable SysRq to recover from freezes.
-    # kernel.sysctl."kernel.sysrq" = 1;
+    kernel.sysctl."kernel.sysrq" = 1;
     kernelParams = [
       "logo.nologo"
       "fbcon=nodefer"
