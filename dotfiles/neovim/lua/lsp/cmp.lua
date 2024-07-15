@@ -31,6 +31,7 @@ return {
         }, {
           { name = "buffer" },
           { name = "path" },
+          { name = "neorg" },
         }),
 
         window = {
