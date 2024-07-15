@@ -15,7 +15,8 @@
     nix-colors.url = "github:misterio77/nix-colors";
     nix-gaming = {
       url =
-        "github:fufexan/nix-gaming/de70cdf224bd40928fe2af7fa558e1bdb7d8d619";
+        "github:fufexan/nix-gaming/fce565402d5b1ed4e92c4a9dfcd094d0172d8f0b";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -34,7 +35,7 @@
       };
 
     in {
-      formatter.x86_64-linux = pkgs.nixfmt;
+      formatter.x86_64-linux = pkgs.nixfmt-classic;
       nixosConfigurations = {
         Arnix = lib.nixosSystem {
           inherit system;
