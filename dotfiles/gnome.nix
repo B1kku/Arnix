@@ -7,7 +7,6 @@ let
     # pkgs-unstable.gnomeExtensions.valent
     media-controls
     just-perfection
-    # taskwhisperer # TODO: 24.05 BORKED !!
     alttab-mod
     switch-workspace
     color-picker
@@ -25,10 +24,6 @@ in {
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;
-    # theme = {
-    #   name = "${config.colorScheme.slug}";
-    #   package = gtkThemeFromScheme {scheme = config.colorScheme;};
-    # };
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome.gnome-themes-extra;

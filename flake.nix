@@ -26,7 +26,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [ (import ./overlays/pkgs.nix) ];
+        # overlays = [ (import ./overlays/pkgs.nix) ];
       };
       lib = nixpkgs.lib;
       pkgs-unstable = import nixpkgs-unstable {

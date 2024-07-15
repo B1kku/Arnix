@@ -2,8 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-let
-  ssd-options = [ "noatime" "nodiratime" "discard" ];
+let ssd-options = [ "noatime" "nodiratime" "discard" ];
 in {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -40,8 +39,12 @@ in {
     fsType = "ext4";
     options = ssd-options;
   };
-  swapDevices = [ ];
-
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    # RedHat recommends 0.5/1.5 * RAM depending on whether hibernation is on or off
+    size = builtins.ceil(0.5 * 16 * 1024);
+    randomEncryption.enable = true;
+  }];
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -52,5 +55,6 @@ in {
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   # Why the hell was this by default. Am I missing something?
   # And why knowing this is off by default had me going through a trail of options.
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;     # lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
+  # lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
