@@ -2,15 +2,23 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 local mux = wezterm.mux
+
+local opacity = 0.75
+local bg_color = "rgba(0,0,0," .. opacity .. ")"
+
 config = {
   -- color_scheme = 'AdventureTime',
   automatically_reload_config = true,
   hide_mouse_cursor_when_typing = false,
-  window_background_opacity = 0.75,
+  window_background_opacity = opacity,
   hide_tab_bar_if_only_one_tab = true,
   window_decorations = "RESIZE", -- https://github.com/wez/wezterm/issues/4569
   font = wezterm.font 'FiraCode Nerd Font',
   use_dead_keys = false,
+  window_frame = {
+    border_top_height = 2,
+    border_top_color = bg_color
+  },
   window_padding = {
     left = 0,
     right = 0,
@@ -18,14 +26,20 @@ config = {
     bottom = 0
   }
 }
-config.tab_max_width = 32
+config.tab_max_width = 27
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
+config.window_frame = {
+  border_top_height = 5,
+  border_top_color = bg_color
+}
+
 config.colors = {
   tab_bar = {
-    background = "rgba(0,0,0," .. config.window_background_opacity .. ")"
+    background = bg_color
   }
 }
+
 
 -- Credit to https://github.com/MagicDuck
 local function tab_title(tab_info)
@@ -42,7 +56,7 @@ end
 wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
   local background = "#435ac6"
   local foreground = "#b5b3b0"
-  local edge_background = config.colors.tab_bar.background
+  local edge_background = bg_color
 
   if tab.is_active or hover then
     background = "#5b9fff"
