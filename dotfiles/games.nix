@@ -1,8 +1,10 @@
-{ inputs, pkgs, pkgs-unstable, lib, ... }:
+{ inputs, pkgs, pkgs-unstable, lib, osConfig, ... }:
 let
   custom-lutris = (pkgs-unstable.lutris.override {
+    steamSupport = false;
     extraPkgs = pkgs-unstable:
       with pkgs-unstable; [
+        osConfig.programs.steam.package
         gamemode # Tries to tune the system for games
         mangohud # For monitoring
         winetricks # For modifying wineprefix
@@ -48,5 +50,5 @@ in {
     };
   }) lutris-runners;
 
-  home.packages = with pkgs-unstable; [ custom-lutris steam-run winetricks ];
+  home.packages = with pkgs-unstable; [ custom-lutris steam-run winetricks wineWowPackages.stableFull ];
 }
