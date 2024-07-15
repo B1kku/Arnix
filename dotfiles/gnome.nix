@@ -12,7 +12,7 @@ let
     switch-workspace
     color-picker
     quick-settings-audio-panel
-    smart-auto-move
+    auto-move-windows
   ]);
 in {
   home.packages = gnome-extensions;
@@ -53,10 +53,6 @@ in {
       extension-position = "Left";
       extension-index = mkUint32 1;
     };
-    "org/gnome/shell/extensions/smart-auto-move" = {
-      sync-frequency = 5000;
-      save-frequency = 5000;
-    };
     "org/gnome/shell/extensions/just-perfection" = {
       workspace-wrap-around = true;
       animation = 4;
@@ -80,6 +76,7 @@ in {
     };
     "org/gnome/desktop/wm/preferences" = { num-workspaces = 4; };
     "org/gnome/shell/app-switcher".current-workspace-only = true;
+    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-timeout = 300;
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
       night-light-temperature = mkUint32 3700;
