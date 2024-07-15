@@ -13,14 +13,24 @@ let
     quick-settings-audio-panel
     auto-move-windows
   ]);
+  num-workspaces = 4;
+  workspace-actions = {
+    move-to-workspace = "<Ctrl><Alt>";
+    switch-to-workspace = "<Alt>";
+  };
+  generateWorkspaceKeybinds = (workspaces: workspace-actions:
+    let
+      inherit (lib) range listToAttrs concatMapAttrs;
+      mapAction = (action: key:
+        listToAttrs (map (n:
+          let workspace = toString n;
+          in {
+            name = "${action}-${workspace}";
+            value = [ "${key + workspace}" ];
+          }) (range 1 workspaces)));
+    in concatMapAttrs mapAction workspace-actions);
 in {
   home.packages = gnome-extensions;
-  /* ++ (with pkgs;
-     [ # pkgs-unstable.valent
-       # taskwarrior
-       # gnome.pomodoro
-     ]);
-  */
   # This should be more of a general config, tells apps what to use.
   gtk = {
     enable = true;
@@ -37,8 +47,6 @@ in {
     "org/gnome/shell/extensions/altTab-mod" = {
       current-monitor-only = true;
       current-workspace-only = true;
-      # current-monitor-only-window = true;
-      # current-workspace-only-window = true;
       remove-delay = true;
     };
     "org/gnome/shell/extensions/mediacontrols" = {
@@ -69,7 +77,7 @@ in {
       dynamic-workspaces = false;
       workspaces-only-on-primary = false;
     };
-    "org/gnome/desktop/wm/preferences" = { num-workspaces = 4; };
+    "org/gnome/desktop/wm/preferences" = { num-workspaces = num-workspaces; };
     "org/gnome/shell/app-switcher".current-workspace-only = true;
     "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-timeout = 300;
     "org/gnome/settings-daemon/plugins/color" = {
@@ -77,14 +85,8 @@ in {
       night-light-temperature = mkUint32 3700;
     };
     "org/gnome/desktop/wm/keybindings" = {
-      # switch-to-workspace-rigth = [ "<Super><Shift>Tab" ];
-      # switch-to-workspace-left = [ "<Super>Tab" ];
       switch-applications = [ "<Alt>Tab" ];
-      switch-to-workspace-1 = [ "<Alt>1" ];
-      switch-to-workspace-2 = [ "<Alt>2" ];
-      switch-to-workspace-3 = [ "<Alt>3" ];
-      switch-to-workspace-4 = [ "<Alt>4" ];
-    };
+    } // (generateWorkspaceKeybinds num-workspaces workspace-actions);
     "org/gnome/settings-daemon/plugins/media-keys" = {
       mic-mute = [ "<Alt>z" ];
       volume-up = [ "<Alt>KP_Up" ];
