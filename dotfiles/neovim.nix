@@ -14,17 +14,18 @@ let
       java17 = "${pkgs.jdk17}";
     };
   });
-  lsps = with pkgs; [
+  lsps = (with pkgs; [
     lua-language-server
-    jdtls # I added lombok in there so I don't have to bother about it.
+    kotlin-language-server
     nodePackages.pyright
     nodePackages.bash-language-server
+    yaml-language-server
     gopls
     go
     clang-tools
     nixd
-  ];
-  formatters = with pkgs; [ google-java-format ];
+  ]) ++ [ jdtls ];
+  formatters = with pkgs; [ google-java-format nodePackages.prettier ];
   linters = with pkgs;
     [
       # checkstyle

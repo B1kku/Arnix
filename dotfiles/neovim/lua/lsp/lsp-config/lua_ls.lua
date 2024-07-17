@@ -1,15 +1,17 @@
 local M = {}
 
-M.settings = {
-  Lua = {
-    workspace = {
-      library = {},
+M.lsp_setup = {
+  settings = {
+    Lua = {
+      workspace = {
+        library = {},
 
-      -- adjust these two values if your performance is not optimal
-      maxPreload = 2000,
-      preloadFileSize = 1000,
-    },
-    telemetry = { enable = false },
+        -- adjust these two values if your performance is not optimal
+        maxPreload = 2000,
+        preloadFileSize = 1000,
+      },
+      telemetry = { enable = false },
+    }
   }
 }
 

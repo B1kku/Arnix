@@ -1,9 +1,11 @@
 local function load_lsps(lsp_list, default_config)
+  -- TODO: Technically incorrect? It's language settings, as in, formatter and linter also go there.
+  -- Changing it does mean I might have to make a map of lsp -> language or language -> lsp so everyone can find their files.
   local lsp_config_dir = "lsp.lsp-config."
   local lspconfig = require("lspconfig")
   local function load_lsp(lsp)
-    local config_found, lsp_config = pcall(require, lsp_config_dir .. lsp)
-    lsp_config = config_found and lsp_config or {}
+    local config_found, language_config = pcall(require, lsp_config_dir .. lsp)
+    local lsp_config = config_found and language_config["lsp_setup"] or {}
     lspconfig[lsp].setup(vim.tbl_deep_extend("force", default_config, lsp_config))
   end
   vim.tbl_map(load_lsp, lsp_list)
@@ -57,8 +59,19 @@ return {
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
       -- List of lsp to be loaded, if lsp_config_dir + lsp_name matches a file,
       -- it will override the default config.
-      local lsp_list = { "pyright", "bashls", "nixd", "gopls", "clangd", "lua_ls" }
+      local lsp_list = {
+        "pyright",
+        "bashls",
+        "nixd",
+        "gopls",
+        "clangd",
+        "lua_ls",
+        "yamlls",
+        "kotlin_language_server"
+      }
+
       local default_config = { capabilities = capabilities }
+
       -- Map of signs for the LSP.
       local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
 
