@@ -16,7 +16,8 @@ return {
     conform.setup({
       formatters_by_ft = {
         java = { "google-java-format" },
-        nix = { "nixos" }
+        nix = { "nixos" },
+        yaml = { "prettier" }
       }
     })
   end

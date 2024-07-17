@@ -31,9 +31,9 @@ opt.hlsearch = true   -- Highlight search matches
 
 --  Whitespace  --
 opt.expandtab = true -- Use spaces instead of tabs
-opt.shiftwidth = 4   -- Size of an indent
-opt.softtabstop = 4  -- Number of spaces tabs count for in insert mode
-opt.tabstop = 4      -- Number of spaces tabs count for
+opt.shiftwidth = 2   -- Size of an indent
+opt.softtabstop = 2  -- Number of spaces tabs count for in insert mode
+opt.tabstop = 2      -- Number of spaces tabs count for
 
 --  Splits  --
 opt.splitright = true -- Place new window to right of current one
