@@ -20,7 +20,9 @@ M.lsp_name = {
     -- return vim.lsp.get_active_clients({ number = vim.api.nvim_get_current_buf() })[1].name
     local buf_lsps = vim.lsp.buf_get_clients()
     if not buf_lsps then return "" end
-    local display = "󰒓 " .. buf_lsps[1].name
+    local display = "󰒓 "
+    if not buf_lsps[1].config.root_dir then display = " " end
+    display = display .. buf_lsps[1].name
     if #buf_lsps > 1 then
       display = display .. " +" .. #buf_lsps
     end
