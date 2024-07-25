@@ -27,10 +27,10 @@ let
   ];
 in {
   home.file = lib.listToAttrs (map (wine-pkg: {
-    name = wine-pkg.name;
+    name = lib.toLower(wine-pkg.name);
     value = {
       # Sue me if you want, lutris won't take multiple wine packages otherwise.
-      target = ".local/share/lutris/runners/wine/${wine-pkg.name}";
+      target = ".local/share/lutris/runners/wine/${lib.toLower(wine-pkg.name)}";
       source = wine-pkg;
     };
   }) wine-pkgs);
