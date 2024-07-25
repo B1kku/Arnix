@@ -11,7 +11,7 @@ return {
   -- tags = (overseer.TAG.BUILD),
   condition = {
     callback = function(search)
-      return next(vim.fs.find({ 'build.gradle' }, { upward = true }))
+      return next(vim.fs.find({ 'build.gradle', 'build.gradle.kts' }, { upward = true }))
     end
   }
 }
