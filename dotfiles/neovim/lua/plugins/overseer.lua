@@ -6,16 +6,33 @@ return {
   },
   config = function()
     local overseer = require('overseer')
+    local STATUS = require("overseer.constants").STATUS
+    local run_task = function(task)
+      if (task.status == STATUS.PENDING) then
+        overseer.run_action(task, "start")
+      elseif (task.status ~= STATUS.RUNNING) then
+        overseer.run_action(task, "restart")
+      end
+    end
+    -- Wish there was a way to get the task passed, or at least be able to add
+    -- new sidebar mappings, but seems hardcoded for now.
+    local function sidebar_run_action(action)
+      return function()
+        local sidebar_module = require("overseer.task_list.sidebar")
+        local sidebar = sidebar_module.get()
+        if sidebar == nil then
+          return
+        end
+        sidebar:run_action(action)
+      end
+    end
+
     function OverseerRestart()
       local tasks = overseer.list_tasks({ recent_first = true })
       if vim.tbl_isempty(tasks) then
         vim.cmd("OverseerRun")
       else
-        if (tasks[1].status == "PENDING") then
-          overseer.run_action(tasks[1], "start")
-        elseif (tasks[1].status ~= "RUNNING") then
-          overseer.run_action(tasks[1], "restart")
-        end
+        run_task(tasks[1])
       end
     end
 
@@ -27,10 +44,19 @@ return {
         autostart_on_load = false
       },
       templates = { "builtin", "java.maven", "java.gradle", "go.run", "go.build", "c.gcc", "deploy.rsync", "wrapper" },
+      actions = {
+        ["run"] = {
+          desc = "Just run the task... Don't care if I have to restart or start.",
+          run = run_task
+        }
+      },
       task_list = {
         direction = "bottom",
         bindings = {
-          ["a"] = "<CMD>OverseerRun<CR>"
+          ["a"] = "<CMD>OverseerRun<CR>",
+          ["e"] = "Edit",
+          ["f"] = "OpenFloat",
+          ["r"] = sidebar_run_action("run")
         }
       },
       form = {
