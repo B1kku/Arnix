@@ -16,7 +16,6 @@
     nix-gaming = {
       url =
         "github:fufexan/nix-gaming/fce565402d5b1ed4e92c4a9dfcd094d0172d8f0b";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
