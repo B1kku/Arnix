@@ -48,14 +48,16 @@ local config = {
     java = {
       configuration = {
         runtimes = {
-          {
-            name = "JavaSE-17",
-            path = vim.g.nixvars.java17 .. "/lib/openjdk/",
-            default = true
-          },
+
         }
       }
     }
   }
 }
+
+for key, value in pairs(vim.g.nixvars.java_runtimes) do
+  table.insert(config.settings.java.configuration.runtimes,
+    { name = "JavaSE-" .. key, path = value .. "/lib/openjdk/" })
+end
+vim.g.jdtls = config
 return config

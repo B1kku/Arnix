@@ -11,7 +11,10 @@ let
   '' + (lib.generators.toLua { asBindings = true; } {
     "vim.g.nixvars" = {
       config_dir = "/etc/nixos/dotfiles/neovim";
-      java17 = "${pkgs.jdk17}";
+      java_runtimes = {
+        "17" = "${pkgs.jdk17}";
+        "21" = "${pkgs.jdk21}";
+      };
     };
   });
   lsps = (with pkgs; [
