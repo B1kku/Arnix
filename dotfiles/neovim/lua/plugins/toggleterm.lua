@@ -28,7 +28,14 @@ return {
               terminal:toggle()
             end
           }
-        }
+        },
+        { "t", "<esc>", "", {
+          desc = "Send esc to terminal",
+          callback = function()
+            local esc = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+            vim.fn.chansend(terminal.job_id, esc)
+          end
+        } }
       }
     end
     -- Default config for all terminal keys
