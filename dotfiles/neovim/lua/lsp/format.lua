@@ -5,9 +5,9 @@ return {
   },
   config = function()
     local conform = require("conform")
-    conform.formatters["google-java-format"] = {
-      prepend_args = { "-a" }
-    }
+    -- conform.formatters["google-java-format"] = {
+    --   prepend_args = { "-a" }
+    -- }
     conform.formatters["nixos"] = {
       command = "nix",
       args = { "fmt", "$FILENAME" },
@@ -15,7 +15,7 @@ return {
     }
     conform.setup({
       formatters_by_ft = {
-        java = { "google-java-format" },
+        -- java = { "google-java-format" },
         nix = { "nixos" },
         yaml = { "prettier" }
       }

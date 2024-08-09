@@ -67,7 +67,7 @@ return {
         "clangd",
         "lua_ls",
         "yamlls",
-        "kotlin_language_server"
+        -- "kotlin_language_server"
       }
 
       local default_config = { capabilities = capabilities }

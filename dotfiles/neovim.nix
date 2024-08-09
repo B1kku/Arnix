@@ -3,7 +3,7 @@ let
   # TODO: Figure out why this breaks 
   # https://github.com/NixOS/nixpkgs/commit/ebbd613587758567d62555cfe91a770148e1a30f
   jdtls = pkgs.writeShellScriptBin "jdtls" ''
-    ${pkgs.jdt-language-server}/bin/jdtls \
+    ${pkgs.jdt-language-server.override { jdk = pkgs.jdk21; }}/bin/jdtls \
     --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
   '';
   nixvars = ''
@@ -19,7 +19,6 @@ let
   });
   lsps = (with pkgs; [
     lua-language-server
-    kotlin-language-server
     nodePackages.pyright
     nodePackages.bash-language-server
     yaml-language-server
@@ -27,8 +26,9 @@ let
     go
     clang-tools
     nixd
+    # kotlin-language-server # Too green to use, memory hog
   ]) ++ [ jdtls ];
-  formatters = with pkgs; [ google-java-format nodePackages.prettier ];
+  formatters = with pkgs; [ /* google-java-format */ nodePackages.prettier ];
   linters = with pkgs;
     [
       # checkstyle
