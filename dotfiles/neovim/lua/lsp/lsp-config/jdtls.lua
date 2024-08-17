@@ -2,6 +2,8 @@
 -- I'm half sure nix wrapper for jdtls doesn't give a crap about data directory.
 local util = require 'lspconfig.util'
 
+-- ps ax | grep java (somewhat debug startup command)
+
 local env = {
   HOME = vim.loop.os_homedir(),
   XDG_CACHE_HOME = os.getenv 'XDG_CACHE_HOME',
@@ -50,7 +52,7 @@ local config = {
         runtimes = {
 
         }
-      }
+      },
     }
   }
 }

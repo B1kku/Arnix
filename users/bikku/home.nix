@@ -39,15 +39,16 @@
   home.packages = (with pkgs; [
     mlocate
     rsync
+    rclone
     htop
     bitwarden
     fastfetch
     obs-studio
-    fira-code-nerdfont
+    fira-code-nerdfont # TODO: Move to a proper setting.
     prismlauncher
     deluge
     libnotify
-    loupe # Image viewer
+    gthumb # Image viewer
   ]) ++ (with pkgs.gnome; [
     baobab # Disk space info
     nautilus # File browser

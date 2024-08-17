@@ -32,6 +32,7 @@ let
   linters = with pkgs;
     [
       # checkstyle
+      python312Packages.autopep8
     ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.

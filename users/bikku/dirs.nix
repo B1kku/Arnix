@@ -13,5 +13,9 @@ in {
   in {
     Documents.source = mkOutOfStoreSymlink "${documents}";
     Downloads.source = mkOutOfStoreSymlink "${download}";
+    OPsidian.source =
+      mkOutOfStoreSymlink (documents + "Coding/OPsidian/");
+    Greenbeania.source = 
+      mkOutOfStoreSymlink (documents + "Coding/Greenbeania/");
   };
 }

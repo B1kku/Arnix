@@ -17,7 +17,8 @@ return {
       formatters_by_ft = {
         -- java = { "google-java-format" },
         nix = { "nixos" },
-        yaml = { "prettier" }
+        yaml = { "prettier" },
+        python = { "autopep8" }
       }
     })
   end
