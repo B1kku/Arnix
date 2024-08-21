@@ -7,6 +7,7 @@ return {
   config = function()
     local overseer = require('overseer')
     local STATUS = require("overseer.constants").STATUS
+    -- TODO: There's currently a bug where if a child task fails this won't restart it
     local run_task = function(task)
       if (task.status == STATUS.PENDING) then
         overseer.run_action(task, "start")
@@ -43,7 +44,7 @@ return {
       bundles = {
         autostart_on_load = false
       },
-      templates = { "builtin", "java.maven", "java.gradle", "go.run", "go.build", "c.gcc", "deploy.rsync", "wrapper" },
+      templates = { "builtin", "java.maven", "java.gradle", "go.run", "go.build", "c.gcc", "deploy.rsync", "deploy.rclone_copy", "deploy.rclone_mount", "wrapper" },
       actions = {
         ["run"] = {
           desc = "Just run the task... Don't care if I have to restart or start.",

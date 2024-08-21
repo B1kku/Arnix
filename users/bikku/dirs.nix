@@ -13,6 +13,7 @@ in {
   in {
     Documents.source = mkOutOfStoreSymlink "${documents}";
     Downloads.source = mkOutOfStoreSymlink "${download}";
+    Games.source = mkOutOfStoreSymlink (media + "Data-SSD/Games-SSD/Prefixes/");
     OPsidian.source =
       mkOutOfStoreSymlink (documents + "Coding/OPsidian/");
     Greenbeania.source = 

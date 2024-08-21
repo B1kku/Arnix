@@ -1,21 +1,26 @@
 return {
-  name = "Rsync to",
+  name = "Rclone to",
   desc = "Move a glob to another directory",
   builder = function(params)
-    -- local expandcmd = vim.fn.expandcmd
-    local args = { "--dry-run", "-P" }
-    if params.chown then
-      local chown_params = { "-og", "--chown=" .. params.chown }
-      vim.list_extend(args, chown_params)
+    -- Always dry run at first
+    local args = { "--dry-run" }
+    if params.filter_file then
+      table.insert(args, "--filter-from " .. params.filter_file)
+    end
+    if params.backup_remote then
+      local backup_remote = { "--backup-dir", params.backup_remote .. ":./.rclone_cache" }
+      vim.list_extend(args, backup_remote)
     end
     if params.extra then
       vim.list_extend(args, params.extra)
     end
+
     table.insert(args, params.from)
     table.insert(args, params.to)
+
     return {
-      name = "Rsync to " .. params.to,
-      cmd = { "rsync" },
+      name = "Rclone to " .. params.to,
+      cmd = { "rclone", "copy" },
       args = args,
       components = { "default" }
     }
@@ -29,10 +34,15 @@ return {
       type = "string",
       order = 2
     },
-    chown = {
+    filter_file = {
       type = "string",
       optional = true,
       order = 3
+    },
+    backup_remote = {
+      type = "string",
+      optional = true,
+      order = 4
     },
     extra = {
       type = "list",
@@ -40,8 +50,8 @@ return {
         type = "string"
       },
       delimiter = ",",
-      order = 4,
-      optional = true
+      optional = true,
+      order = 5
     },
   }
 }
