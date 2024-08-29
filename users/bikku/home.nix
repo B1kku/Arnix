@@ -28,6 +28,8 @@
     enable = true;
     enableZshIntegration = true;
   };
+  xdg.configFile."starship.toml".source = ../../dotfiles/starship/starship.toml;
+
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
