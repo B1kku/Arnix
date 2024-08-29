@@ -1,9 +1,7 @@
 { lib, pkgs, pkgs-unstable, config, ... }:
 let
-  # TODO: Figure out why this breaks 
-  # https://github.com/NixOS/nixpkgs/commit/ebbd613587758567d62555cfe91a770148e1a30f
   jdtls = pkgs.writeShellScriptBin "jdtls" ''
-    ${pkgs.jdt-language-server.override { jdk = pkgs.jdk21; }}/bin/jdtls \
+    ${pkgs-unstable.jdt-language-server}/bin/jdtls \
     --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
   '';
   nixvars = ''

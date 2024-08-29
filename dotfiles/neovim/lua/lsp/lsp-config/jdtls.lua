@@ -46,6 +46,9 @@ local config = {
   cmd = cmd,
   root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
   capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  inlayHints = {
+    parameterNames = { enabled = "all" }
+  },
   settings = {
     java = {
       configuration = {
