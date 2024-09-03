@@ -14,9 +14,9 @@ return {
       groups = {
         all = {
           -- More transparency, I feel this should be by default
-          NormalFloat = { fg = "fg1", bg = "NONE", },
+          NormalFloat = { bg = "NONE", },
           -- Cmp transparency
-          PMenu = { bg = "NONE" },
+          Pmenu = { bg = "NONE" },
         },
       },
     }
