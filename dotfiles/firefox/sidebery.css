@@ -1,6 +1,21 @@
-#root.root {--frame-bg: #11131c;}
-#root.root {--toolbar-bg: #11131c;}
-#root.root {--tabs-indent: 0px;}
+#root.root {--tabs-border-radius: 8px;}
+#root.root {--tabs-activated-shadow: none;}
+#root.root:not(:hover) {
+  --tabs-indent: 0xp;
+}
+/* Make selected panel not have that ugly border, also blend with the panel below.*/
+.NavigationBar .nav-item[data-active="true"] {
+  background-color: var(--frame-bg);
+	border-radius: 30% 30% 0 0;
+	box-shadow: 0px 0px 0px 2px var(--frame-bg);
+}
+/* Make audio on selected panel transparent */
+.NavigationBar .nav-item .audio {
+	background-color: transparent;
+}
+/* #root.root {--frame-bg: #11131c;} */
+/* #root.root {--toolbar-bg: #11131c;} */
+/* #root.root {--tabs-indent: 0px;} */
 /* OLD CSS VARS
 #root.root {--bg: #11131c;}
 #root.root {--nav-btn-width: 36px;}
@@ -11,62 +26,62 @@
 
 /* OLD STYLES
 /* TODO: Make indented tabs show with right border.*/
-.Tab:not([data-lvl="0"]) {
-    box-shadow: 3px 0 0 0 #6c68b7 inset;
-}
-
-/* Make favicons bigger */
-.fav {
-    transform: scale(120%);
-    margin-right: 10px !important;
-    margin-left: 10px !important;
-}
-
-/* Hide expand arrow and move it away */
-.exp {
-    display: none !important;
-    visibility: hidden;
-    /*transform: translate(-50px, 0px);*/
-}
-
-/* Make favicon not faded */
-.Tab[data-parent] .fav:hover > img, .Tab[data-parent][data-folded] .fav > img {
-    opacity: 1;
-}
-
-/* Stop text indenting when tab has sound */
-.Tab[data-audible=true] .t-box, .Tab[data-muted=true] .t-box {
-    transform: translateX(-18px);
-}
-
-div.audio > svg {
- fill: rgb(193, 103, 217) !important;
-
-}
-.Tab[data-pin=false] .audio {
-	width: 25px !important;
-	height: 25px !important;
-	top: auto !important;
-	left: 0px !important;
-	z-index: 30 !important;
-	margin: 4px 5px;
-        opacity: 0;
-}
-
-.Tab[data-pin=false] .audio > svg {
-	position: absolute;
-        top: calc(50% + 2px);
-        left: calc(50% + 2px);
-	width: 12px;
-	height: 12px;
-	margin: auto;
-}
-
-/* Move to a better notif */
-.Tab[data-audible=true][data-pin=false] .fav > .update-badge, .Tab[data-muted][data-pin=false] .fav > .update-badge {
-	right: 12px;
-	bottom: 9px;
-}
+/* .Tab:not([data-lvl="0"]) { */
+/*     box-shadow: 3px 0 0 0 #6c68b7 inset; */
+/* } */
+/**/
+/* /* Make favicons bigger */ */
+/* .fav { */
+/*     transform: scale(120%); */
+/*     margin-right: 10px !important; */
+/*     margin-left: 10px !important; */
+/* } */
+/**/
+/* /* Hide expand arrow and move it away */ */
+/* .exp { */
+/*     display: none !important; */
+/*     visibility: hidden; */
+/*     /*transform: translate(-50px, 0px);*/ */
+/* } */
+/**/
+/* /* Make favicon not faded */ */
+/* .Tab[data-parent] .fav:hover > img, .Tab[data-parent][data-folded] .fav > img { */
+/*     opacity: 1; */
+/* } */
+/**/
+/* /* Stop text indenting when tab has sound */ */
+/* .Tab[data-audible=true] .t-box, .Tab[data-muted=true] .t-box { */
+/*     transform: translateX(-18px); */
+/* } */
+/**/
+/* div.audio > svg { */
+/*  fill: rgb(193, 103, 217) !important; */
+/**/
+/* } */
+/* .Tab[data-pin=false] .audio { */
+/* 	width: 25px !important; */
+/* 	height: 25px !important; */
+/* 	top: auto !important; */
+/* 	left: 0px !important; */
+/* 	z-index: 30 !important; */
+/* 	margin: 4px 5px; */
+/*         opacity: 0; */
+/* } */
+/**/
+/* .Tab[data-pin=false] .audio > svg { */
+/* 	position: absolute; */
+/*         top: calc(50% + 2px); */
+/*         left: calc(50% + 2px); */
+/* 	width: 12px; */
+/* 	height: 12px; */
+/* 	margin: auto; */
+/* } */
+/**/
+/* /* Move to a better notif */ */
+/* .Tab[data-audible=true][data-pin=false] .fav > .update-badge, .Tab[data-muted][data-pin=false] .fav > .update-badge { */
+/* 	right: 12px; */
+/* 	bottom: 9px; */
+/* } */
 /*
 .Tab[data-audible=true][data-pin=false] .fav > img, .Tab[data-muted=true] .fav > img {
 	mask: radial-gradient(circle at calc(100% - 2px) calc(100% - 2px),rgba(0,0,0,0),rgba(0,0,0,0.141) 6px,#000 0px,#000);
