@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 let
   logo = pkgs.fetchurl {
     url =
@@ -19,5 +19,5 @@ in {
       X-startupWMClass = "Discord";
     };
   };
-  home.packages = [ pkgs-unstable.vesktop ];
+  home.packages = [ pkgs.vesktop ];
 }

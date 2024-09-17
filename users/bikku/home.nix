@@ -51,6 +51,7 @@
     deluge
     libnotify
     gthumb # Image viewer
+    vlc
   ]) ++ (with pkgs.gnome; [
     baobab # Disk space info
     nautilus # File browser
