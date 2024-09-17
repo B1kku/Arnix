@@ -4,6 +4,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     enabled = true,
     build = ":TSUpdate",
+    lazy = false,
     config = function()
       if (vim.g.nixvars) then
         require('nvim-treesitter.install').compilers = { "gcc" }
