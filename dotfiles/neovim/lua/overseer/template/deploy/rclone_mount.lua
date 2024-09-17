@@ -12,7 +12,7 @@ return {
       vim.list_extend(args, { "--filter-from", params.filter_file })
     end
     if params.backup_remote then
-      local backup_remote = { "--backup-dir", params.backup_remote .. ":./.rclone_cache" }
+      local backup_remote = { "--backup-dir", params.backup_remote .. "./.rclone_cache" }
       vim.list_extend(args, backup_remote)
     end
     if params.extra then

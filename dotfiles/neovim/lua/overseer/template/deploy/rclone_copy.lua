@@ -1,14 +1,17 @@
 return {
-  name = "Rclone to",
+  name = "Rclone copy",
   desc = "Move a glob to another directory",
   builder = function(params)
     -- Always dry run at first
     local args = { "--dry-run" }
     if params.filter_file then
-      table.insert(args, "--filter-from " .. params.filter_file)
+      vim.list_extend(args, { "--filter-from", params.filter_file })
     end
     if params.backup_remote then
       local backup_remote = { "--backup-dir", params.backup_remote .. ":./.rclone_cache" }
+      if params.backup_remote == "none" then
+        backup_remote = { "--inplace" }
+      end
       vim.list_extend(args, backup_remote)
     end
     if params.extra then
@@ -19,7 +22,7 @@ return {
     table.insert(args, params.to)
 
     return {
-      name = "Rclone to " .. params.to,
+      name = "Rclone copy " .. params.to,
       cmd = { "rclone", "copy" },
       args = args,
       components = { "default" }
@@ -41,6 +44,7 @@ return {
     },
     backup_remote = {
       type = "string",
+      default = "none",
       optional = true,
       order = 4
     },

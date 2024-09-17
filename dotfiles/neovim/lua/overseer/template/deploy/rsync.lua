@@ -3,10 +3,17 @@ return {
   desc = "Move a glob to another directory",
   builder = function(params)
     -- local expandcmd = vim.fn.expandcmd
-    local args = { "--dry-run", "-P" }
+    local args = { "--dry-run", "-P", "-h" }
     if params.chown then
       local chown_params = { "-og", "--chown=" .. params.chown }
       vim.list_extend(args, chown_params)
+    end
+    if params.filter_file then
+      local filter_file_param = string.format("--filter='merge %s'", params.filter_file)
+      table.insert(args, filter_file_param)
+    end
+    if params.ru then
+      vim.list_extend(args, {"-ru"})
     end
     if params.extra then
       vim.list_extend(args, params.extra)
@@ -34,13 +41,24 @@ return {
       optional = true,
       order = 3
     },
+    filter_file = {
+      type = "string",
+      optional = true,
+      default = ".rsync-filter",
+      order = 4
+    },
+    ru = {
+      type = "boolean",
+      optional = true,
+      order = 5
+    },
     extra = {
       type = "list",
       subtype = {
         type = "string"
       },
       delimiter = ",",
-      order = 4,
+      order = 6,
       optional = true
     },
   }
