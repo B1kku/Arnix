@@ -26,7 +26,10 @@ let
     nixd
     # kotlin-language-server # Too green to use, memory hog
   ]) ++ [ jdtls ];
-  formatters = with pkgs; [ /* google-java-format */ nodePackages.prettier ];
+  formatters = with pkgs;
+    [ # google-java-format
+      nodePackages.prettier
+    ];
   linters = with pkgs;
     [
       # checkstyle

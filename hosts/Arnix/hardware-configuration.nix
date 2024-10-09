@@ -42,7 +42,7 @@ in {
   swapDevices = [{
     device = "/var/lib/swapfile";
     # RedHat recommends 0.5/1.5 * RAM depending on whether hibernation is on or off
-    size = builtins.ceil(0.5 * 16 * 1024);
+    size = builtins.ceil (0.5 * 16 * 1024);
     randomEncryption.enable = true;
   }];
   zramSwap.enable = true;

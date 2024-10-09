@@ -2,6 +2,5 @@
 
 {
   home.packages = [ pkgs.sshfs ];
-  home.shellAliases = {
-  };
+  home.shellAliases = { };
 }

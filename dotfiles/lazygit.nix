@@ -2,9 +2,7 @@
   programs.lazygit = {
     enable = true;
     settings = {
-      git = {
-        autoFetch = true;
-      };
+      git = { autoFetch = true; };
       gui = {
         border = "rounded";
         nerdFontsVersion = "3";

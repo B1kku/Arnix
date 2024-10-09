@@ -7,7 +7,7 @@
   xdg.configFile."wezterm" = {
     # Without this, it won't reload automatically.
     # Technically only the main file needs this (if I ever expand).
-    recursive = true; 
+    recursive = true;
     source = ./wezterm;
   };
   programs.wezterm.enable = true;

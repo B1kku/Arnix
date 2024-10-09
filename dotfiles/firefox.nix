@@ -1,5 +1,26 @@
 { inputs, pkgs, ... }:
-let firefox-profile = "weasel";
+let
+  firefox-profile = "weasel";
+  extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+    ublock-origin
+    sidebery
+    behave
+    skip-redirect
+    forget_me_not
+    firefox-translations
+    darkreader
+    seventv
+    return-youtube-dislikes
+  ];
+  maskFree = (pkg:
+    if !pkg.meta.unfree then
+      pkg
+    else
+      pkg.overrideAttrs (attrs: {
+        meta = attrs.meta or { } // {
+          license = attrs.meta.license // { free = true; };
+        };
+      }));
 in {
   home.packages = [ pkgs.firefox ];
 
@@ -26,18 +47,7 @@ in {
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1818517 
         "widget.gtk.ignore-bogus-leave-notify" = 1;
       };
-
-      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-        ublock-origin
-        sidebery
-        behave
-        skip-redirect
-        forget_me_not
-        firefox-translations
-        darkreader
-        #	betterttv
-        #	return-youtube-dislikes
-      ];
+      extensions = map maskFree extensions;
     };
   };
 }
