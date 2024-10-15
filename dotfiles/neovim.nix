@@ -84,17 +84,32 @@ in {
   programs.neovim = {
     enable = true;
     package = pkgs-unstable.neovim-unwrapped;
-    defaultEditor = true;
+    # defaultEditor = true;
     vimAlias = true;
     extraLuaConfig = nixvars;
     extraPackages = lsps ++ formatters ++ linters ++ deps;
   };
 
+  home.packages = let
+    nvim-open = pkgs.writeShellScriptBin "nvim-open" ''
+      set -euo pipefail
+
+      if [[ -f $1 ]]; then
+        cd "$(dirname "$1")"
+        nvim "$1"
+      elif [[ -d $1 ]]; then
+        cd "$1"
+        nvim
+      fi
+    '';
+  in [ nvim-open ];
+  home.sessionVariables = { EDITOR = "nvim-open"; };
+
   xdg.desktopEntries.nvim = {
     name = "Neovim";
     genericName = "Text Editor";
     type = "Application";
-    exec = "nvim %u";
+    exec = "nvim-open %u";
     terminal = true;
     categories = [ "Utility" "TextEditor" ];
     icon = "nvim";
