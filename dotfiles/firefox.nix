@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, pkgs-unstable, ... }:
 let
   firefox-profile = "weasel";
   extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
@@ -22,8 +22,6 @@ let
         };
       }));
 in {
-  home.packages = [ pkgs.firefox ];
-
   home.file.${firefox-profile} = {
     source = ./firefox/chrome;
     target = ".mozilla/firefox/${firefox-profile}/chrome";
@@ -35,6 +33,7 @@ in {
   };
   programs.firefox = {
     enable = true;
+    package = pkgs-unstable.firefox;
     profiles.${firefox-profile} = {
       search.default = "DuckDuckGo";
       search.force = true;
