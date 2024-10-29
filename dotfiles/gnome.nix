@@ -1,6 +1,8 @@
 { lib, pkgs, pkgs-unstable, config, inputs, ... }:
 let
   # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
+  minutes-to-suspend = 5;
+  minutes-to-turn-off-screen = 3;
   gnome-extensions = (with pkgs.gnomeExtensions; [
     blur-my-shell
     # https://github.com/NixOS/nixpkgs/issues/301380
@@ -79,7 +81,8 @@ in {
     };
     "org/gnome/desktop/wm/preferences" = { num-workspaces = num-workspaces; };
     "org/gnome/shell/app-switcher".current-workspace-only = true;
-    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-timeout = 300;
+    "org/gnome/desktop/session".idle-delay = mkUint32 (minutes-to-turn-off-screen * 60);
+    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-timeout = mkUint32 (minutes-to-suspend * 60);
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
       night-light-temperature = mkUint32 3700;

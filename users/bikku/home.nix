@@ -1,4 +1,11 @@
-{ config, osConfig, lib, pkgs, pkgs-unstable, inputs, ... }: {
+{ config, osConfig, lib, pkgs, pkgs-unstable, inputs, ... }:
+let
+  # Little wrapper around nix shell, shorthand and allows specifying a branch.
+  nix-shell-wrapper = pkgs.writeShellScriptBin "pkgs" ''
+    nixpkgs="nixpkgs''${2:+"/nixos-$2"}"
+    NIXPKGS_ALLOW_UNFREE=1 nix shell "$nixpkgs#$1" --impure
+  '';
+in {
   programs.home-manager.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
@@ -21,8 +28,9 @@
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
   home.shellAliases = {
-    arnix-rebuild = "sudo nixos-rebuild switch";
+    arnix-rebuild = "su -c 'nixos-rebuild switch'";
     arnix-update = "nix flake update /etc/nixos";
+    arnix-clean = "su -c 'nix-collect-garbage --delete-older-than 7d'";
   };
   programs.starship = {
     enable = true;
@@ -61,7 +69,7 @@
     gnome-calculator
     gnome-system-monitor
     gnome-tweaks
-  ]);
+  ]) ++ [ nix-shell-wrapper ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
 }
