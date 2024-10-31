@@ -32,11 +32,7 @@ in {
     arnix-update = "nix flake update /etc/nixos";
     arnix-clean = "su -c 'nix-collect-garbage --delete-older-than 7d'";
   };
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-  xdg.configFile."starship.toml".source = ../../dotfiles/starship/starship.toml;
+
 
   programs.direnv = {
     enable = true;
