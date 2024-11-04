@@ -8,6 +8,7 @@ M.pre_write = function()
 end
 M.pre_read = function()
   sessions_overseer.pre_read()
+  vim.cmd("LspStop")
 end
 M.post_read = function()
   sessions_toggleterm.post_read()
