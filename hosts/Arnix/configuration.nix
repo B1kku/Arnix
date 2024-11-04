@@ -117,6 +117,10 @@
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
+    extraPackages = with pkgs; [
+      gamescope
+      mangohud
+    ];
   };
 
   programs.gamemode.enable = true;

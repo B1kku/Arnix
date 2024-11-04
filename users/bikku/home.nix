@@ -31,6 +31,7 @@ in {
     arnix-rebuild = "su -c 'nixos-rebuild switch'";
     arnix-update = "nix flake update /etc/nixos";
     arnix-clean = "su -c 'nix-collect-garbage --delete-older-than 7d'";
+    neofetch = "fastfetch";
   };
 
 
