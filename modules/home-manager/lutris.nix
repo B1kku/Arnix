@@ -19,7 +19,7 @@ in {
 
     steamPackage = mkOption {
       type = types.nullOr types.package;
-      default = if builtins.hasAttr "osConfig" args
+      default = if (args ? osConfig)
       && args.osConfig.programs.steam.enable then
         args.osConfig.programs.steam.package
       else
