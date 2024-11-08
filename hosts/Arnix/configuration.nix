@@ -5,6 +5,7 @@
 { config, pkgs, pkgs-unstable, home-manager, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
+    ../../modules/system/usb-wakeup.nix
     ./hardware-configuration.nix
     home-manager.nixosModules.home-manager
   ];
@@ -78,13 +79,15 @@
     #  useXkbConfig = true; # use xkbOptions in tty.
   };
   # Disable everything but the keyboard from waking up the computer.
-  # This is due to mouse sending wake up signals randomly sometimes.
-  # TODO: Move to a module.
-  services.udev.extraRules = ''
-    ACTION=="add", ATTRS{removable}=="removable", ATTRS{idVendor}!="413c", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
-    #ACTION=="add", ATTRS{idProduct}!="2003", ATTR{power/wakeup}="disabled"
-    #ACTION=="add", ATTR{power/wakeup}="disabled"
-  '';
+  # This is due to mouse sending wake up signals randomly.
+  hardware.usb.wakeup = {
+    enable = true;
+    mode = "whitelist";
+    devices.keyboard = {
+      vendor = "413c";
+      product = "2003";
+    };
+  };
   # XServer, DM & DE
   services.libinput.mouse.accelProfile = "flat";
   services.displayManager.defaultSession = "gnome";
@@ -117,10 +120,7 @@
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
-    extraPackages = with pkgs; [
-      gamescope
-      mangohud
-    ];
+    extraPackages = with pkgs; [ gamescope mangohud ];
   };
 
   programs.gamemode.enable = true;
