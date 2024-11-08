@@ -29,7 +29,7 @@ in {
   home.shellAliases = {
     firefox-test =
       "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome; ln -s /etc/nixos/dotfiles/firefox/chrome/ ~/.mozilla/firefox/${firefox-profile}/chrome";
-    firefox-clean = "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome/";
+    firefox-clean = "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome";
   };
   programs.firefox = {
     enable = true;
