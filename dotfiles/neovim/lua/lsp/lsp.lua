@@ -67,6 +67,7 @@ return {
         "clangd",
         "lua_ls",
         "yamlls",
+        "rust_analyzer"
         -- "kotlin_language_server"
       }
 

@@ -1,9 +1,5 @@
 { lib, pkgs, pkgs-unstable, config, ... }:
 let
-  jdtls = pkgs.writeShellScriptBin "jdtls" ''
-    ${pkgs-unstable.jdt-language-server}/bin/jdtls \
-    --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
-  '';
   nixvars = ''
     -- Code injected by Home Manager for NixOS --
   '' + (lib.generators.toLua { asBindings = true; } {
@@ -15,15 +11,19 @@ let
       };
     };
   });
+  jdtls = pkgs.writeShellScriptBin "jdtls" ''
+    ${pkgs-unstable.jdt-language-server}/bin/jdtls \
+    --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
+  '';
   lsps = (with pkgs; [
     lua-language-server
     nodePackages.pyright
     nodePackages.bash-language-server
     yaml-language-server
     gopls
-    go
     clang-tools
     nixd
+    rust-analyzer
     # kotlin-language-server # Too green to use, memory hog
   ]) ++ [ jdtls ];
   formatters = with pkgs;
@@ -35,6 +35,7 @@ let
       # checkstyle
       python312Packages.autopep8
     ];
+  tooling = with pkgs; [ go rustup ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.
     fzf # Telescope dependency
@@ -87,7 +88,7 @@ in {
     # defaultEditor = true;
     vimAlias = true;
     extraLuaConfig = nixvars;
-    extraPackages = lsps ++ formatters ++ linters ++ deps;
+    extraPackages = lsps ++ formatters ++ linters ++ deps ++ tooling;
   };
 
   home.packages = let
@@ -109,7 +110,7 @@ in {
     name = "Neovim";
     genericName = "Text Editor";
     type = "Application";
-    exec = "nvim-open %u";
+    exec = "nvim %u";
     terminal = true;
     categories = [ "Utility" "TextEditor" ];
     icon = "nvim";
