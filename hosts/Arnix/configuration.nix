@@ -1,8 +1,14 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
-
-{ config, pkgs, pkgs-unstable, home-manager, inputs, ... }: {
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  home-manager,
+  inputs,
+  ...
+}: {
   imports = [
     # Include the results of the hardware scan.
     ../../modules/system/usb-wakeup.nix
@@ -51,9 +57,9 @@
   #Networking
   networking.hostName = "Arnix";
   networking = {
-    nameservers = [ "1.1.1.1" ];
+    nameservers = ["1.1.1.1"];
     # Valent
-    # Only local 
+    # Only local
     # firewall = {
     #   extraCommands = ''
     #     iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
@@ -94,7 +100,7 @@
   services.xserver = {
     enable = true;
     xkb.layout = "${config.console.keyMap}";
-    excludePackages = [ pkgs.xterm ];
+    excludePackages = [pkgs.xterm];
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
@@ -110,7 +116,11 @@
     pulse.enable = true;
   };
   powerManagement.cpuFreqGovernor = "ondemand";
-  environment.systemPackages = with pkgs; [ wget git tealdeer ];
+  environment.systemPackages = with pkgs; [
+    wget
+    git
+    tealdeer
+  ];
 
   users.users.bikku = {
     shell = pkgs.zsh;
@@ -119,8 +129,11 @@
   };
   programs.steam = {
     enable = true;
-    extraCompatPackages = [ pkgs.proton-ge-bin ];
-    extraPackages = with pkgs; [ gamescope mangohud ];
+    extraCompatPackages = [pkgs.proton-ge-bin];
+    extraPackages = with pkgs; [
+      gamescope
+      mangohud
+    ];
   };
 
   programs.gamemode.enable = true;
@@ -129,11 +142,11 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit pkgs-unstable inputs; };
+    extraSpecialArgs = {
+      inherit pkgs-unstable inputs;
+    };
     users.bikku = import ../../users/bikku/home.nix;
   };
   # Don't change randomly, used for internals.
   system.stateVersion = "23.05";
-
 }
-

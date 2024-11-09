@@ -1,6 +1,11 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
-let
-  TOMLgenerator = pkgs.formats.toml { };
+{
+  config,
+  lib,
+  pkgs,
+  pkgs-unstable,
+  ...
+}: let
+  TOMLgenerator = pkgs.formats.toml {};
   terminal-font = "FiraCode Nerd Font";
   alacritty-config = {
     window = {
@@ -43,7 +48,6 @@ let
       };
     };
   };
-
 in {
   home.packages = [
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
@@ -54,8 +58,7 @@ in {
   # pkg version, it's not doing it properly, which leads
   # to a yaml file and therefore alacritty complains nonstop.
   xdg.configFile = {
-    "alacritty/alacritty.toml".source =
-      TOMLgenerator.generate "alacritty.toml" alacritty-config;
+    "alacritty/alacritty.toml".source = TOMLgenerator.generate "alacritty.toml" alacritty-config;
   };
   programs.alacritty = {
     enable = true;

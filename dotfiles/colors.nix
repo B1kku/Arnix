@@ -1,5 +1,4 @@
-{ inputs, ... }:
-let
+{inputs, ...}: let
   colors = {
     duskfox = {
       name = "Duskfox";
@@ -46,16 +45,14 @@ let
         base0E = "c678dd";
         base0F = "46d9ff";
       };
-
     };
   };
 in {
-  imports = [ inputs.nix-colors.homeManagerModules.default ];
+  imports = [inputs.nix-colors.homeManagerModules.default];
   # colorScheme = inputs.nix-colors.colorSchemes.stella;
   # colorScheme = inputs.nix-colors.colorSchemes.spaceduck;
   # colorScheme = inputs.nix-colors.colorSchemes.harmonic16-dark;
   # colorScheme = inputs.nix-colors.colorSchemes.dracula;
   # colorScheme = inputs.nix-colors.colorSchemes.solarized-dark;
   colorScheme = inputs.nix-colors.colorSchemes.solarized-dark;
-
 }

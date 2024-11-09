@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   services.udev.extraHwdb = ''
     evdev:name:BDA NSW wired controller:*
-      KEYBOARD_KEY_90002=btn_c      # A 
+      KEYBOARD_KEY_90002=btn_c      # A
       KEYBOARD_KEY_90003=btn_east   # B
       KEYBOARD_KEY_90001=btn_west   # X
       KEYBOARD_KEY_90004=btn_south  # Y

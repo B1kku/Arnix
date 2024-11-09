@@ -1,5 +1,5 @@
-{ config, ... }:
-let media = "/run/media/bikku/";
+{config, ...}: let
+  media = "/run/media/bikku/";
 in {
   xdg.userDirs = {
     enable = true;
@@ -15,7 +15,6 @@ in {
     Downloads.source = mkOutOfStoreSymlink "${download}";
     Games.source = mkOutOfStoreSymlink (media + "Data-SSD/Games-SSD/Prefixes/");
     OPsidian.source = mkOutOfStoreSymlink (documents + "Coding/OPsidian/");
-    Greenbeania.source =
-      mkOutOfStoreSymlink (documents + "Coding/Greenbeania/");
+    Greenbeania.source = mkOutOfStoreSymlink (documents + "Coding/Greenbeania/");
   };
 }

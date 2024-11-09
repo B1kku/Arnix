@@ -1,9 +1,20 @@
 # Adapted from: https://9999years/nix-config/
-{ config, pkgs, lib, ... }:
-let
-  inherit (lib)
-    mapAttrsToList concatStringsSep hasSuffix toLower types mkOption mkIf
-    mkEnableOption;
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit
+    (lib)
+    mapAttrsToList
+    concatStringsSep
+    toLower
+    types
+    mkOption
+    mkIf
+    mkEnableOption
+    ;
   cfg = config.hardware.usb.wakeup;
   vendorProductStrDesc = type: ''
     The device's ${type} ID, as a 4-digit hex string.
@@ -16,13 +27,15 @@ let
     All strings are converted to lowercase.
   '';
   deviceStr = types.strMatching "^[0-9a-fA-F]{4}$";
-
 in {
   options.hardware.usb.wakeup = {
     enable = mkEnableOption "USB wakeup rules";
 
     mode = mkOption {
-      type = types.enum [ "whitelist" "blacklist" ];
+      type = types.enum [
+        "whitelist"
+        "blacklist"
+      ];
       default = "whitelist";
       description = ''
         Whitelist disables all devices but the ones specified from waking up the computer.
@@ -31,21 +44,23 @@ in {
       '';
     };
     devices = mkOption {
-      default = { };
-      type = types.attrsOf (types.submodule {
-        options = {
-          product = mkOption {
-            description = vendorProductStrDesc "product";
-            type = deviceStr;
-            example = "c52b";
+      default = {};
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            product = mkOption {
+              description = vendorProductStrDesc "product";
+              type = deviceStr;
+              example = "c52b";
+            };
+            vendor = mkOption {
+              description = vendorProductStrDesc "vendor";
+              type = deviceStr;
+              example = "046d";
+            };
           };
-          vendor = mkOption {
-            description = vendorProductStrDesc "vendor";
-            type = deviceStr;
-            example = "046d";
-          };
-        };
-      });
+        }
+      );
     };
   };
 
@@ -56,32 +71,37 @@ in {
         ''SUBSYSTEM=="usb"''
         ''ATTRS{removable}=="removable"''
       ];
-      deviceTarget = (name: device: [
-        ''ATTRS{idVendor}=="${toLower device.vendor}"''
-        ''ATTRS{idProduct}=="${toLower device.product}"''
-      ]);
-      ruleAction = (action: [ ''ATTR{power/wakeup}="${action}"'' ]);
+      deviceTarget = (
+        name: device: [
+          ''ATTRS{idVendor}=="${toLower device.vendor}"''
+          ''ATTRS{idProduct}=="${toLower device.product}"''
+        ]
+      );
+      ruleAction = action: [''ATTR{power/wakeup}="${action}"''];
 
       # Map each device to a string rule that targets said device, with given action (enabled/disabled).
-      mapRules = (action:
-        (map (filterRule:
-          concatStringsSep ", " (baseRule ++ filterRule ++ (ruleAction action)))
-          (lib.attrsets.mapAttrsToList deviceTarget cfg.devices)));
+      mapRules = (
+        action: (map (filterRule: concatStringsSep ", " (baseRule ++ filterRule ++ (ruleAction action))) (
+          mapAttrsToList deviceTarget cfg.devices
+        ))
+      );
       # Contains which action to take depending on the mode set.
       modeAction = {
         # Disable all, add rules below to enable those devices.
-        whitelist =
-          [ (concatStringsSep ", " (baseRule ++ ruleAction "disabled")) ]
-          ++ (mapRules "enabled");
+        whitelist = [(concatStringsSep ", " (baseRule ++ ruleAction "disabled"))] ++ (mapRules "enabled");
         blacklist = mapRules "disabled";
       };
       rules = modeAction.${cfg.mode};
-
-      mkUdevRule = (rules:
-        pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules"
-        (concatStringsSep "\n" ([
-          "#USB wake rules, controls which USB devices can resume the computer from sleep."
-        ] ++ rules)));
-    in if (builtins.length rules <= 0) then [ ] else [ (mkUdevRule rules) ];
+    in
+      if (builtins.length rules <= 0)
+      then []
+      else [
+        (pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules" (
+          (concatStringsSep "\n" (
+            ["#USB wakeup rules, controls which USB devices can resume the computer from sleep."] ++ rules
+          ))
+          + "\n"
+        ))
+      ];
   };
 }

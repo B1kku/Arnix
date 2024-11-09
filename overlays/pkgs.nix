@@ -1,13 +1,11 @@
 final: prev: {
-  kotlin-language-server = prev.kotlin-language-server.overrideAttrs
-    (oldAttrs: rec {
-      version = "1.3.12";
-      src = prev.fetchzip {
-        url =
-          "https://github.com/fwcd/kotlin-language-server/releases/download/${version}/server.zip";
-        hash = "sha256-poWaU0vZS1cpMbbvN7/s1RRUKhekdfTi08fF/IZsVGs=";
-      };
-    });
+  kotlin-language-server = prev.kotlin-language-server.overrideAttrs (oldAttrs: rec {
+    version = "1.3.12";
+    src = prev.fetchzip {
+      url = "https://github.com/fwcd/kotlin-language-server/releases/download/${version}/server.zip";
+      hash = "sha256-poWaU0vZS1cpMbbvN7/s1RRUKhekdfTi08fF/IZsVGs=";
+    };
+  });
   # bedrock-mc = final.callPackage ../packages/bedrock-mc { };
   # # Also should be removed on update, but didn't see any PR for updating this?
   # gnomeExtensions = prev.gnomeExtensions // {
@@ -22,5 +20,4 @@ final: prev: {
   #     patches = [ ];
   #   });
   # };
-
 }

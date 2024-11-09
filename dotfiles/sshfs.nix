@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
-  home.packages = [ pkgs.sshfs ];
-  home.shellAliases = { };
+  pkgs,
+  lib,
+  ...
+}: {
+  home.packages = [pkgs.sshfs];
+  home.shellAliases = {};
 }

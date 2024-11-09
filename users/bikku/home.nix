@@ -1,5 +1,12 @@
-{ config, osConfig, lib, pkgs, pkgs-unstable, inputs, ... }:
-let
+{
+  config,
+  osConfig,
+  lib,
+  pkgs,
+  pkgs-unstable,
+  inputs,
+  ...
+}: let
   # Little wrapper around nix shell, shorthand and allows specifying a branch.
   nix-shell-wrapper = pkgs.writeShellScriptBin "pkgs" ''
     nixpkgs="nixpkgs''${2:+"/nixos-$2"}"
@@ -44,30 +51,33 @@ in {
   # No sftpman integration yet on 23.11
   # programs.sftpman
   fonts.fontconfig.enable = true;
-  home.packages = (with pkgs; [
-    mlocate
-    rsync
-    rclone
-    htop
-    bitwarden
-    fastfetch
-    obs-studio
-    fira-code-nerdfont # TODO: Move to a proper setting.
-    prismlauncher
-    deluge
-    libnotify
-    gthumb # Image viewer
-    vlc
-  ]) ++ (with pkgs.gnome; [
-    baobab # Disk space info
-    nautilus # File browser
-    gnome-clocks # Alarms
-    gnome-weather # Weather applet
-    gnome-music
-    gnome-calculator
-    gnome-system-monitor
-    gnome-tweaks
-  ]) ++ [ nix-shell-wrapper ];
+  home.packages =
+    (with pkgs; [
+      mlocate
+      rsync
+      rclone
+      htop
+      bitwarden
+      fastfetch
+      obs-studio
+      fira-code-nerdfont # TODO: Move to a proper setting.
+      prismlauncher
+      deluge
+      libnotify
+      gthumb # Image viewer
+      vlc
+    ])
+    ++ (with pkgs.gnome; [
+      baobab # Disk space info
+      nautilus # File browser
+      gnome-clocks # Alarms
+      gnome-weather # Weather applet
+      gnome-music
+      gnome-calculator
+      gnome-system-monitor
+      gnome-tweaks
+    ])
+    ++ [nix-shell-wrapper];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
 }
