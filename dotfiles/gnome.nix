@@ -50,6 +50,11 @@
 in {
   home.packages = gnome-extensions;
   # This should be more of a general config, tells apps what to use.
+  qt = {
+    enable = true;
+    style.name = "adwaita-dark";
+  };
+
   gtk = {
     enable = true;
     theme = {
