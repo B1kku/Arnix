@@ -23,8 +23,8 @@
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
+    package = pkgs.nixVersions.latest;
+    extraOptions = "experimental-features = nix-command flakes pipe-operators";
   };
   # Use the systemd-boot EFI boot loader.
   boot = {
