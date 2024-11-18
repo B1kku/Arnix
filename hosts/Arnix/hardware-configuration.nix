@@ -37,6 +37,7 @@ in {
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
+    options = [ "umask=0077" ];
   };
 
   fileSystems."/home" = {
