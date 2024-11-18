@@ -21,10 +21,8 @@ in
   imports = [
     ../../dotfiles/colors.nix
     ../../dotfiles/games.nix
-    ../../dotfiles/tmux.nix
     ../../dotfiles/yazi.nix
     ../../dotfiles/lazygit.nix
-    ../../dotfiles/sshfs.nix
     ../../dotfiles/vesktop.nix
     ../../dotfiles/zsh.nix
     ../../dotfiles/wezterm.nix
