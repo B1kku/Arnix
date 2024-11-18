@@ -65,7 +65,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && (cfg.devices |> builtins.attrNames |> builtins.length <= 0)) {
     services.udev.packages =
       let
         baseRule = [
@@ -80,32 +80,33 @@ in
           ]
         );
         ruleAction = action: [ ''ATTR{power/wakeup}="${action}"'' ];
-
         # Map each device to a string rule that targets said device, with given action (enabled/disabled).
         mapRules = (
           action:
-          (map (filterRule: concatStringsSep ", " (baseRule ++ filterRule ++ (ruleAction action))) (
-            mapAttrsToList deviceTarget cfg.devices
-          ))
+          cfg.devices
+          |> mapAttrsToList deviceTarget
+          |> map (filterRule: concatStringsSep ", " (baseRule ++ filterRule ++ (ruleAction action)))
         );
         # Contains which action to take depending on the mode set.
+        # I assume if nix is lazy it won't calculate both.
         modeAction = {
           # Disable all, add rules below to enable those devices.
           whitelist = [ (concatStringsSep ", " (baseRule ++ ruleAction "disabled")) ] ++ (mapRules "enabled");
           blacklist = mapRules "disabled";
         };
-        rules = modeAction.${cfg.mode};
       in
-      if (builtins.length rules <= 0) then
-        [ ]
-      else
-        [
-          (pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules" (
-            (concatStringsSep "\n" (
-              [ "#USB wakeup rules, controls which USB devices can resume the computer from sleep." ] ++ rules
-            ))
-            + "\n"
-          ))
-        ];
+      [
+        (
+          [
+            "# USB wakeup rules, controls which USB device can resume the computer from sleep."
+            "# Do not change manually, use hardware.usb.wakeup to configure these."
+          ]
+          ++ modeAction.${cfg.mode}
+          |> concatStringsSep "\n"
+          #Append \n as EOL, writeTextDir did not seem to do this and I suspect that caused it to not work at times.
+          |> (text: text + "\n")
+          |> pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules"
+        )
+      ];
   };
 }

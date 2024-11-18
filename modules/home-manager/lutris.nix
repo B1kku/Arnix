@@ -16,6 +16,7 @@ let
     listToAttrs
     nameValuePair
     ;
+  inherit (pkgs.lib) extra;
   # TODO: Properly define this type.
   runnerType = types.submodule {
     options = {
@@ -88,8 +89,9 @@ in
       [ (cfg.package.override lutris-override) ];
     # Link wine packages, for some reason it trips out if there's any caps on the name.
     # Couldn't find a better way than linking the wine package to local/share.
-    xdg.dataFile = listToAttrs (
-      map (
+    xdg.dataFile =
+      cfg.winePackages
+      |> map (
         wine-pkg:
         let
           name = toLower wine-pkg.name;
@@ -98,8 +100,8 @@ in
           target = "lutris/runners/wine/${name}";
           source = wine-pkg;
         })
-      ) cfg.winePackages
-    );
+      )
+      |> listToAttrs;
     # Link other runners.
     xdg.configFile =
       let
@@ -132,10 +134,9 @@ in
         acc: runner:
         acc
         // (
-          if (types.package.check runner) then
-            (runnerToConfig (pkgToRunner runner))
-          else
-            runnerToConfig runner
+          runner
+          |> (runner: if (types.package.check runner) then (pkgToRunner runner) else runner)
+          |> runnerToConfig
         )
       ) { } cfg.runners;
   };
