@@ -4,9 +4,9 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mapAttrsToList
     concatStringsSep
     toLower
@@ -27,7 +27,8 @@
     All strings are converted to lowercase.
   '';
   deviceStr = types.strMatching "^[0-9a-fA-F]{4}$";
-in {
+in
+{
   options.hardware.usb.wakeup = {
     enable = mkEnableOption "USB wakeup rules";
 
@@ -44,7 +45,7 @@ in {
       '';
     };
     devices = mkOption {
-      default = {};
+      default = { };
       type = types.attrsOf (
         types.submodule {
           options = {
@@ -65,43 +66,46 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.udev.packages = let
-      baseRule = [
-        ''ACTION=="add"''
-        ''SUBSYSTEM=="usb"''
-        ''ATTRS{removable}=="removable"''
-      ];
-      deviceTarget = (
-        name: device: [
-          ''ATTRS{idVendor}=="${toLower device.vendor}"''
-          ''ATTRS{idProduct}=="${toLower device.product}"''
-        ]
-      );
-      ruleAction = action: [''ATTR{power/wakeup}="${action}"''];
+    services.udev.packages =
+      let
+        baseRule = [
+          ''ACTION=="add"''
+          ''SUBSYSTEM=="usb"''
+          ''ATTRS{removable}=="removable"''
+        ];
+        deviceTarget = (
+          name: device: [
+            ''ATTRS{idVendor}=="${toLower device.vendor}"''
+            ''ATTRS{idProduct}=="${toLower device.product}"''
+          ]
+        );
+        ruleAction = action: [ ''ATTR{power/wakeup}="${action}"'' ];
 
-      # Map each device to a string rule that targets said device, with given action (enabled/disabled).
-      mapRules = (
-        action: (map (filterRule: concatStringsSep ", " (baseRule ++ filterRule ++ (ruleAction action))) (
-          mapAttrsToList deviceTarget cfg.devices
-        ))
-      );
-      # Contains which action to take depending on the mode set.
-      modeAction = {
-        # Disable all, add rules below to enable those devices.
-        whitelist = [(concatStringsSep ", " (baseRule ++ ruleAction "disabled"))] ++ (mapRules "enabled");
-        blacklist = mapRules "disabled";
-      };
-      rules = modeAction.${cfg.mode};
-    in
-      if (builtins.length rules <= 0)
-      then []
-      else [
-        (pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules" (
-          (concatStringsSep "\n" (
-            ["#USB wakeup rules, controls which USB devices can resume the computer from sleep."] ++ rules
+        # Map each device to a string rule that targets said device, with given action (enabled/disabled).
+        mapRules = (
+          action:
+          (map (filterRule: concatStringsSep ", " (baseRule ++ filterRule ++ (ruleAction action))) (
+            mapAttrsToList deviceTarget cfg.devices
           ))
-          + "\n"
-        ))
-      ];
+        );
+        # Contains which action to take depending on the mode set.
+        modeAction = {
+          # Disable all, add rules below to enable those devices.
+          whitelist = [ (concatStringsSep ", " (baseRule ++ ruleAction "disabled")) ] ++ (mapRules "enabled");
+          blacklist = mapRules "disabled";
+        };
+        rules = modeAction.${cfg.mode};
+      in
+      if (builtins.length rules <= 0) then
+        [ ]
+      else
+        [
+          (pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules" (
+            (concatStringsSep "\n" (
+              [ "#USB wakeup rules, controls which USB devices can resume the computer from sleep." ] ++ rules
+            ))
+            + "\n"
+          ))
+        ];
   };
 }

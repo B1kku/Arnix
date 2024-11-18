@@ -3,7 +3,8 @@
   pkgs,
   pkgs-unstable,
   ...
-}: let
+}:
+let
   firefox-profile = "weasel";
   extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
     ublock-origin
@@ -18,23 +19,19 @@
   ];
   maskFree = (
     pkg:
-      if !pkg.meta.unfree
-      then pkg
-      else
-        pkg.overrideAttrs (attrs: {
-          meta =
-            attrs.meta
-            or {}
-            // {
-              license =
-                attrs.meta.license
-                // {
-                  free = true;
-                };
-            };
-        })
+    if !pkg.meta.unfree then
+      pkg
+    else
+      pkg.overrideAttrs (attrs: {
+        meta = attrs.meta or { } // {
+          license = attrs.meta.license // {
+            free = true;
+          };
+        };
+      })
   );
-in {
+in
+{
   home.file.${firefox-profile} = {
     source = ./firefox/chrome;
     target = ".mozilla/firefox/${firefox-profile}/chrome";

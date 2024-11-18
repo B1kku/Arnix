@@ -7,10 +7,10 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (builtins) length;
-  inherit
-    (lib)
+  inherit (lib)
     concatStringsSep
     optionalString
     optional
@@ -38,25 +38,24 @@
   udevRules = pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules" (
     concatStringsSep "\n" (
       forEach cfg (
-        devCfg: let
-          wakeStr =
-            if devCfg.wakeup
-            then "enabled"
-            else "disabled";
+        devCfg:
+        let
+          wakeStr = if devCfg.wakeup then "enabled" else "disabled";
         in
-          concatStringsSep ", " [
-            ''ACTION=="add"''
-            ''ATTRS{idVendor}=="${toLower devCfg.vendor}"''
-            ''ATTRS{idProduct}=="${toLower devCfg.product}"''
-            ''ATTR{power/wakeup}="${wakeStr}"''
-          ]
+        concatStringsSep ", " [
+          ''ACTION=="add"''
+          ''ATTRS{idVendor}=="${toLower devCfg.vendor}"''
+          ''ATTRS{idProduct}=="${toLower devCfg.product}"''
+          ''ATTR{power/wakeup}="${wakeStr}"''
+        ]
       )
     )
   );
-in {
+in
+{
   options.hardware.usb.wakeupDisabled = mkOption {
     description = "Prevent USB devices from waking the computer from sleep/hibernation.";
-    default = [];
+    default = [ ];
     type = types.listOf (
       types.submodule {
         options = {

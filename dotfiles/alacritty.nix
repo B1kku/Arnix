@@ -4,8 +4,9 @@
   pkgs,
   pkgs-unstable,
   ...
-}: let
-  TOMLgenerator = pkgs.formats.toml {};
+}:
+let
+  TOMLgenerator = pkgs.formats.toml { };
   terminal-font = "FiraCode Nerd Font";
   alacritty-config = {
     window = {
@@ -48,7 +49,8 @@
       };
     };
   };
-in {
+in
+{
   home.packages = [
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
       exec "${lib.getExe pkgs-unstable.alacritty}" -e "$@"

@@ -5,7 +5,8 @@
   lib,
   osConfig,
   ...
-}: {
+}:
+{
   programs.lutris = {
     enable = true;
     winePackages = [

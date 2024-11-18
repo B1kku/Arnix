@@ -1,4 +1,5 @@
-{inputs, ...}: let
+{ inputs, ... }:
+let
   colors = {
     duskfox = {
       name = "Duskfox";
@@ -47,8 +48,9 @@
       };
     };
   };
-in {
-  imports = [inputs.nix-colors.homeManagerModules.default];
+in
+{
+  imports = [ inputs.nix-colors.homeManagerModules.default ];
   # colorScheme = inputs.nix-colors.colorSchemes.stella;
   # colorScheme = inputs.nix-colors.colorSchemes.spaceduck;
   # colorScheme = inputs.nix-colors.colorSchemes.harmonic16-dark;

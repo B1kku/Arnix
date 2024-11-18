@@ -1,8 +1,5 @@
+{ pkgs-unstable, config, ... }:
 {
-  pkgs-unstable,
-  config,
-  ...
-}: {
   home.shellAliases = {
     lf = "yazi";
   };

@@ -4,12 +4,13 @@
   pkgs-unstable,
   config,
   ...
-}: let
+}:
+let
   nixvars =
     ''
       -- Code injected by Home Manager for NixOS --
     ''
-    + (lib.generators.toLua {asBindings = true;} {
+    + (lib.generators.toLua { asBindings = true; } {
       "vim.g.nixvars" = {
         config_dir = "/etc/nixos/dotfiles/neovim";
         java_runtimes = {
@@ -30,11 +31,13 @@
       yaml-language-server
       gopls
       clang-tools
-      nixd
       rust-analyzer
       # kotlin-language-server # Too green to use, memory hog
     ])
-    ++ [jdtls];
+    ++ [
+      jdtls
+      pkgs-unstable.nixd
+    ];
   formatters = with pkgs; [
     # google-java-format
     nodePackages.prettier
@@ -73,7 +76,8 @@
     "text/x-c"
     "text/x-c++"
   ];
-in {
+in
+{
   # TODO: Research remote neovim, to pipe files from yazi into neovim.
   # Home manager won't write to init.lua otherwise
   # But it's also used to inject nix specific options
@@ -101,19 +105,21 @@ in {
     extraPackages = lsps ++ formatters ++ linters ++ deps ++ tooling;
   };
 
-  home.packages = let
-    nvim-open = pkgs.writeShellScriptBin "nvim-open" ''
-      set -euo pipefail
+  home.packages =
+    let
+      nvim-open = pkgs.writeShellScriptBin "nvim-open" ''
+        set -euo pipefail
 
-      if [[ -f $1 ]]; then
-        cd "$(dirname "$1")"
-        nvim "$1"
-      elif [[ -d $1 ]]; then
-        cd "$1"
-        nvim
-      fi
-    '';
-  in [nvim-open];
+        if [[ -f $1 ]]; then
+          cd "$(dirname "$1")"
+          nvim "$1"
+        elif [[ -d $1 ]]; then
+          cd "$1"
+          nvim
+        fi
+      '';
+    in
+    [ nvim-open ];
   home.sessionVariables = {
     EDITOR = "nvim-open";
   };

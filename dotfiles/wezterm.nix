@@ -4,7 +4,8 @@
   pkgs,
   pkgs-unstable,
   ...
-}: {
+}:
+{
   home.packages = [
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
       exec "${lib.getExe config.programs.wezterm.package}" -e "$@"

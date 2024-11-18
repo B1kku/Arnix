@@ -8,7 +8,8 @@
   home-manager,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ../../modules/system/usb-wakeup.nix
@@ -42,27 +43,27 @@
     ];
     # plymouth = { enable = true; };
     loader = {
-		  systemd-boot = { 
+      systemd-boot = {
         enable = true;
         configurationLimit = 5;
       };
       timeout = 2;
       efi.canTouchEfiVariables = true;
-#      grub = {
-#        enable = true;
-#        efiSupport = true;
-#        configurationLimit = 5;
-#        useOSProber = true;
-#        memtest86.enable = true;
-#        device = "nodev";
-#      };
+      #      grub = {
+      #        enable = true;
+      #        efiSupport = true;
+      #        configurationLimit = 5;
+      #        useOSProber = true;
+      #        memtest86.enable = true;
+      #        device = "nodev";
+      #      };
     };
   };
 
   #Networking
   networking.hostName = "Arnix";
   networking = {
-    nameservers = ["1.1.1.1"];
+    nameservers = [ "1.1.1.1" ];
     # Valent
     # Only local
     # firewall = {
@@ -105,7 +106,7 @@
   services.xserver = {
     enable = true;
     xkb.layout = "${config.console.keyMap}";
-    excludePackages = [pkgs.xterm];
+    excludePackages = [ pkgs.xterm ];
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
@@ -134,7 +135,7 @@
   };
   programs.steam = {
     enable = true;
-    extraCompatPackages = [pkgs.proton-ge-bin];
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
     extraPackages = with pkgs; [
       gamescope
       mangohud

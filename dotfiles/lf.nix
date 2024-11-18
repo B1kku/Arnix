@@ -1,8 +1,5 @@
+{ pkgs, lib, ... }:
 {
-  pkgs,
-  lib,
-  ...
-}: {
   xdg.configFile.".lficons" = {
     source = ./lf/icons;
     target = "lf/icons";

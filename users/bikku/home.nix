@@ -6,13 +6,15 @@
   pkgs-unstable,
   inputs,
   ...
-}: let
+}:
+let
   # Little wrapper around nix shell, shorthand and allows specifying a branch.
   nix-shell-wrapper = pkgs.writeShellScriptBin "pkgs" ''
     nixpkgs="nixpkgs''${2:+"/nixos-$2"}"
     NIXPKGS_ALLOW_UNFREE=1 nix shell "$nixpkgs#$1" --impure
   '';
-in {
+in
+{
   programs.home-manager.enable = true;
   home.username = "bikku";
   home.homeDirectory = "/home/bikku";
@@ -77,7 +79,7 @@ in {
       gnome-system-monitor
       gnome-tweaks
     ])
-    ++ [nix-shell-wrapper];
+    ++ [ nix-shell-wrapper ];
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
 }

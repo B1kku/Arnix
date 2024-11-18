@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   services.udev.extraHwdb = ''
     evdev:name:BDA NSW wired controller:*

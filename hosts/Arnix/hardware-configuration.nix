@@ -7,14 +7,16 @@
   pkgs,
   modulesPath,
   ...
-}: let
+}:
+let
   ssd-options = [
     "noatime"
     "nodiratime"
     "discard"
   ];
-in {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+in
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -24,9 +26,9 @@ in {
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = ["amdgpu"];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NixOS";
