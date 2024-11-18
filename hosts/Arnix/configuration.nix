@@ -19,11 +19,6 @@
   # Auto update db.
   nix = {
     settings.auto-optimise-store = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
     package = pkgs.nixVersions.latest;
     extraOptions = "experimental-features = nix-command flakes pipe-operators";
   };

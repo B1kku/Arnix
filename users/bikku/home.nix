@@ -39,7 +39,11 @@ in
   home.shellAliases = {
     arnix-rebuild = "su -c 'nixos-rebuild switch'";
     arnix-update = "nix flake update /etc/nixos";
-    arnix-clean = "su -c 'nix-collect-garbage --delete-older-than 7d'";
+    arnix-clean =
+      let
+        command = "nix-collect-garbage --delete-older-than 7d";
+      in
+      "su -c '${command}'; ${command}";
     neofetch = "fastfetch";
   };
 
