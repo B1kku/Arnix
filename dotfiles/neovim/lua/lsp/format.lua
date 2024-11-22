@@ -18,7 +18,8 @@ return {
         -- java = { "google-java-format" },
         nix = { "nixos" },
         yaml = { "prettier" },
-        python = { "autopep8" }
+        python = { "autopep8" },
+        sh = { "shellharden" }
       }
     })
   end

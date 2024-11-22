@@ -41,6 +41,7 @@ let
   formatters = with pkgs; [
     # google-java-format
     nodePackages.prettier
+    shellharden
   ];
   linters = with pkgs; [
     # checkstyle

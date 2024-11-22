@@ -16,7 +16,6 @@ let
     listToAttrs
     nameValuePair
     ;
-  inherit (pkgs.lib) extra;
   # TODO: Properly define this type.
   runnerType = types.submodule {
     options = {

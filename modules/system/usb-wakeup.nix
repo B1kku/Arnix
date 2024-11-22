@@ -65,7 +65,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable && (cfg.devices |> builtins.attrNames |> builtins.length <= 0)) {
+  config = mkIf (cfg.enable && (cfg.devices |> builtins.attrNames |> builtins.length) <= 0) {
     services.udev.packages =
       let
         baseRule = [

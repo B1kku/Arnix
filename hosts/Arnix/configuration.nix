@@ -11,8 +11,9 @@
 }:
 {
   imports = [
-    # Include the results of the hardware scan.
     ../../modules/system/usb-wakeup.nix
+    ../../modules/system/firewall-extra.nix
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     home-manager.nixosModules.home-manager
   ];
@@ -59,18 +60,6 @@
   networking.hostName = "Arnix";
   networking = {
     nameservers = [ "1.1.1.1" ];
-    # Valent
-    # Only local
-    # firewall = {
-    #   extraCommands = ''
-    #     iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
-    #     iptables -A nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept
-    #   '';
-    #   extraStopCommands = ''
-    #     iptables -D nixos-fw -p tcp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
-    #     iptables -D nixos-fw -p udp --source 192.168.1.0/24 --dport 1714:1764 -j nixos-fw-accept || true
-    #   '';
-    # };
   };
   # Select internationalisation properties.
   time.timeZone = "Europe/Brussels";
