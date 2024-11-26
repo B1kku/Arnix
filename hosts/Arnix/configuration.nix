@@ -13,6 +13,7 @@
   imports = [
     ../../modules/system/usb-wakeup.nix
     ../../modules/system/firewall-extra.nix
+    ../../modules/powera-controller.nix
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     home-manager.nixosModules.home-manager
@@ -27,6 +28,7 @@
   boot = {
     # Enable SysRq to recover from freezes.
     kernel.sysctl."kernel.sysrq" = 1;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
     kernelParams = [
       "logo.nologo"
       "fbcon=nodefer"
@@ -55,7 +57,6 @@
       #      };
     };
   };
-
   #Networking
   networking.hostName = "Arnix";
   networking = {
@@ -107,7 +108,6 @@
   };
   powerManagement.cpuFreqGovernor = "ondemand";
   environment.systemPackages = with pkgs; [
-    wget
     git
     tealdeer
   ];

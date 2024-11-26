@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
-  hardware.steam-hardware.enable = pkgs.lib.mkForce false;
+  # This is deprecated, it's only kept here as a reference point for mapping
+  # hardware keys to different ones, on this case, controllers.
+  # hardware.steam-hardware.enable = pkgs.lib.mkForce false;
   services.udev.extraHwdb = ''
     evdev:name:BDA NSW wired controller:*
       KEYBOARD_KEY_90002=btn_c      # A
