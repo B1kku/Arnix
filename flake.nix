@@ -32,7 +32,7 @@
         config.allowUnfree = true;
         overlays = [ (import ./overlays/pkgs.nix) ];
       };
-      lib = nixpkgs.lib;
+      lib = pkgs.lib;
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
@@ -41,13 +41,14 @@
     {
       formatter.x86_64-linux = pkgs-unstable.nixfmt-rfc-style;
       nixosConfigurations = {
-        Arnix = lib.nixosSystem {
+        Arnix = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit
               inputs
               pkgs
               pkgs-unstable
+              lib
               home-manager
               ;
           };
