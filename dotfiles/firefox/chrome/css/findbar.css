@@ -1,49 +1,138 @@
+/* Credits to https://github.com/nuclearcodecat/shimmer */
+/* As this is mainly it's own with some changes and fixes */
+
 findbar {
-  position: absolute;
-  min-width: 100% !important;
-  transform: translateY(-40px);
-  border-top: none !important; 
-  overflow: visible;
-}
-.findbar-container {
-  justify-content: center !important;
-    overflow: visible !important;
-}
-.findbar-textbox {
-  height: 35px;
-  border-radius: 25px !important;
-  width: 30vw !important;
-  text-align: center;
-}
-.findbar-closebutton.tabbable.close-icon {
-  position: absolute;
-}
-.findbar-label.found-matches {
-  position: absolute;
-  transform: translateY(50px);
-  background-color: var(--toolbar-bgcolor);
-  border-radius: 25px;
-  padding: 10px;
+  border: 0 !important;
+  /*? relative for margins */
+  position: relative !important;
+  border-radius: 16px !important;
+  bottom: 60px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 600px !important;
+  height: 3rem !important;
+
+
+  /*? fix for relative positioning */
+  margin-top: -44px !important;
+  border: 0 !important;
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
+  overflow-x: visible !important;
+  filter: drop-shadow(0px 0px 1px color-mix(in srgb, var(--lwt-text-color) 60%, rgba(0, 0, 0, 0)));
 }
 
-.findbar-find-previous.tabbable {
-  order: -1;
+findbar[hidden]{
+  margin-bottom: 0 !important;
+  opacity: 0 !important;
+  background: rgba(0, 0, 0, 0) !important;
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
 }
-.findbar-highlight.tabbable {
-  order: 0;
+
+findbar:not([hidden]) {
+  opacity: 1 !important;
+  background: var(--lwt-accent-color) !important;
+  background-color: var(--toolbar-bgcolor, var(--toolbar-non-lwt-bgcolor)) !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
-.findbar-entire-word.tabbable {
-  order: 1;
+.findbar-container, .findbar-container > hbox {
+  height: 100% !important;
 }
-hbox[anonid="findbar-textbox-wrapper"] {
-  order: 2;
+
+.findbar-container {
+  margin-left: 7px !important;
 }
-.findbar-match-diacritics.tabbable {
-  order: 3;
+
+/*? change text to icons for smaller findbar */
+.findbar-container checkbox::after {
+  height: 16px;
+  font-size: 14px;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  color: inherit;
+  
 }
-.findbar-case-sensitive.tabbable {
-  order: 4;
+.findbar-highlight::after {
+  content: '';
+  mask-image: url(../assets/hl.svg);
+  background-color: var(--lwt-text-color) !important;
+  width: 18px;
+  background-position-y: -1px;
 }
-.findbar-label.findbar-find-status {
-  display: none;
+.findbar-match-diacritics::after {
+  content: 'ąâ';
+  font-weight: 600;
+}
+.findbar-entire-word::after {
+  content: '';
+  mask-image: url(../assets/word.svg);
+  background-color: var(--lwt-text-color) !important;
+  width: 20px;
+  background-position-y: -2px;
+
+}
+.findbar-case-sensitive::after {
+  content: 'Aa';
+  font-weight: 600;
+}
+
+/*? hide all text for findbar checkboxes */
+.findbar-container checkbox > .checkbox-label-box {
+  display: none !important;
+}
+
+.findbar-textbox {
+  border-radius: 11px !important;
+  font-family: monospace !important;
+  padding: 5px 8px !important;
+  width: 16em !important;
+}
+
+.findbar-closebutton:hover {
+  opacity: 1 !important;
+  background: var(--toolbarbutton-hover-background) !important;
+}
+.findbar-closebutton {
+  opacity: 1 !important;
+  background: var(--lwt-accent-color) !important;
+  /* wasn't square for some reason */
+  /* Still wasn't a square */
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/*? move matched amount below main findbar */
+.found-matches {
+  position: absolute !important;
+  padding: 25px 13px 3px 10px !important;
+  top: 14px !important;
+  background: var(--lwt-accent-color) !important;
+  background-color: var(--toolbar-bgcolor, var(--toolbar-non-lwt-bgcolor)) !important;
+  /* border: solid var(--arrowpanel-border-color) 1px !important; */
+  left: -12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  z-index: 9 !important;
+}
+.findbar-find-status {
+  display: none !important;
+}
+.found-matches::before {
+  z-index: 8 !important;
+}
+.found-matches::after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 16px;
+  height: 22px;
+  background-color: var(--toolbar-bgcolor, var(--toolbar-non-lwt-bgcolor)) !important;
+  background: var(--lwt-accent-color);
+  right: -6px;
+  top: 12px;
+  transform: rotate(45deg);
+}
+.findbar-textbox { 
+  z-index: 10 !important;
 }
