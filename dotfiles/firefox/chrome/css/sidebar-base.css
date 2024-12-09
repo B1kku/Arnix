@@ -9,8 +9,8 @@
   display: none;
 }
 /* Hide sidebar logo and resizer */
-#sidebar-box[sidebarcommand=_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action] > #sidebar-header,
-#sidebar-box[sidebarcommand=_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action] + #sidebar-splitter {
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] > #sidebar-header,
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] + #sidebar-splitter {
   display: none;
 }
 /* Hide the small border between top bar and content */
@@ -22,7 +22,7 @@
   min-width: var(--sidebery-collapsed-width) !important;
   width: var(--sidebery-collapsed-width) !important;
   overflow: hidden;
-  z-index: 1;
+  z-index: 3;
   transition: all 250ms;
 }
 
