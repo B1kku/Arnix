@@ -28,7 +28,7 @@
   boot = {
     # Enable SysRq to recover from freezes.
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "logo.nologo"
       "fbcon=nodefer"

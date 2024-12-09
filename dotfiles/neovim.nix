@@ -26,7 +26,7 @@ let
   lsps =
     (with pkgs; [
       lua-language-server
-      nodePackages.pyright
+      pyright
       nodePackages.bash-language-server
       yaml-language-server
       gopls
