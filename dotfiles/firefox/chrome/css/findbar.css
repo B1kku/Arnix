@@ -9,7 +9,7 @@ findbar {
   bottom: 60px !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  width: 600px !important;
+  width: 530px !important;
   height: 3rem !important;
 
 
@@ -43,44 +43,66 @@ findbar:not([hidden]) {
   margin-left: 7px !important;
 }
 
-/*? change text to icons for smaller findbar */
-.findbar-container checkbox::after {
-  height: 16px;
-  font-size: 14px;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  color: inherit;
-  
-}
-.findbar-highlight::after {
-  content: '';
-  mask-image: url(../assets/hl.svg);
-  background-color: var(--lwt-text-color) !important;
-  width: 18px;
-  background-position-y: -1px;
-}
-.findbar-match-diacritics::after {
-  content: 'ąâ';
-  font-weight: 600;
-}
-.findbar-entire-word::after {
-  content: '';
-  mask-image: url(../assets/word.svg);
-  background-color: var(--lwt-text-color) !important;
-  width: 20px;
-  background-position-y: -2px;
 
-}
-.findbar-case-sensitive::after {
-  content: 'Aa';
-  font-weight: 600;
+.findbar-container > checkbox image {
+  opacity: 0;
 }
 
 /*? hide all text for findbar checkboxes */
 .findbar-container checkbox > .checkbox-label-box {
-  display: none !important;
+  display: none;
 }
+
+/*? change text to icons for smaller findbar */
+.findbar-container checkbox::after {
+  position: absolute;
+  height: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+
+  
+  background-color: #595959 !important;
+  content: '';
+  width: 20px;
+  height: 20px;
+  mask-size: 20px;
+  mask-position: center;
+  mask-repeat: no-repeat;
+
+}
+
+
+.findbar-container checkbox[checked="true"]::after {
+  background-color: var(--lwt-text-color) !important;
+}
+
+.findbar-container checkbox:hover::after {
+  background-color: gray !important;
+}
+
+.findbar-highlight::after {
+  mask-image: url(../assets/hl.svg);
+}
+.findbar-case-sensitive::after {
+  mask-image: url(../assets/aa.svg);
+}
+.findbar-entire-word { 
+  order: 1; 
+}
+.findbar-entire-word::after {
+  mask-image: url(../assets/word.svg);
+  mask-size: 22px !important;
+}
+.findbar-match-diacritics {
+  order: 2;
+}
+.findbar-match-diacritics::after {
+  mask-image: url(../assets/sa.svg);
+  mask-size: 15px !important;
+}
+
+
 
 .findbar-textbox {
   border-radius: 11px !important;
