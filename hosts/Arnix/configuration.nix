@@ -30,14 +30,7 @@
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
-      "logo.nologo"
-      "fbcon=nodefer"
-      "bgrt_disable"
-      "vt.global_cursor_default=0"
       "quiet"
-      "systemd.show_status=false"
-      "rd.udev.log_level=3"
-      "splash"
     ];
     # plymouth = { enable = true; };
     loader = {
@@ -47,14 +40,6 @@
       };
       timeout = 2;
       efi.canTouchEfiVariables = true;
-      #      grub = {
-      #        enable = true;
-      #        efiSupport = true;
-      #        configurationLimit = 5;
-      #        useOSProber = true;
-      #        memtest86.enable = true;
-      #        device = "nodev";
-      #      };
     };
   };
   #Networking
@@ -86,6 +71,7 @@
     };
   };
   # XServer, DM & DE
+
   services.libinput.mouse.accelProfile = "flat";
   services.displayManager.defaultSession = "gnome";
   services.xserver = {
