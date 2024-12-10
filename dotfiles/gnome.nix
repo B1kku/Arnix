@@ -23,6 +23,7 @@ let
       color-picker
       quick-settings-audio-panel
       auto-move-windows
+      gsconnect
     ]
   );
   num-workspaces = 4;
