@@ -1,0 +1,29 @@
+:root {
+  --my-color: var(--toolbar-bgcolor);
+  --floating-margin: 8px;
+}
+
+#browser {
+  background: var(--my-color) !important;
+}
+
+#browser > * {
+  background: var(--my-color) !important;
+  overflow: hidden;
+
+}
+
+
+
+#sidebar-box {
+  margin: var(--floating-margin);
+  margin-right: 0px;
+  margin-left: 0px;
+  border-radius: 0px 15px 15px 0px;
+  background: purple !important;
+  box-sizing: border-box !important;
+}
+
+#tabbrowser-tabbox {
+  padding: var(--floating-margin);
+}
