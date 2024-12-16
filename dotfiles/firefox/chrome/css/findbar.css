@@ -9,7 +9,7 @@ findbar {
   bottom: 60px !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  width: 530px !important;
+  width: 515px !important;
   height: 3rem !important;
 
 
@@ -25,6 +25,7 @@ findbar[hidden]{
   margin-bottom: 0 !important;
   opacity: 0 !important;
   background: rgba(0, 0, 0, 0) !important;
+  transform: translateY(80px);
   transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
 }
 
@@ -35,6 +36,7 @@ findbar:not([hidden]) {
   -moz-appearance: none !important;
   appearance: none !important;
 }
+
 .findbar-container, .findbar-container > hbox {
   height: 100% !important;
 }
@@ -60,8 +62,6 @@ findbar:not([hidden]) {
   font-size: 14px;
   display: flex;
   align-items: center;
-
-  
   background-color: #595959 !important;
   content: '';
   width: 20px;
@@ -69,9 +69,7 @@ findbar:not([hidden]) {
   mask-size: 20px;
   mask-position: center;
   mask-repeat: no-repeat;
-
 }
-
 
 .findbar-container checkbox[checked="true"]::after {
   background-color: var(--lwt-text-color) !important;
@@ -102,8 +100,6 @@ findbar:not([hidden]) {
   mask-size: 15px !important;
 }
 
-
-
 .findbar-textbox {
   border-radius: 11px !important;
   font-family: monospace !important;
@@ -117,7 +113,7 @@ findbar:not([hidden]) {
 }
 .findbar-closebutton {
   opacity: 1 !important;
-  background: var(--lwt-accent-color) !important;
+
   /* wasn't square for some reason */
   /* Still wasn't a square */
   width: 28px !important;
@@ -128,7 +124,7 @@ findbar:not([hidden]) {
 .found-matches {
   position: absolute !important;
   padding: 25px 13px 3px 10px !important;
-  top: 14px !important;
+  top: 20px !important;
   background: var(--lwt-accent-color) !important;
   background-color: var(--toolbar-bgcolor, var(--toolbar-non-lwt-bgcolor)) !important;
   /* border: solid var(--arrowpanel-border-color) 1px !important; */
@@ -147,12 +143,12 @@ findbar:not([hidden]) {
   position: absolute;
   display: block;
   content: '';
-  width: 16px;
-  height: 22px;
+  width: 18px;
+  height: 33px;
   background-color: var(--toolbar-bgcolor, var(--toolbar-non-lwt-bgcolor)) !important;
   background: var(--lwt-accent-color);
   right: -6px;
-  top: 12px;
+  top: 13px;
   transform: rotate(45deg);
 }
 .findbar-textbox { 

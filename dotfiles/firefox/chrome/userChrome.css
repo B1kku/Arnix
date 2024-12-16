@@ -1,9 +1,9 @@
+
 @import "css/sidebar-base.css";
 @import "css/toolbar.css";
+
 @import "css/findbar.css";
+@import "css/floating-browser.css";
 :root {
-  --toolbar-border-radius: 25px;
-  --toolbar-top-separation: 50px;
-  --sidebar-expanded-width: 300px;
-  --sidebar-collapsed-width: 30px;
+  
 }
