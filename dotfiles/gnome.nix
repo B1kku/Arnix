@@ -8,15 +8,20 @@
 }:
 let
   # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
+  # cursor-theme = {
+  #   package = pkgs.oreo-cursors-plus;
+  #   name = "oreo_black_cursors";
+  # };
+  icon-theme = {
+    package = pkgs.papirus-icon-theme;
+    name = "Papirus-Dark";
+  };
   minutes-to-suspend = 5;
   minutes-to-turn-off-screen = 3;
   gnome-extensions = (
     with pkgs.gnomeExtensions;
     [
       blur-my-shell
-      # https://github.com/NixOS/nixpkgs/issues/301380
-      # pkgs-unstable.gnomeExtensions.valent
-      media-controls
       just-perfection
       alttab-mod
       switch-workspace
@@ -62,6 +67,20 @@ in
     style.name = "adwaita-dark";
   };
 
+  home.pointerCursor = {
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    gtk.enable = true;
+    size = 24;
+  };
+  
+  home.file = {
+    ${icon-theme.name} = {
+      source = "${icon-theme.package}/share/icons/${icon-theme.name}";
+      target = ".icons/${icon-theme.name}";
+    };
+  };
+
   gtk = {
     enable = true;
     theme = {
@@ -101,6 +120,7 @@ in
         enabled-extensions = map (extension: "${extension.passthru.extensionUuid}") gnome-extensions;
       };
       "org/gnome/desktop/interface" = {
+        icon-theme = icon-theme.name;
         color-scheme = "prefer-dark";
         enable-hot-corners = true;
       };
@@ -112,6 +132,7 @@ in
       };
       "org/gnome/desktop/wm/preferences" = {
         num-workspaces = num-workspaces;
+        button-layout = "icon:close";
       };
       "org/gnome/shell/app-switcher".current-workspace-only = true;
       "org/gnome/desktop/session".idle-delay = mkUint32 (minutes-to-turn-off-screen * 60);
