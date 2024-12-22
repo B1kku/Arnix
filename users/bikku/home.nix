@@ -70,10 +70,9 @@ in
       libnotify
       gthumb # Image viewer
       vlc
-      alacritty
     ])
     # Gnome packages mainly
-    ++ (with pkgs; [
+    ++ (with pkgs.gnome; [
       baobab # Disk space info
       nautilus # File browser
       gnome-clocks # Alarms
