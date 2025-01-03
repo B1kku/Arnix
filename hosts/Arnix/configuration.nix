@@ -109,6 +109,7 @@
     extraPackages = with pkgs; [
       gamescope
       mangohud
+      protonhax
     ];
   };
 

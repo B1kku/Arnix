@@ -70,6 +70,7 @@ in
       libnotify
       gthumb # Image viewer
       vlc
+      protonhax
     ])
     # Gnome packages mainly
     ++ (with pkgs.gnome; [

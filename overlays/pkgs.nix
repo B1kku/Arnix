@@ -1,5 +1,19 @@
 final: prev: {
   lib = prev.lib // (import ../lib/lib.nix final prev);
+  protonhax =
+    let
+      protonhax_script = prev.fetchFromGitHub {
+        owner = "jcnils";
+        repo = "protonhax";
+        rev = "1.0.5";
+        hash = "sha256-5G4MCWuaF/adSc9kpW/4oDWFFRpviTKMXYAuT2sFf9w=";
+      };
+    in
+    prev.writeShellApplication {
+      name = "protonhax";
+      runtimeInputs = [ prev.steam-run ];
+      text = ''steam-run ${protonhax_script}/protonhax "$@"'';
+    };
   gnomeExtensions = prev.gnomeExtensions // {
     valent =
       let
