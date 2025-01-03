@@ -57,6 +57,7 @@ return {
       end
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
       -- List of lsp to be loaded, if lsp_config_dir + lsp_name matches a file,
       -- it will override the default config.
       local lsp_list = {
@@ -67,8 +68,11 @@ return {
         "clangd",
         "lua_ls",
         "yamlls",
-        "rust_analyzer"
-        -- "kotlin_language_server"
+        "rust_analyzer",
+        "html",
+        "cssls",
+        "jsonls",
+        "ts_ls"
       }
 
       local default_config = { capabilities = capabilities }

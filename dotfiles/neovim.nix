@@ -32,11 +32,12 @@ let
       gopls
       clang-tools
       rust-analyzer
-      # kotlin-language-server # Too green to use, memory hog
+      vscode-langservers-extracted
     ])
     ++ [
       jdtls
       pkgs-unstable.nixd
+      pkgs-unstable.typescript-language-server
     ];
   formatters = with pkgs; [
     # google-java-format
