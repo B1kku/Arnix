@@ -1,0 +1,23 @@
+#root.root {--ctx-menu-text-opt-inner-gap: 4px;}
+
+#root.root {--ctx-menu-icon-opt-height: 30px;}
+#root.root {--tabs-border-radius: 8px;}
+#root.root {--tabs-activated-shadow: none;}
+#root.root:not(:hover) {
+  --tabs-indent: 0xp;
+}
+.NavigationBar .nav-item[data-active="true"] {
+  background-color: var(--frame-bg);
+
+	box-shadow: 0px 0px 5px 0px var(--frame-bg);
+}
+
+.NavigationBar .nav-item .audio {
+	background-color: transparent;
+}
+
+/* This removes the little leftover text when not hovered */
+#root.root:not(:hover) .Tab .body .t-box {
+  opacity: 0;
+	transition: opacity 0.25s;
+}
