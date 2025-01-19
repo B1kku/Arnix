@@ -43,6 +43,7 @@ let
     # google-java-format
     nodePackages.prettier
     shellharden
+    rustfmt
   ];
   linters = with pkgs; [
     # checkstyle
@@ -50,7 +51,8 @@ let
   ];
   tooling = with pkgs; [
     go
-    rustup
+    cargo
+    rustc
   ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.

@@ -71,7 +71,6 @@
     };
   };
   # XServer, DM & DE
-
   services.libinput.mouse.accelProfile = "flat";
   services.displayManager.defaultSession = "gnome";
   services.xserver = {
@@ -97,7 +96,6 @@
     git
     tealdeer
   ];
-
   users.users.bikku = {
     shell = pkgs.zsh;
     isNormalUser = true;
