@@ -38,7 +38,7 @@ in
 
   home.shellAliases = {
     arnix-rebuild = "su -c 'nixos-rebuild switch'";
-    arnix-update = "nix flake update /etc/nixos";
+    arnix-update = "nix flake update --flake /etc/nixos";
     arnix-clean =
       let
         command = "nix-collect-garbage --delete-older-than 7d";
@@ -51,6 +51,7 @@ in
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+    stdlib = builtins.readFile ../../dotfiles/direnvrc;
   };
   # No sftpman integration yet on 23.11
   # programs.sftpman
@@ -63,7 +64,6 @@ in
       htop
       bitwarden
       fastfetch
-      obs-studio
       fira-code-nerdfont # TODO: Move to a proper setting.
       prismlauncher
       deluge
@@ -83,6 +83,11 @@ in
       gnome-tweaks
     ])
     ++ [ nix-shell-wrapper ];
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
+  };
   # Don't change randomly, used for internals.
   home.stateVersion = "23.11";
 }
