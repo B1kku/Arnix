@@ -7,11 +7,8 @@
   ...
 }:
 let
-  # gtkThemeFromScheme = (inputs.nix-colors.lib-contrib {inherit pkgs;}).gtkThemeFromScheme;
-  # cursor-theme = {
-  #   package = pkgs.oreo-cursors-plus;
-  #   name = "oreo_black_cursors";
-  # };
+  # Variables to modify the gnome config
+  # For things that often need changing, besides dconf specifics.
   icon-theme = {
     package = pkgs.papirus-icon-theme;
     name = "Papirus-Dark";
@@ -29,6 +26,8 @@ let
       quick-settings-audio-panel
       auto-move-windows
       gsconnect
+      tracker
+      gamemode-shell-extension
     ]
   );
   num-workspaces = 4;
@@ -36,27 +35,31 @@ let
     move-to-workspace = "<Ctrl><Alt>";
     switch-to-workspace = "<Alt>";
   };
+
+  # Generate keybinds for an ammount of workspaces.
+  # Keybinds will use the base + n.
+  # switch-to-workspace-1 = [ <alt>1 ]
+  # Might not even be worth to use this...
   generateWorkspaceKeybinds = (
     workspaces: workspace-actions:
     let
-      inherit (lib) range listToAttrs concatMapAttrs;
-      mapAction = (
-        action: key:
-        listToAttrs (
-          map (
-            n:
-            let
-              workspace = toString n;
-            in
-            {
-              name = "${action}-${workspace}";
-              value = [ "${key + workspace}" ];
-            }
-          ) (range 1 workspaces)
-        )
-      );
+      inherit (lib)
+        range
+        concatMapAttrs
+        fold
+        mergeAttrs
+        ;
+      mapWorkspace = (workspace: action: key: { "${action}-${workspace}" = [ "${key}${workspace}" ]; });
     in
-    concatMapAttrs mapAction workspace-actions
+    workspaces
+    |> range 1
+    |> fold (
+      workspace: acc:
+      let
+        mapAction = workspace |> toString |> mapWorkspace;
+      in
+      workspace-actions |> concatMapAttrs mapAction |> mergeAttrs acc
+    ) { }
   );
 in
 {
@@ -73,7 +76,7 @@ in
     gtk.enable = true;
     size = 24;
   };
-  
+  # Icon theme generation.
   home.file = {
     ${icon-theme.name} = {
       source = "${icon-theme.package}/share/icons/${icon-theme.name}";
@@ -94,26 +97,26 @@ in
       inherit (lib.hm.gvariant) mkUint32;
     in
     {
+      "org/gnome/shell/extensions/gamemodeshellextension" = {
+        show-icon-only-when-active = true;
+        show-launch-notification = false;
+      };
+      "org/gnome/shell/extensions/quick-settings-audio-panel" = {
+        move-master-volume = false;
+        merge-panel = true;
+        media-controls = "none";
+      };
       "org/gnome/shell/extensions/switchWorkSpace".switch-workspace = [ "<Super>Tab" ];
       "org/gnome/shell/extensions/altTab-mod" = {
         current-monitor-only = true;
         current-workspace-only = true;
         remove-delay = true;
       };
-      "org/gnome/shell/extensions/mediacontrols" = {
-        show-label = false;
-        show-control-icons-seek-forward = false;
-        show-control-icons-seek-backward = false;
-        extension-position = "Left";
-        extension-index = mkUint32 1;
-      };
       "org/gnome/shell/extensions/just-perfection" = {
         workspace-wrap-around = true;
         animation = 4;
       };
-      "org/gnome/shell/extensions/blur-my-shell" = {
-        hacks-level = 0;
-      };
+      # Transparent dock bar on overview
       "org/gnome/shell/extensions/blur-my-shell/overview".style-components = 3;
       "org/gnome/shell" = {
         disable-user-extensions = false;
