@@ -6,7 +6,7 @@ local mux = wezterm.mux
 local opacity = 0.75
 local bg_color = "rgba(0,0,0," .. opacity .. ")"
 
-config = {
+local local_config = {
   -- color_scheme = 'AdventureTime',
   -- Temporary
   front_end = "WebGpu",
@@ -30,7 +30,7 @@ config = {
     right = 0,
     top = 0,
     bottom = 0
-  }
+  },
 }
 config.tab_max_width = 27
 config.use_fancy_tab_bar = false
@@ -102,4 +102,13 @@ wezterm.on('gui-attached', function(domain)
     end
   end
 end)
-return config
+
+-- Put every k in table2 on table1, overriding t1 with t2
+local function merge_tbl(table1, table2)
+  for k, v in pairs(table2) do
+    table1[k] = v
+  end
+  return table1
+end
+
+return merge_tbl(config, local_config)
