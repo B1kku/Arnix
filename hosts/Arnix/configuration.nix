@@ -103,7 +103,8 @@
   };
   programs.steam = {
     enable = true;
-    extraCompatPackages = [ pkgs.proton-ge-bin ];
+    extraCompatPackages =
+      [ pkgs.proton-gamemode ];
     extraPackages = with pkgs; [
       gamescope
       mangohud

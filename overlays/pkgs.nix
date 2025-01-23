@@ -1,4 +1,5 @@
-{inputs, system}: final: prev: {
+{ inputs, system }:
+final: prev: {
   lib = prev.lib // (import ../lib/lib.nix final prev);
   protonhax =
     let
@@ -14,6 +15,7 @@
       runtimeInputs = [ prev.steam-run ];
       text = ''steam-run ${protonhax_script}/protonhax "$@"'';
     };
+  proton-gamemode = (import ./proton-gamemode-wrapper.nix prev);
   wezterm = inputs.nixpkgs-old.legacyPackages.${system}.wezterm;
   gnomeExtensions = prev.gnomeExtensions // {
     valent =
