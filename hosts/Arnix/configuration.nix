@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running `nixos-help`).
 {
   config,
   pkgs,
@@ -20,9 +17,15 @@
   ];
   # Auto update db.
   nix = {
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+      # Nix-Gaming Cachix
+      substituters = [ "https://nix-gaming.cachix.org" ];
+      trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+    };
     package = pkgs.nixVersions.latest;
     extraOptions = "experimental-features = nix-command flakes pipe-operators";
+
   };
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -50,10 +53,12 @@
   # Select internationalisation properties.
   time.timeZone = "Europe/Brussels";
   # locale
-  i18n.defaultLocale = "en_GB.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_MONETARY = "es_ES.UTF-8";
-    LC_MEASUREMENT = "es_ES.UTF-8";
+  i18n = {
+    defaultLocale = "en_GB.UTF-8";
+    extraLocaleSettings = {
+      LC_MONETARY = "es_ES.UTF-8";
+      LC_MEASUREMENT = "es_ES.UTF-8";
+    };
   };
   console = {
     font = "Lat2-Terminus16";
@@ -103,8 +108,7 @@
   };
   programs.steam = {
     enable = true;
-    extraCompatPackages =
-      [ pkgs.proton-gamemode ];
+    extraCompatPackages = [ pkgs.proton-gamemode ];
     extraPackages = with pkgs; [
       gamescope
       mangohud

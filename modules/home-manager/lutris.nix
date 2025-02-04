@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }@args:
 let
@@ -44,7 +45,7 @@ in
                 Default will try to pull steam from osConfig.programs.steam.package, else fallback to pkgs.steam'';
     };
 
-    extraPkgs = mkOption {
+    defaultPackages = mkOption {
       type = types.listOf types.package;
       default = (
         with pkgs;
@@ -55,7 +56,17 @@ in
           gamescope
           libstrangle
         ]
+        # WARNING: Remove once it's on stable channel.
+        # Maybe overlay to move them to stable so we don't take unstable here.
+        ++ [ pkgs-unstable.umu-launcher ]
       );
+
+    };
+
+    extraPkgs = mkOption {
+      type = types.listOf types.package;
+      default = [ ];
+
     };
 
     winePackages = mkOption {
@@ -82,7 +93,8 @@ in
         lutris-override = {
           # All this does is add their own non-overridable steam to extraPkgs.
           steamSupport = false;
-          extraPkgs = pkgs: cfg.extraPkgs ++ optional (cfg.steamPackage != null) cfg.steamPackage;
+          extraPkgs =
+            pkgs: cfg.defaultPackages ++ cfg.extraPkgs ++ optional (cfg.steamPackage != null) cfg.steamPackage;
         };
       in
       [ (cfg.package.override lutris-override) ];
