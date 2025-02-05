@@ -12,6 +12,7 @@
     winePackages = [
       pkgs.wineWowPackages.stableFull
       inputs.nix-gaming.packages.${pkgs.system}.wine-ge
+      pkgs.proton-ge-bin
     ];
     runners = [
       pkgs.ryujinx

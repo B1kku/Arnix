@@ -15,7 +15,6 @@
     ./hardware-configuration.nix
     home-manager.nixosModules.home-manager
   ];
-  # Auto update db.
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -24,8 +23,8 @@
       trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
     };
     package = pkgs.nixVersions.latest;
+    # Enable pipes [1 2 3] |> map (e: e * 2)
     extraOptions = "experimental-features = nix-command flakes pipe-operators";
-
   };
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -46,13 +45,12 @@
     };
   };
   #Networking
-  networking.hostName = "Arnix";
   networking = {
     nameservers = [ "1.1.1.1" ];
+    hostName = "Arnix";
   };
   # Select internationalisation properties.
   time.timeZone = "Europe/Brussels";
-  # locale
   i18n = {
     defaultLocale = "en_GB.UTF-8";
     extraLocaleSettings = {
@@ -76,24 +74,28 @@
     };
   };
   # XServer, DM & DE
-  services.libinput.mouse.accelProfile = "flat";
-  services.displayManager.defaultSession = "gnome";
-  services.xserver = {
-    enable = true;
-    xkb.layout = "${config.console.keyMap}";
-    excludePackages = [ pkgs.xterm ];
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+  services = {
+    libinput.mouse.accelProfile = "flat";
+    displayManager.defaultSession = "gnome";
+    xserver = {
+      enable = true;
+      xkb.layout = "${config.console.keyMap}";
+      excludePackages = [ pkgs.xterm ];
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+    };
+    gnome.core-utilities.enable = false;
   };
-  services.gnome.core-utilities.enable = false;
 
   # Enable sound.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
     pulse.enable = true;
   };
   powerManagement.cpuFreqGovernor = "ondemand";
@@ -101,11 +103,7 @@
     git
     tealdeer
   ];
-  users.users.bikku = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    initialPassword = "potato";
-  };
+  # This should take care of most game-related settings too.
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.proton-gamemode ];
@@ -114,10 +112,15 @@
       mangohud
     ];
   };
-
   programs.gamemode.enable = true;
+
   programs.zsh.enable = true;
 
+  users.users.bikku = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    initialPassword = "potato";
+  };
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;

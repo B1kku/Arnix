@@ -15,7 +15,7 @@
     };
     nix-colors.url = "github:misterio77/nix-colors";
     nix-gaming = {
-      url = "github:fufexan/nix-gaming/e5559b3a91433c21eb64792b78134582b3bd77f2";
+      url = "github:fufexan/nix-gaming";
     };
   };
 
