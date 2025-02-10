@@ -9,19 +9,17 @@ findbar {
   bottom: 60px !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  width: 515px !important;
+  width: 490px !important;
   height: 3rem !important;
-
-
   /*? fix for relative positioning */
-  margin-top: -44px !important;
+  margin-top: -3rem !important;
   border: 0 !important;
   transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
   overflow-x: visible !important;
   filter: drop-shadow(0px 0px 1px color-mix(in srgb, var(--lwt-text-color) 60%, rgba(0, 0, 0, 0)));
 }
 
-findbar[hidden]{
+findbar[hidden] {
   margin-bottom: 0 !important;
   opacity: 0 !important;
   background: rgba(0, 0, 0, 0) !important;
@@ -37,7 +35,8 @@ findbar:not([hidden]) {
   appearance: none !important;
 }
 
-.findbar-container, .findbar-container > hbox {
+.findbar-container,
+.findbar-container>hbox {
   height: 100% !important;
 }
 
@@ -46,12 +45,12 @@ findbar:not([hidden]) {
 }
 
 
-.findbar-container > checkbox image {
+.findbar-container>checkbox image {
   opacity: 0;
 }
 
 /*? hide all text for findbar checkboxes */
-.findbar-container checkbox > .checkbox-label-box {
+.findbar-container checkbox>.checkbox-label-box {
   display: none;
 }
 
@@ -82,19 +81,24 @@ findbar:not([hidden]) {
 .findbar-highlight::after {
   mask-image: url(../assets/hl.svg);
 }
+
 .findbar-case-sensitive::after {
   mask-image: url(../assets/aa.svg);
 }
-.findbar-entire-word { 
-  order: 1; 
+
+.findbar-entire-word {
+  order: 1;
 }
+
 .findbar-entire-word::after {
   mask-image: url(../assets/word.svg);
   mask-size: 22px !important;
 }
+
 .findbar-match-diacritics {
   order: 2;
 }
+
 .findbar-match-diacritics::after {
   mask-image: url(../assets/sa.svg);
   mask-size: 15px !important;
@@ -111,6 +115,7 @@ findbar:not([hidden]) {
   opacity: 1 !important;
   background: var(--toolbarbutton-hover-background) !important;
 }
+
 .findbar-closebutton {
   opacity: 1 !important;
 
@@ -133,24 +138,28 @@ findbar:not([hidden]) {
   border-bottom-right-radius: 12px !important;
   z-index: 9 !important;
 }
+
 .findbar-find-status {
   display: none !important;
 }
+
 .found-matches::before {
-  z-index: 8 !important;
+  z-index: 20 !important;
 }
+
 .found-matches::after {
   position: absolute;
   display: block;
   content: '';
-  width: 18px;
+  width: 20px;
   height: 33px;
   background-color: var(--toolbar-bgcolor, var(--toolbar-non-lwt-bgcolor)) !important;
   background: var(--lwt-accent-color);
-  right: -6px;
-  top: 13px;
+  right: -10px;
+  top: 8px;
   transform: rotate(45deg);
 }
-.findbar-textbox { 
+
+.findbar-textbox {
   z-index: 10 !important;
 }
