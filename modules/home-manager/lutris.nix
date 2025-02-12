@@ -73,6 +73,10 @@ in
       type = types.listOf types.package;
       default = [ pkgs.wineWowPackages.stableFull ];
     };
+    protonPackages = mkOption {
+      type = types.listOf types.package;
+      default = [ pkgs.proton-ge-bin ];
+    };
 
     runnersDefaultConfig = mkOption {
       type = types.attrs;
@@ -101,18 +105,25 @@ in
     # Link wine packages, for some reason it trips out if there's any caps on the name.
     # Couldn't find a better way than linking the wine package to local/share.
     xdg.dataFile =
-      cfg.winePackages
-      |> map (
-        wine-pkg:
-        let
-          name = toLower wine-pkg.name;
-        in
-        (nameValuePair name {
-          target = "lutris/runners/wine/${name}";
-          source = wine-pkg;
-        })
-      )
-      |> listToAttrs;
+      let
+        mkWine = (
+          type: packages:
+          packages
+          |> map (
+            pkg:
+            let
+              name = toLower pkg.name;
+            in
+            (nameValuePair name {
+              target = "lutris/runners/${type}/${name}";
+              source = pkg;
+            })
+          )
+        );
+        proton-links = cfg.protonPackages |> map (pkg: pkg.steamcompattool) |> mkWine "proton";
+        wine-links = cfg.winePackages |> mkWine "wine";
+      in
+      proton-links ++ wine-links |> listToAttrs;
     # Link other runners.
     xdg.configFile =
       let

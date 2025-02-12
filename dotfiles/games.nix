@@ -12,6 +12,8 @@
     winePackages = [
       pkgs.wineWowPackages.stableFull
       inputs.nix-gaming.packages.${pkgs.system}.wine-ge
+    ];
+    protonPackages = [
       pkgs.proton-ge-bin
     ];
     runners = [
