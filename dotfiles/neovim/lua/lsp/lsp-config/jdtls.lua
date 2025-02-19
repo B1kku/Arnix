@@ -45,7 +45,7 @@ local cmd = {
 local config = {
   cmd = cmd,
   root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
-  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  capabilities = require('blink.cmp').get_lsp_capabilities(),
   inlayHints = {
     parameterNames = { enabled = "all" }
   },
@@ -64,5 +64,4 @@ for key, value in pairs(vim.g.nixvars.java_runtimes) do
   table.insert(config.settings.java.configuration.runtimes,
     { name = "JavaSE-" .. key, path = value .. "/lib/openjdk/" })
 end
-vim.g.jdtls = config
 return config

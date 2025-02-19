@@ -9,7 +9,7 @@ map("n", "<C-s>", [[<cmd>w<CR>]], { silent = true, desc = "Save file" })
 map("i", "<C-s>", [[<cmd>w<CR><ESC><Right>]], { silent = true, desc = "Save file and go to normal" })
 map("n", "<leader>sa", [[<cmd>wa<CR>]], { silent = true, desc = "Save all buffers" })
 -- Remap append to insert, as I have no real use for append.
-map("n", "a", "i", { silent = true })
+-- map("n", "a", "i", { silent = true })
 -- Buffers
 map("n", "<leader><Right>", [[<cmd>bnext<CR>]], { silent = true, desc = "Next buffer" })
 map("n", "<leader><Left>", [[<cmd>bprev<CR>]], { silent = true, desc = "Previous buffer" })

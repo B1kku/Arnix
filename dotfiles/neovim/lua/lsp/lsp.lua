@@ -56,7 +56,7 @@ return {
         })
       end
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
       -- capabilities.textDocument.completion.completionItem.snippetSupport = true
       -- List of lsp to be loaded, if lsp_config_dir + lsp_name matches a file,
       -- it will override the default config.
@@ -74,9 +74,20 @@ return {
         "jsonls",
         "ts_ls"
       }
-
-      local default_config = { capabilities = capabilities }
-
+      -- Set lsp borders
+      local borders = vim.g.border
+      local default_config = {
+        capabilities = capabilities,
+        handlers = {
+          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = borders }),
+          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = borders })
+        },
+        on_attach = function(client, bufnr)
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, {bufnr})
+          end
+        end
+      }
       -- Map of signs for the LSP.
       local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
 
