@@ -40,14 +40,15 @@ local function set_keymaps_on_attach(keymaps)
     end
   })
 end
-
+local nix_enabled = vim.g.nixvars ~= nil
 return {
+  {
+    "williamboman/mason-lspconfig.nvim",
+    enabled = not nix_enabled
+  },
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    dependencies = vim.g.nixvars and {} or {
-      "williamboman/mason-lspconfig.nvim"
-    },
     config = function()
       -- Don't install lsps on nix, nix handles it.
       if not vim.g.nixvars then
@@ -84,7 +85,7 @@ return {
         },
         on_attach = function(client, bufnr)
           if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(true, {bufnr})
+            vim.lsp.inlay_hint.enable(true, { bufnr })
           end
         end
       }
