@@ -8,6 +8,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       "nvim-telescope/telescope-dap.nvim"
     },
+    enabled = false,
     config = function()
       require("dapui").setup()
       vim.keymap.set("n", "<leader>dk", ":lua require('dap').continue()<CR>")
@@ -18,6 +19,7 @@ return {
   {
     --Python dap plugin
     "mfussenegger/nvim-dap-python",
+    enabled = false,
     config = function()
       local path = require("mason-registry").get_package("debugpy"):get_install_path()
       require("dap-python").setup(path .. "/venv/Scripts/python")

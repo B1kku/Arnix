@@ -4,8 +4,7 @@ return {
   {
     -- Still don't know why, but mapping ":w<cr>" shows double saving message until using :Noice, "<cmd>w<cr>" does not.
     "folke/noice.nvim",
-    enabled = true,
-    -- event = "VeryLazy",
+    event = "VeryLazy",
     config = function()
       require("noice").setup({
         presets = {

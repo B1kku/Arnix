@@ -1,5 +1,6 @@
 return {
   "nvim-neorg/neorg",
+  enabled = false,
   version = "*",
   config = function()
     require("neorg").setup {
