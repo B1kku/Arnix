@@ -26,7 +26,6 @@ let
       quick-settings-audio-panel
       auto-move-windows
       gsconnect
-      tracker
       gamemode-shell-extension
     ]
   );
@@ -76,6 +75,7 @@ in
     gtk.enable = true;
     size = 24;
   };
+
   # Icon theme generation.
   home.file = {
     ${icon-theme.name} = {
