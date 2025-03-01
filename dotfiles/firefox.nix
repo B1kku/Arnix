@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  config,
   pkgs-unstable,
   ...
 }:
@@ -9,13 +10,8 @@ let
   extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
     ublock-origin
     sidebery
-    behave
-    skip-redirect
-    forget_me_not
-    firefox-translations
     darkreader
     seventv
-    return-youtube-dislikes
   ];
   maskFree = (
     pkg:
@@ -33,28 +29,48 @@ let
 in
 {
   home.file.${firefox-profile} = {
-    source = ./firefox/chrome;
-    target = ".mozilla/firefox/${firefox-profile}/chrome";
+    source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/dotfiles/firefox/chrome";
+    target = ".librewolf/${firefox-profile}/chrome";
   };
   home.shellAliases = {
-    firefox-test = "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome; ln -s /etc/nixos/dotfiles/firefox/chrome/ ~/.mozilla/firefox/${firefox-profile}/chrome";
-    firefox-clean = "rm -rf ~/.mozilla/firefox/${firefox-profile}/chrome";
+    firefox-test = "rm -rf ~/.librewolf/${firefox-profile}/chrome; ln -s /etc/nixos/dotfiles/firefox/chrome/ ~/.librewolf/${firefox-profile}/chrome";
+    firefox-clean = "rm -rf ~/.librewolf/${firefox-profile}/chrome";
   };
-  programs.firefox = {
+  programs.librewolf = {
     enable = true;
-    package = pkgs-unstable.firefox;
+    # package = pkgs-unstable.librewolf;
     profiles.${firefox-profile} = {
       search.default = "DuckDuckGo";
       search.force = true;
-      settings = {
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        "browser.toolbars.bookmarks.visibility" = "never";
-        "browser.startup.page" = 3; # Restore session on startup.
-        # Finally found a workaround for this stupid issue where if you drag
-        # on sidebery it stops counting as :hover (gnome only, ofc)
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=1818517
-        "widget.gtk.ignore-bogus-leave-notify" = 1;
-      };
+      settings =
+        let
+          # List of RFP Targets
+          # https://searchfox.org/mozilla-central/source/toolkit/components/resistfingerprinting/RFPTargets.inc
+          RFPTargets = [
+            # Enable all RFP, any further "-Target" will be excluded
+            "+AllTargets"
+            # Re-enable prefers dark mode
+            # idk the consequences, but darkreader aint cutting it
+            # Also I don't feel whitelisting random website cookies for dark theme is better
+            "-CSSPrefersColorScheme"
+            "-RoundWindowSize" # Don't forget window size on reopen
+          ];
+        in
+        {
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "browser.toolbars.bookmarks.visibility" = "never";
+          "browser.startup.page" = 3; # Restore session on startup.
+          "general.autoScroll" = true; # Enable middle click to free scroll.
+          "devtools.debugger.remote-enabled" = false; # Enable to debug CSS with <C-S-M>i
+          # Finally found a workaround for this stupid issue where if you drag
+          # on sidebery it stops counting as :hover (gnome only, ofc)
+          # https://bugzilla.mozilla.org/show_bug.cgi?id=1818517
+          "widget.gtk.ignore-bogus-leave-notify" = 1;
+          "privacy.resistFingerprinting" = false;
+          "privacy.fingerprintingProtection" = true;
+          "privacy.fingerprintingProtection.overrides" = builtins.concatStringsSep "," RFPTargets;
+
+        };
       extensions = map maskFree extensions;
     };
   };
