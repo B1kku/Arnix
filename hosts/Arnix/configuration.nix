@@ -102,6 +102,7 @@
   environment.systemPackages = with pkgs; [
     git
     tealdeer
+    nh
   ];
   # This should take care of most game-related settings too.
   programs.steam = {

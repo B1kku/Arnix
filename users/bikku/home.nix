@@ -36,16 +36,22 @@ in
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
 
-  home.shellAliases = {
-    arnix-rebuild = "su -c 'nixos-rebuild switch'";
-    arnix-update = "nix flake update --flake /etc/nixos";
-    arnix-clean =
-      let
-        command = "nix-collect-garbage --delete-older-than 7d";
-      in
-      "su -c '${command}'; ${command}";
-    neofetch = "fastfetch";
-  };
+  home.shellAliases =
+    let
+      FLAKE_DIR = "/etc/nixos";
+      buildNHCommand = (_: command: "pkexec ${command}");
+      nixos-aliases =
+        {
+          arnix-rebuild = "nh os switch ${FLAKE_DIR} -R";
+          arnix-update = "nh os switch ${FLAKE_DIR} -u -R";
+          arnix-clean = "nh clean all --keep-since 7d --keep 5 --ask";
+        }
+        |> builtins.mapAttrs buildNHCommand;
+    in
+    {
+      neofetch = "fastfetch";
+    }
+    // nixos-aliases;
 
   programs.direnv = {
     enable = true;
@@ -53,15 +59,13 @@ in
     nix-direnv.enable = true;
     stdlib = builtins.readFile ../../dotfiles/direnvrc;
   };
-  # No sftpman integration yet on 23.11
-  # programs.sftpman
   fonts.fontconfig.enable = true;
   home.packages =
     (with pkgs; [
       mlocate
       rsync
       rclone
-      htop
+      btop-rocm
       bitwarden
       fastfetch
       fira-code-nerdfont # TODO: Move to a proper setting.
@@ -70,8 +74,10 @@ in
       libnotify
       gthumb # Image viewer
       vlc
+      nh
     ])
     # Gnome packages mainly
+    # TODO: Move these to gnome.nix?
     ++ (with pkgs; [
       baobab # Disk space info
       nautilus # File browser
