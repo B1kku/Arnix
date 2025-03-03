@@ -4,6 +4,7 @@
   pkgs-unstable,
   home-manager,
   inputs,
+  flake-opts,
   ...
 }:
 {
@@ -126,7 +127,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {
-      inherit pkgs-unstable inputs;
+      inherit pkgs-unstable inputs flake-opts;
     };
     users.bikku = import ../../users/bikku/home.nix;
   };

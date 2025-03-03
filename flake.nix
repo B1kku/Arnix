@@ -18,9 +18,9 @@
       url = "github:fufexan/nix-gaming";
     };
   };
-
   outputs =
     {
+
       nixpkgs-main,
       nixpkgs-unstable,
       home-manager,
@@ -38,7 +38,14 @@
         inherit system;
         config.allowUnfree = true;
       };
-
+      # Some things just end up needing to know where the flake is.
+      # Such as home manager for mkoutofstoresymlink or nvim for updating lazy.lock
+      flake-opts = {
+        # Controls whether to link from flake-dir or flake-dir-pure.
+        # Some things still need flake-dir.
+        pure = true;
+        flake-dir = "/etc/nixos";
+      };
     in
     {
       formatter.x86_64-linux = pkgs-unstable.nixfmt-rfc-style;
@@ -52,6 +59,7 @@
               pkgs-unstable
               lib
               home-manager
+              flake-opts
               ;
           };
           modules = [ ./hosts/Arnix/configuration.nix ];

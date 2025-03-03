@@ -4,6 +4,7 @@
   lib,
   pkgs,
   pkgs-unstable,
+  flake-opts,
   inputs,
   ...
 }:
@@ -13,6 +14,7 @@ let
     nixpkgs="nixpkgs''${2:+"/nixos-$2"}"
     NIXPKGS_ALLOW_UNFREE=1 nix shell "$nixpkgs#$1" --impure
   '';
+  flake-dir = flake-opts.flake-dir;
 in
 {
   programs.home-manager.enable = true;
@@ -33,17 +35,25 @@ in
     ../../modules/home-manager/lutris.nix
     # ../../dotfiles/alacritty.nix
   ];
+  lib = {
+    extra = {
+      mkFlakePath =
+        if flake-opts.pure then
+          (path: inputs.self + path)
+        else
+          (path: config.lib.file.mkOutOfStoreSymlink (flake-opts.flake-dir + path));
+    };
+  };
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
 
   home.shellAliases =
     let
-      FLAKE_DIR = "/etc/nixos";
       buildNHCommand = (_: command: "pkexec ${command}");
       nixos-aliases =
         {
-          arnix-rebuild = "nh os switch ${FLAKE_DIR} -R";
-          arnix-update = "nh os switch ${FLAKE_DIR} -u -R";
+          arnix-rebuild = "nh os switch ${flake-dir} -R";
+          arnix-update = "nh os switch ${flake-dir} -u -R";
           arnix-clean = "nh clean all --keep-since 7d --keep 5 --ask";
         }
         |> builtins.mapAttrs buildNHCommand;

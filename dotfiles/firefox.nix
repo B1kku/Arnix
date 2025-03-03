@@ -3,6 +3,7 @@
   pkgs,
   config,
   pkgs-unstable,
+  flake-opts,
   ...
 }:
 let
@@ -26,15 +27,12 @@ let
         };
       })
   );
+  flake-dir = flake-opts.flake-dir;
 in
 {
   home.file.${firefox-profile} = {
-    source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/dotfiles/firefox/chrome";
+    source = config.lib.extra.mkFlakePath "/dotfiles/firefox/chrome";
     target = ".librewolf/${firefox-profile}/chrome";
-  };
-  home.shellAliases = {
-    firefox-test = "rm -rf ~/.librewolf/${firefox-profile}/chrome; ln -s /etc/nixos/dotfiles/firefox/chrome/ ~/.librewolf/${firefox-profile}/chrome";
-    firefox-clean = "rm -rf ~/.librewolf/${firefox-profile}/chrome";
   };
   programs.librewolf = {
     enable = true;

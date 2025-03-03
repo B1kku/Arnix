@@ -3,16 +3,18 @@
   pkgs,
   pkgs-unstable,
   config,
+  flake-opts,
   ...
 }:
 let
+  config-dir = "/dotfiles/neovim";
   nixvars =
     ''
       -- Code injected by Home Manager for NixOS --
     ''
     + (lib.generators.toLua { asBindings = true; } {
       "vim.g.nixvars" = {
-        config_dir = "/etc/nixos/dotfiles/neovim";
+        inherit config-dir;
         java_runtimes = {
           "17" = "${pkgs.jdk17}";
           "21" = "${pkgs.jdk21}";
@@ -87,19 +89,19 @@ in
   # But it's also used to inject nix specific options
   # into init.lua, in this case through extraLuaConfig.
   # If the root gets bigger I'll map these, but it's unlikely.
-  xdg.configFile = {
-    "nvim/lua".source = ./neovim/lua;
-    "nvim/ftplugin".source = ./neovim/ftplugin;
-    "nvim/init.lua".text = builtins.readFile ./neovim/init.lua;
-    "nvim/nvim-remote-wrapper.sh" = {
-      source = ./neovim/nvim-remote-wrapper.sh;
-      executable = true;
+  xdg.configFile =
+    let
+      inherit (config.lib.extra) mkFlakePath;
+    in
+    {
+      "nvim/lua".source = mkFlakePath (config-dir + "/lua");
+      "nvim/ftplugin".source = mkFlakePath (config-dir + "/ftplugin");
+      "nvim/init.lua".text = builtins.readFile ./neovim/init.lua;
+      "nvim/nvim-remote-wrapper.sh" = {
+        source = ./neovim/nvim-remote-wrapper.sh;
+        executable = true;
+      };
     };
-  };
-  home.shellAliases = {
-    nvim-test = "rm -rf ~/.config/nvim; ln -s /etc/nixos/dotfiles/neovim/ ~/.config/nvim";
-    nvim-clean = "rm -rf ~/.config/nvim";
-  };
   programs.neovim = {
     enable = true;
     package = pkgs-unstable.neovim-unwrapped;
@@ -108,7 +110,6 @@ in
     extraLuaConfig = nixvars;
     extraPackages = lsps ++ formatters ++ linters ++ deps ++ tooling;
   };
-
   home.packages =
     let
       nvim-open = pkgs.writeShellScriptBin "nvim-open" ''
