@@ -23,9 +23,9 @@
       substituters = [ "https://nix-gaming.cachix.org" ];
       trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
     };
-    package = pkgs.nixVersions.latest;
+    package = pkgs.lix;
     # Enable pipes [1 2 3] |> map (e: e * 2)
-    extraOptions = "experimental-features = nix-command flakes pipe-operators";
+    extraOptions = "experimental-features = nix-command flakes pipe-operator";
   };
   # Use the systemd-boot EFI boot loader.
   boot = {
