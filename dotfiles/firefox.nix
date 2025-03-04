@@ -27,7 +27,6 @@ let
         };
       })
   );
-  flake-dir = flake-opts.flake-dir;
 in
 {
   home.file.${firefox-profile} = {

@@ -5,7 +5,7 @@
   lib,
   osConfig,
   ...
-}@args :
+}@args:
 {
   programs.lutris = {
     enable = true;
@@ -23,7 +23,7 @@
   };
   # Allows starting up steam on the background on gnome.
 
-  xdg.desktopEntries.steam-background = lib.mkIf (args ? osConfig && osConfig.programs.steam.enable)  {
+  xdg.desktopEntries.steam-background = lib.mkIf (args ? osConfig && osConfig.programs.steam.enable) {
     name = "Steam Background";
     exec = "steam -silent %u";
     icon = "steam";
@@ -34,6 +34,7 @@
     ];
   };
   home.packages = with pkgs-unstable; [
+    umu-launcher
     steam-run
     winetricks
     wineWowPackages.stableFull
