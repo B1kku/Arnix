@@ -98,6 +98,7 @@ in
       gnome-calculator
       gnome-system-monitor
       gnome-tweaks
+      gnome-calendar
     ])
     ++ [ nix-shell-wrapper ];
 
