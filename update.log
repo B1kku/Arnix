@@ -1,0 +1,62 @@
+<<< /run/current-system
+>>> /tmp/nh-osS5Cp2e/result
+Version changes:
+[U*]  #01  cpupower                                          6.12.17 -> 6.12.19
+[C*]  #02  curl                                              8.12.0 x2, 8.12.0-bin, 8.12.1 x2, 8.12.1-bin x2, 8.12.1-man -> 8.12.1 x4, 8.12.1-bin x3, 8.12.1-man
+[U.]  #03  dotnet-runtime                                    8.0.13 -> 8.0.14
+[U.]  #04  dotnet-runtime-wrapped                            8.0.13 -> 8.0.14
+[U.]  #05  electron                                          33.4.1 -> 33.4.2, 34.3.2
+[U.]  #06  electron-unwrapped                                33.4.1 -> 33.4.2, 34.3.2
+[C.]  #07  fzf                                               0.56.2, 0.60.2 -> 0.56.2, 0.60.3
+[U.]  #08  gnome-shell-extension-alttab-mod                  20 -> 21
+[U.]  #09  gnome-shell-extension-auto-move-windows           58 -> 60
+[U.]  #10  gnome-shell-extension-gamemode-shell-extension    11 -> 12
+[U.]  #11  gnome-shell-extension-just-perfection             31 -> 34
+[U.]  #12  gnome-shell-extension-quick-settings-audio-panel  74 -> 77
+[C.]  #13  gnutls                                            3.8.6 x4, 3.8.6-bin, 3.8.6-man -> 3.8.6 x2, 3.8.6-bin, 3.8.6-man, 3.8.9 x2
+[U.]  #14  imagemagick                                       7.1.1-43, 7.1.1-44 -> 7.1.1-45 x2
+[U.]  #15  initrd-linux                                      6.12.17 -> 6.12.19
+[U.]  #16  jdt-language-server                               1.44.0 -> 1.45.0
+[C.]  #17  libassuan                                         2.5.7 x4 -> 2.5.7 x2, 3.0.2 x2
+[C.]  #18  libcdio                                           2.1.0 x4 -> 2.1.0 x2, 2.2.0 x2
+[U.]  #19  librewolf                                         134.0-1 -> 136.0.1-1
+[U.]  #20  librewolf-unwrapped                               134.0-1 -> 136.0.1-1
+[C.]  #21  libselinux                                        3.7 x4, 3.7-bin, 3.7-man -> 3.7 x2, 3.7-bin, 3.7-man, 3.8 x2
+[C.]  #22  libxml2                                           2.13.4, 2.13.5 x2, 2.13.6 x2, 2.13.6-bin -> 2.13.4, 2.13.6 x4, 2.13.6-bin
+[U.]  #23  linux                                             6.12.17, 6.12.17-modules, 6.12.17-modules-shrunk -> 6.12.19, 6.12.19-modules, 6.12.19-modules-shrunk
+[U.]  #24  linux-firmware                                    20250211-zstd -> 20250311-zstd
+[C.]  #25  llvm                                              18.1.8, 18.1.8-lib x2, 19.1.7-lib x2 -> 18.1.8, 18.1.8-lib x2, 19.1.7-lib
+[C.]  #26  mesa                                              24.2.8 x2, 24.2.8-drivers x2, 24.2.8-osmesa x2, 24.3.4-osmesa x2 -> 24.2.8 x2, 24.2.8-drivers x2, 24.2.8-osmesa x2
+[U.]  #27  mesa-libgbm                                       24.3.4 x2 -> 25.0.1 x2
+[C*]  #28  networkmanager                                    1.48.10 x2, 1.48.10-doc, 1.48.10-man, 1.50.2 x2, 1.50.2-man -> 1.48.10 x2, 1.48.10-doc, 1.48.10-man, 1.52.0 x2, 1.52.0-man
+[C.]  #29  nss                                               3.101.2 x4, 3.108 -> 3.101.2 x4, 3.109
+[C.]  #30  openh264                                          2.5.0 x2, 2.6.0 x2 -> 2.6.0 x4
+[C*]  #31  pipewire                                          1.2.7 x4, 1.2.7-doc, 1.2.7-man -> 1.2.7 x2, 1.2.7-doc, 1.2.7-man, 1.4.0 x2
+[C.]  #32  publicsuffix-list                                 0-unstable-2024-10-25 x2, 0-unstable-2025-01-16 x2 -> 0-unstable-2024-10-25 x2, 0-unstable-2025-02-12 x2
+[U.]  #33  python3.12-aiohappyeyeballs                       2.4.4 -> 2.4.6
+[U.]  #34  python3.12-aiohttp                                3.11.12 -> 3.11.13
+[C.]  #35  python3.12-cryptography                           43.0.1, 44.0.0 -> 43.0.1, 44.0.1
+[U.]  #36  sidebery                                          5.3.2 -> 5.3.3
+[C*]  #37  systemd                                           <none>, 256.10 x2, 256.10-man, 257.2 x2 -> <none>, 256.10 x2, 256.10-man, 257.3 x2
+[C.]  #38  systemd-minimal                                   256.10 x2, 257.2 x2 -> 256.10 x2, 257.3 x2
+[C.]  #39  systemd-minimal-libs                              256.10 x2, 257.2 x2 -> 256.10 x2, 257.3 x2
+[C.]  #40  taglib                                            1.13.1 x4 -> 1.13.1 x2, 2.0.2 x2
+[C.]  #41  talloc                                            2.4.2 x4 -> 2.4.2 x2, 2.4.3 x2
+[C.]  #42  tdb                                               1.4.11 x2, 1.4.12 x2 -> 1.4.11 x2, 1.4.13 x2
+[U.]  #43  tree-sitter                                       0.24.6 -> 0.25.1
+[U.]  #44  typescript                                        5.7.3 -> 5.8.2
+[C.]  #45  udev-rules                                        <none> -> <none> x2
+[C.]  #46  wayland-protocols                                 1.38 x2, 1.40 x2 -> 1.38 x2, 1.41 x2
+[C.]  #47  x264                                              0-unstable-2023-10-01-lib x4 -> 0-unstable-2023-10-01-lib x2, 0-unstable-2025-01-03-lib x2
+[U.]  #48  yazi                                              25.2.26 x2 -> 25.3.2 x2
+[C.]  #49  zvbi                                              0.2.42, 0.2.43 x2 -> 0.2.43 x2, 0.2.44
+Added packages:
+[A.]  #1  extra-utils    <none>
+[A.]  #2  initrd-fsinfo  <none>
+[A.]  #3  keymap         <none>
+[A.]  #4  libebur128     1.2.6 x2
+[A.]  #5  link-units     <none>
+[A.]  #6  mdadm.conf     <none>
+[A.]  #7  stage          1-init.sh
+Closure size: 3429 -> 3437 (1185 paths added, 1177 paths removed, delta +8, disk usage -93.4MiB).
+setting up /etc...
