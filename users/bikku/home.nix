@@ -50,14 +50,14 @@ in
 
   home.shellAliases =
     let
-      buildNHCommand = (_: command: "pkexec ${command}");
+      sudoWrap = (_: command: "pkexec ${command}");
       nixos-aliases =
         {
-          arnix-rebuild = "nh os switch ${flake-dir} -R";
-          arnix-update = "nh os switch ${flake-dir} -u -R";
+          arnix-rebuild = "nh os switch ${flake-dir} -R | tee ${flake-dir + "/rebuild.log"}";
+          arnix-update = "nh os switch ${flake-dir} -u -R | tee ${flake-dir + "/update.log"}";
           arnix-clean = "nh clean all --keep-since 7d --keep 5 --ask";
         }
-        |> builtins.mapAttrs buildNHCommand;
+        |> builtins.mapAttrs sudoWrap;
     in
     {
       neofetch = "fastfetch";
