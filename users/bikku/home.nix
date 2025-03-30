@@ -53,9 +53,9 @@ in
       sudoWrap = (_: command: "pkexec ${command}");
       nixos-aliases =
         {
-          arnix-rebuild = "nh os switch ${flake-dir} -R | tee ${flake-dir + "/rebuild.log"}";
-          arnix-update = "nh os switch ${flake-dir} -u -R | tee ${flake-dir + "/update.log"}";
-          arnix-clean = "nh clean all --keep-since 7d --keep 5 --ask";
+          rebuild = "nh os switch ${flake-dir} -R | tee ${flake-dir + "/rebuild.log"}";
+          update = "nh os switch ${flake-dir} -u -R | tee ${flake-dir + "/update.log"}";
+          clean = "nh clean all --keep-since 7d --keep 5 --ask";
         }
         |> builtins.mapAttrs sudoWrap;
     in
