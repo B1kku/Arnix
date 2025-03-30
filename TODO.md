@@ -1,5 +1,4 @@
 # Nixos
-    - Some way to remind myself to update.
     - Lutris runners are not well documented or set.
 # Wezterm
     - Tabs are not quite there, a picker would be nice
