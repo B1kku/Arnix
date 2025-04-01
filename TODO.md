@@ -4,6 +4,11 @@
     - Tabs are not quite there, a picker would be nice
     - Theming isn't quite set yet
 # Neovim
+    - Default lsp settings changed on newest update
+        - Diagnostics are not shown by default.
+        - Got some warning about a deprecated setting.
+    - Luabar visuals made it non-transparent after last update.
+
     - Direnv (prob gotta fork or make my own, don't lsp until it loads, etc...)
     - Completion
         - Docs are not transparent.
