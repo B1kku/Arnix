@@ -18,17 +18,27 @@ final: prev: {
   proton-gamemode = (import ./proton-gamemode-wrapper.nix prev);
   wezterm = inputs.nixpkgs-old.legacyPackages.${system}.wezterm;
   gnomeExtensions = prev.gnomeExtensions // {
-    valent =
-      let
-        version = "1.0.0.alpha.46";
-      in
-      prev.gnomeExtensions.valent.overrideAttrs (attrs: {
-        src = prev.fetchFromGitHub {
-          owner = "andyholmes";
-          repo = "gnome-shell-extension-valent";
-          rev = "v${version}";
-          hash = "sha256-OY0fxO6IYg7xukYYuK0QM9YriaEAlM2dH6t8Wv3XKIs=";
-        };
-      });
+    # valent =
+    #   let
+    #     version = "1.0.0.alpha.46";
+    #   in
+    #   prev.gnomeExtensions.valent.overrideAttrs (attrs: {
+    #     src = prev.fetchFromGitHub {
+    #       owner = "andyholmes";
+    #       repo = "gnome-shell-extension-valent";
+    #       rev = "v${version}";
+    #       hash = "sha256-OY0fxO6IYg7xukYYuK0QM9YriaEAlM2dH6t8Wv3XKIs=";
+    #     };
+    #   });
+    gsconnect = prev.gnomeExtensions.gsconnect.overrideAttrs (attrs: {
+      src = let
+        version = "62";
+      in prev.fetchFromGitHub {
+        owner = "GSConnect";
+        repo = "gnome-shell-extension-gsconnect";
+        rev = "v${version}";
+        hash = "sha256-1MXjNVoVpgBaIbGYpbnQdS7rdew+JUrwzOg+2Ka7kgA=";
+      };
+    });
   };
 }

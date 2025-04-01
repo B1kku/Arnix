@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 let
   logo = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/bfb687d78001efc15618eac7dd50e2e5104663ea/Papirus/64x64/apps/discord.svg";
@@ -23,5 +23,5 @@ in
       X-startupWMClass = "Discord";
     };
   };
-  home.packages = [ pkgs.vesktop ];
+  home.packages = [ pkgs-unstable.vesktop ];
 }
