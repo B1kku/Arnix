@@ -1,64 +1,28 @@
 <<< /run/current-system
->>> /tmp/nh-os1G4xQU/result
+>>> /tmp/nh-osmx8qCo/result
 Version changes:
-[C.]  #01  SDL                                1.2.15 x4, 1.2.15-dev -> 1.2.15 x2, 1.2.15-dev
-[C.]  #02  SDL2                               2.30.6 x2, 2.32.0 x2 -> 2.30.6 x2, 2.32.2 x2
-[U.]  #03  c-grammar-neovim                   0.10.4 -> 0.11.0
-[C.]  #04  chafa                              1.14.5 x2 -> 1.14.5 x2, 1.14.5-bin
-[U*]  #05  cpupower                           6.12.19 -> 6.12.21
-[C.]  #06  directfb                           1.7.7 x4 -> 1.7.7 x2
-[C.]  #07  faad2                              2.11.1 x4 -> 2.11.1 x2, 2.11.2 x2
-[C.]  #08  ffmpeg                             6.1.2-data, 6.1.2-lib, 7.1-bin x2, 7.1-data x4, 7.1-lib x4, 7.1-man -> 6.1.2-data, 6.1.2-lib, 7.1-bin, 7.1-data x2, 7.1-lib x2, 7.1-man, 7.1.1-bin, 7.1.1-data, 7.1.1-lib
-[C.]  #09  ffmpeg-headless                    7.1-data x4, 7.1-lib x4 -> 7.1-data x2, 7.1-lib x2, 7.1.1-data x2, 7.1.1-lib x2
-[C*]  #10  glib                               2.82.1 x2, 2.82.1-bin x2, 2.82.1-dev, 2.82.4 x2, 2.82.4-bin x2 -> 2.82.1 x2, 2.82.1-bin x2, 2.82.1-dev, 2.82.5 x2, 2.82.5-bin x2
-[C.]  #11  hwdata                             0.390 x2, 0.392 x2 -> 0.390 x2, 0.393 x2
-[C.]  #12  imagemagick                        7.1.1-45 x2 -> 7.1.1-45, 7.1.1-46
-[U.]  #13  initrd-linux                       6.12.19 -> 6.12.21
-[C.]  #14  ldb                                2.9.1 x2, 2.9.2 x4 -> 2.9.1 x2, 2.9.2 x2
-[C.]  #15  libX11                             1.8.10 x3, 1.8.10-dev, 1.8.10-man, 1.8.11 x2 -> 1.8.10 x3, 1.8.10-dev, 1.8.10-man, 1.8.12 x2
-[C*]  #16  libcap                             2.70, 2.70-dev, 2.70-doc, 2.70-lib x2, 2.70-man, 2.73, 2.73-lib x2, 2.73-man -> 2.70, 2.70-dev, 2.70-doc, 2.70-lib x2, 2.70-man, 2.74, 2.74-lib x2, 2.74-man
-[C.]  #17  liblc3                             1.1.1 x2, 1.1.2 x2 -> 1.1.1 x2, 1.1.3 x2
-[U.]  #18  librewolf                          136.0.1-1 -> 136.0.4-1
-[U.]  #19  librewolf-unwrapped                136.0.1-1 -> 136.0.4-1
-[C.]  #20  libvdpau                           1.5 x4 -> 1.5 x3
-[C.]  #21  libvisual                          0.4.1 x2, 0.4.2 x2 -> 0.4.1 x2
-[U.]  #22  linux                              6.12.19, 6.12.19-modules, 6.12.19-modules-shrunk -> 6.12.21, 6.12.21-modules, 6.12.21-modules-shrunk
-[U.]  #23  lua-grammar-neovim                 0.10.4 -> 0.11.0
-[C.]  #24  luajit                             2.1.1713773202 x2, 2.1.1713773202-env x2 -> 2.1.1713773202, 2.1.1713773202-env, 2.1.1741730670, 2.1.1741730670-env
-[C*]  #25  lvm2                               2.03.27, 2.03.27-bin, 2.03.27-lib x2, 2.03.27-man, 2.03.30-lib x2 -> 2.03.27, 2.03.27-bin, 2.03.27-lib x2, 2.03.27-man, 2.03.31-lib x2
-[U.]  #26  markdown-grammar-neovim            0.10.4 -> 0.11.0
-[U.]  #27  markdown_inline-grammar-neovim     0.10.4 -> 0.11.0
-[U.]  #28  neovim                             0.10.4 -> 0.11.0
-[U.]  #29  neovim-unwrapped                   0.10.4 -> 0.11.0
-[U.]  #30  nix                                2.24.12 x2, 2.24.12-man x2 -> 2.24.13 x2, 2.24.13-man x2
-[U.]  #31  nixd                               2.6.1 -> 2.6.2
-[U.]  #32  nixf                               2.6.1 -> 2.6.2
-[U.]  #33  nixt                               2.6.1 -> 2.6.2
-[C*]  #34  pipewire                           1.2.7 x2, 1.2.7-doc, 1.2.7-man, 1.4.0 x2 -> 1.2.7 x2, 1.2.7-doc, 1.2.7-man, 1.4.1 x2
-[C*]  #35  polkit                             1.pam, 124 x4, 124-bin -> 1.pam, 124 x2, 124-bin, 126 x2
-[C.]  #36  python3.12-attrs                   24.2.0, 24.3.0 -> 24.2.0, 25.1.0
-[C.]  #37  python3.12-brotlicffi              1.1.0.0 x2 -> 1.1.0.0
-[C.]  #38  python3.12-certifi                 2024.08.30, 2024.12.14 -> 2024.08.30, 2025.01.31
-[C.]  #39  python3.12-cryptography            43.0.1, 44.0.1 -> 43.0.1, 44.0.2
-[U.]  #40  python3.12-propcache               0.2.1 -> 0.3.0
-[C.]  #41  python3.12-pyopenssl               24.2.1, 24.2.1-dev, 24.3.0, 24.3.0-dev -> 24.2.1, 24.2.1-dev, 25.0.0, 25.0.0-dev
-[U.]  #42  python3.12-umu-launcher-unwrapped  1.2.5 -> 1.2.6
-[U.]  #43  query-grammar-neovim               0.10.4 -> 0.11.0
-[C.]  #44  samba                              4.20.4 x6, 4.20.4-man -> 4.20.4 x4, 4.20.4-man
-[U*]  #45  strace                             6.13 -> 6.14, 6.14-man
-[C.]  #46  tevent                             0.16.1 x4, 0.16.2 x2 -> 0.16.1 x2, 0.16.2 x2
-[U.]  #47  ublock-origin                      1.62.0 -> 1.63.2
-[U.]  #48  umu-launcher                       1.2.5, 1.2.5-bwrap, 1.2.5-fhsenv-profile, 1.2.5-fhsenv-rootfs, 1.2.5-init -> 1.2.6, 1.2.6-bwrap, 1.2.6-fhsenv-profile, 1.2.6-fhsenv-rootfs, 1.2.6-init
-[U.]  #49  vim-grammar-neovim                 0.10.4 -> 0.11.0
-[U.]  #50  vimdoc-grammar-neovim              0.10.4 -> 0.11.0
+[U*]  #01  cpupower             6.12.21 -> 6.12.22
+[C.]  #02  electron             33.4.5, 34.3.3 -> 33.4.8, 34.5.0
+[C.]  #03  electron-unwrapped   33.4.5, 34.3.3 -> 33.4.8, 34.5.0
+[C.]  #04  fzf                  0.56.2, 0.60.3 -> 0.56.2, 0.61.1
+[U.]  #05  go                   1.23.6 -> 1.23.7
+[C.]  #06  imagemagick          7.1.1-45, 7.1.1-46 -> 7.1.1-45, 7.1.1-47
+[U.]  #07  initrd-linux         6.12.21 -> 6.12.22
+[C.]  #08  libical              3.0.18 x2, 3.0.19 x2 -> 3.0.19 x4
+[U.]  #09  librewolf            136.0.4-1 -> 137.0-3
+[U.]  #10  librewolf-unwrapped  136.0.4-1 -> 137.0-3
+[U.]  #11  linux                6.12.21, 6.12.21-modules, 6.12.21-modules-shrunk -> 6.12.22, 6.12.22-modules, 6.12.22-modules-shrunk
+[C*]  #12  lvm2                 2.03.27, 2.03.27-bin, 2.03.27-lib x2, 2.03.27-man, 2.03.31-lib x2 -> 2.03.31, 2.03.31-bin, 2.03.31-lib x4, 2.03.31-man
+[U.]  #13  nix                  2.24.13 x2, 2.24.13-man x2 -> 2.24.14 x2, 2.24.14-man x2
+[C.]  #14  nodejs               20.18.3, 22.14.0 -> 20.19.0, 22.14.0
+[C.]  #15  nss                  3.101.2 x4, 3.109 -> 3.101.2 x4, 3.110
+[C.]  #16  tzdata               2024b x2, 2025a x2 -> 2025a x2, 2025b x2
+[C.]  #17  udev-rules           <none> x2 -> <none>
+[C.]  #18  wine-mono            8.1.0-x86.msi, 9.4.0-x86.msi -> 8.1.0-x86.msi, 10.0.0-x86.msi
+[U.]  #19  yazi                 25.3.2 x2 -> 25.4.8 x2
 Added packages:
-[A.]  #1  utf8proc  2.10.0
+[A.]  #1  resvg  0.44.0
 Removed packages:
-[R.]  #1  keymap           <none>
-[R.]  #2  libvterm-neovim  0.3.3
-[R.]  #3  link-units       <none>
-[R.]  #4  mdadm.conf       <none>
-[R.]  #5  msgpack-c        6.1.0
-[R.]  #6  stage            1-init.sh
-Closure size: 3443 -> 3424 (1157 paths added, 1176 paths removed, delta -19, disk usage -209.0MiB).
+[R.]  #1  extra-utils  <none>
+Closure size: 3384 -> 3383 (1518 paths added, 1519 paths removed, delta -1, disk usage +12.0MiB).
 setting up /etc...

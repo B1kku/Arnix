@@ -37,7 +37,7 @@ final: prev: {
         owner = "GSConnect";
         repo = "gnome-shell-extension-gsconnect";
         rev = "v${version}";
-        hash = "sha256-1MXjNVoVpgBaIbGYpbnQdS7rdew+JUrwzOg+2Ka7kgA=";
+        hash = "sha256-HFm04XC61AjkJSt4YBc4dO9v563w+LsYDSaZckPYE14=";
       };
     });
   };
