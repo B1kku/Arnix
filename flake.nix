@@ -19,7 +19,6 @@
   };
   outputs =
     {
-
       nixpkgs-main,
       nixpkgs-unstable,
       home-manager,
@@ -37,13 +36,21 @@
         inherit system;
         config.allowUnfree = true;
       };
-      # Some things just end up needing to know where the flake is.
-      # Such as home manager for mkoutofstoresymlink or nvim for updating lazy.lock
       flake-opts = {
+        # Some things just end up needing to know where the flake is.
+        # Such as home manager for mkoutofstoresymlink or nvim for updating lazy.lock
         # Controls whether to link from flake-dir or flake-dir-pure.
         # Some things still need flake-dir.
-        pure = true;
+        pure = false;
         flake-dir = "/etc/nixos";
+        # Centralize flake inputs substituters and public keys
+        # to pass to configs and tie them if the input is removed.
+        extraCaches = lib.extra.getCachesFromInputs inputs {
+          nix-gaming = {
+            substituters = [ "https://nix-gaming.cachix.org" ];
+            trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+          };
+        };
       };
     in
     {

@@ -20,8 +20,9 @@
     settings = {
       auto-optimise-store = true;
       # Nix-Gaming Cachix
-      substituters = [ "https://nix-gaming.cachix.org" ];
-      trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+      # Extra store caches from inputs.
+      substituters = flake-opts.extraCaches.substituters;
+      trusted-public-keys = flake-opts.extraCaches.trusted-public-keys;
     };
     package = pkgs.lix;
     # Enable pipes [1 2 3] |> map (e: e * 2)
