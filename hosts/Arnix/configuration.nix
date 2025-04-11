@@ -5,6 +5,7 @@
   home-manager,
   inputs,
   flake-opts,
+  lib,
   ...
 }:
 {
@@ -19,14 +20,18 @@
   nix = {
     settings = {
       auto-optimise-store = true;
-      # Nix-Gaming Cachix
       # Extra store caches from inputs.
       substituters = flake-opts.extraCaches.substituters;
       trusted-public-keys = flake-opts.extraCaches.trusted-public-keys;
+      # Path to nixpkgs, to follow flake inputs.
+      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs-main";
     };
     package = pkgs.lix;
     # Enable pipes [1 2 3] |> map (e: e * 2)
     extraOptions = "experimental-features = nix-command flakes pipe-operator";
+    # Follow nixpkgs from inputs as NIX_PATH
+    registry.nixpkgs.flake = inputs.nixpkgs-main;
+    channel.enable = false;
   };
   # Use the systemd-boot EFI boot loader.
   boot = {
