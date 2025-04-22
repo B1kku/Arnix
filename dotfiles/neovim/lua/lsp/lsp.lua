@@ -117,6 +117,38 @@ return {
     end
   },
   {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    config = function()
+      local util = require("util")
+      local function is_vim_workspace(root_dir)
+        if (not root_dir) then
+          root_dir = vim.fn.getcwd(0)
+        end
+        local nix_config_dir = vim.tbl_get(vim.g, "nixvars", "config_dir")
+        if (nix_config_dir and util.is_subdir(root_dir, nix_config_dir)) then
+          return true
+        end
+        local config_dir = vim.fn.stdpath("config")
+        if (util.is_subdir(root_dir, config_dir)) then
+          return true
+        end
+        return false
+      end
+      require("lazydev").setup({
+        library = {
+          { path = "${3rd}/luv/library", words = { "vim%.uv" } }
+        },
+        enabled = function(root_dir)
+          if (vim.g.lazydev_enabled) then
+            return true
+          end
+          return is_vim_workspace(root_dir)
+        end
+      })
+    end
+  },
+  {
     -- Java lsp plugin. --
     -- I'm not sure why, but loading the config from here won't work
     -- Instead it's loaded from ftplugin/java

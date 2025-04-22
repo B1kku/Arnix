@@ -14,7 +14,7 @@ let
     ''
     + (lib.generators.toLua { asBindings = true; } {
       "vim.g.nixvars" = {
-        inherit config-dir;
+        config_dir = flake-opts.flake-dir + config-dir;
         java_runtimes = {
           "17" = "${pkgs.jdk17}";
           "21" = "${pkgs.jdk21}";
