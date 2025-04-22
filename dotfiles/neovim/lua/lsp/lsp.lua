@@ -11,14 +11,6 @@ local function load_lsps(lsp_list, default_config)
   vim.tbl_map(load_lsp, lsp_list)
 end
 
--- Set LSP Icons
-local function set_signs(lsp_signs)
-  for type, icon in pairs(lsp_signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
-end
-
 -- Given a list of {mode, key, action, opts, (extra_opts)},
 -- add said keymap when the lsp attaches.
 local function set_keymaps_on_attach(keymaps)
@@ -77,11 +69,12 @@ return {
       }
       -- Set lsp borders
       local borders = vim.g.border
+      -- DEPRECATED ON 0.11 --
       local default_config = {
         capabilities = capabilities,
         handlers = {
           ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = borders }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = borders })
+          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, { border = borders })
         },
         on_attach = function(client, bufnr)
           if client.server_capabilities.inlayHintProvider then
@@ -89,11 +82,23 @@ return {
           end
         end
       }
+      -- Setup diagnostic config
+      local severity = vim.diagnostic.severity
       -- Map of signs for the LSP.
-      local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
+      ---@type vim.diagnostic.Opts
+      local diagnostic_opts = {
+        signs = {
+          text = { [severity.ERROR] = "󰅚", [severity.WARN] = "󰀪", [severity.HINT] = "󰌶", [severity.INFO] = "" }
+        },
+        severity_sort = true,
+        virtual_lines = { current_line = true },
+      }
+      vim.diagnostic.config(diagnostic_opts)
 
+      local goto_next = function() vim.diagnostic.jump({ count = 1, float = true }) end
+      local goto_prev = function() vim.diagnostic.jump({ count = -1, float = true }) end
       local keymaps = {
-        { "n", "K",    vim.lsp.buf.hover,           "Display information of symbol" },
+        -- { "n", "K",    vim.lsp.buf.hover,           "Display information of symbol" },
         { "n", "gd",   vim.lsp.buf.definition,      "Go to definition" },
         { "n", "gD",   vim.lsp.buf.declaration,     "Go to declaration" },
         { "n", "gi",   vim.lsp.buf.implementation,  "Get implementations" },
@@ -103,12 +108,11 @@ return {
         { "n", "gl",   vim.diagnostic.open_float,   "Get diagnostics on float" },
         { "n", "<F2>", vim.lsp.buf.rename,          "Rename" },
         { "n", "<F4>", vim.lsp.buf.code_action,     "Get code actions" },
-        { "n", "[d",   vim.diagnostic.goto_prev,    "Previous diagnostic" },
-        { "n", "]d",   vim.diagnostic.goto_next,    "Next diagnostic" },
+        { "n", "[d",   goto_prev,                   "Previous diagnostic" },
+        { "n", "]d",   goto_next,                   "Next diagnostic" },
       }
 
       load_lsps(lsp_list, default_config)
-      set_signs(signs)
       set_keymaps_on_attach(keymaps)
     end
   },

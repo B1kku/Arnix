@@ -13,6 +13,9 @@ M.lsp_setup = {
         preloadFileSize = 1000,
       },
       telemetry = { enable = false },
+      diagnostics = {
+        unusedLocalExclude = { "_*" }
+      }
     }
   }
 }
