@@ -18,6 +18,8 @@ return {
     config = function()
       local live_grep = require("telescope-live-grep-args.actions")
       --Telescope doesn't use nvim_open_win parameters, this fixes it...
+      -- TODO: Move to proper setting once this is fixed.
+      -- https://github.com/nvim-telescope/telescope.nvim/issues/3436
       local fixedborder = vim.g.borderchars
       for i = 1, 4, 1 do
         fixedborder[i] = vim.g.borderchars[i * 2]
@@ -33,7 +35,7 @@ return {
               ["qq"] = "close"
             }
           },
-          borderchars = fixedborder,
+          -- borderchars = fixedborder,
           layout_config = {
             horizontal = {
               preview_cutoff = 0,

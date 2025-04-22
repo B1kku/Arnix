@@ -20,7 +20,8 @@ return {
         yaml = { "prettier" },
         python = { "autopep8" },
         sh = { "shellharden" }
-      }
+      },
+      stop_after_first = true,
     })
   end
 }
