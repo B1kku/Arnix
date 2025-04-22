@@ -6,10 +6,14 @@ local cmd = vim.api.nvim_command
 vim.g.loaded_netrwPlugin = 0  -- Disable netrw
 
 --  Context  --
+-- TODO: This works, but currently breaks a bunch of things
+-- telescope, which-key, etc...
+-- opt.winborder = vim.g.border
+opt.nuw = 1
 opt.number = true         -- Show line numbers
 opt.relativenumber = true -- Show relative line numbers
 opt.scrolloff = 4         -- Min num lines of context
-opt.signcolumn = "auto:1" -- Show the sign column
+-- opt.signcolumn = "auto:1" -- Show the sign column
 opt.fillchars = "eob: "   -- Hide "~" on non written lines
 opt.showmode = false      -- Hide mode from bottom bar
 opt.wrap = true           -- Wrap lines when they reach border
