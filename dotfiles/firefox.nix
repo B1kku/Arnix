@@ -13,6 +13,7 @@ let
     sidebery
     darkreader
     seventv
+    violentmonkey
   ];
   maskFree = (
     pkg:

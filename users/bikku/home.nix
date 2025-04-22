@@ -81,7 +81,7 @@ in
       fastfetch
       fira-code-nerdfont # TODO: Move to a proper setting.
       prismlauncher
-      deluge
+      qbittorrent
       libnotify
       gthumb # Image viewer
       vlc

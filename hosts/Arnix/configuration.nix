@@ -26,9 +26,9 @@
       # Path to nixpkgs, to follow flake inputs.
       nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs-main";
     };
-    package = pkgs.lix;
+    package = pkgs.nix;
     # Enable pipes [1 2 3] |> map (e: e * 2)
-    extraOptions = "experimental-features = nix-command flakes pipe-operator";
+    extraOptions = "experimental-features = nix-command flakes pipe-operators";
     # Follow nixpkgs from inputs as NIX_PATH
     registry.nixpkgs.flake = inputs.nixpkgs-main;
     channel.enable = false;
