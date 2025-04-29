@@ -33,6 +33,7 @@
     registry.nixpkgs.flake = inputs.nixpkgs-main;
     channel.enable = false;
   };
+  environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs-main}";
   # Use the systemd-boot EFI boot loader.
   boot = {
     # Enable SysRq to recover from freezes.
