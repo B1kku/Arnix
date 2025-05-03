@@ -9,20 +9,20 @@
 {
   programs.lutris = {
     enable = true;
-    winePackages = [
-      pkgs.wineWowPackages.stableFull
-      inputs.nix-gaming.packages.${pkgs.system}.wine-ge
+    steamPackage = osConfig.programs.steam.package;
+    extraPackages = with pkgs-unstable; [
+      mangohud
+      winetricks
+      umu-launcher
     ];
-    protonPackages = [
-      pkgs.proton-ge-bin
-    ];
-    runners = [
-      pkgs.ryujinx
-      pkgs.cemu
-    ];
+    winePackages = [ inputs.nix-gaming.packages.${pkgs.system}.wine-ge ];
+    protonPackages = [ pkgs-unstable.proton-ge-bin ];
+    runners = {
+      ryujinx.package = pkgs-unstable.ryubing;
+      cemu.package = pkgs-unstable.cemu;
+    };
   };
   # Allows starting up steam on the background on gnome.
-
   xdg.desktopEntries.steam-background = lib.mkIf (args ? osConfig && osConfig.programs.steam.enable) {
     name = "Steam Background";
     exec = "steam -silent %u";
@@ -33,10 +33,4 @@
       "Game"
     ];
   };
-  home.packages = with pkgs-unstable; [
-    umu-launcher
-    steam-run
-    winetricks
-    wineWowPackages.stableFull
-  ];
 }

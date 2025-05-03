@@ -2,164 +2,188 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
-}@args:
+}:
 let
-  cfg = config.programs.lutris;
   inherit (lib)
     mkOption
     mkEnableOption
     mkIf
     types
     optional
+    optionalAttrs
     toLower
     listToAttrs
     nameValuePair
+    mapAttrs'
+    getExe
     ;
-  # TODO: Properly define this type.
-  runnerType = types.submodule {
-    options = {
-      package = mkOption { type = types.package; };
-    };
-  };
+  cfg = config.programs.lutris;
+  settingsFormat = pkgs.formats.yaml { };
 in
 {
   options.programs.lutris = {
-    enable = mkEnableOption "lutris";
 
+    enable = mkEnableOption "lutris.";
     package = mkOption {
-      type = types.package;
       default = pkgs.lutris;
-    };
-
-    steamPackage = mkOption {
-      type = types.nullOr types.package;
-      default =
-        if (args ? osConfig) && args.osConfig.programs.steam.enable then
-          args.osConfig.programs.steam.package
-        else
-          pkgs.steam;
       description = ''
-        This must be the same you use for your system, or two instances will exist
-                Default will try to pull steam from osConfig.programs.steam.package, else fallback to pkgs.steam'';
+        The lutris package to use.
+      '';
+      type = types.package;
     };
-
-    defaultPackages = mkOption {
-      type = types.listOf types.package;
-      default = (
-        with pkgs;
-        [
-          gamemode
-          mangohud
-          winetricks
-          gamescope
-          libstrangle
-        ]
-        # WARNING: Remove once it's on stable channel.
-        # Maybe overlay to move them to stable so we don't take unstable here.
-        ++ [ pkgs-unstable.umu-launcher ]
-      );
-
+    steamPackage = mkOption {
+      default = null;
+      example = "pkgs.steam or osConfig.programs.steam.package";
+      description = ''
+        This must be the same you use for your system, or two instances will conflict,
+        for example, if you configure steam through the nixos module, a good value is "osConfig.programs.steam.package"
+      '';
+      type = types.nullOr types.package;
     };
-
-    extraPkgs = mkOption {
-      type = types.listOf types.package;
+    extraPackages = mkOption {
       default = [ ];
-
-    };
-
-    winePackages = mkOption {
+      example = "with pkgs; [mangohud winetricks gamescope gamemode umu-launcher]";
+      description = ''
+        List of packages to pass as extraPkgs to lutris.
+        Please note runners are not detected properly this way, use a proper option for those.
+      '';
       type = types.listOf types.package;
-      default = [ pkgs.wineWowPackages.stableFull ];
     };
     protonPackages = mkOption {
+      default = [ ];
+      example = "[ pkgs.proton-ge-bin ]";
+      description = ''
+        List of proton packages to be added for lutris to use with umu-launcher.
+      '';
       type = types.listOf types.package;
-      default = [ pkgs.proton-ge-bin ];
     };
-
-    runnersDefaultConfig = mkOption {
-      type = types.attrs;
-      default = {
-        system = {
-          locale = "";
-          disable_runtime = true;
+    winePackages = mkOption {
+      default = [ ];
+      example = "[ pkgs.wineWow64Packages.full ]";
+      description = ''
+        List of wine packages to be added for lutris to use.
+      '';
+      type = types.listOf types.package;
+    };
+    runners = mkOption {
+      default = { };
+      example = ''
+        runners = {
+          cemu.package = pkgs.cemu;
+          pcsx2.config = {
+            system.disable_screen_saver = true;
+            runner.executable_path = "$\{pkgs.pcsx2}/bin/pcsx2-qt";
+          };
         };
-      };
+      '';
+      description = ''
+        Attribute set of Lutris runners along with their configurations.
+        Each runner must be named exactly as lutris expects on `lutris --list-runners`.
+        Note that runners added here won't be configurable through Lutris using the GUI.
+      '';
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            package = mkOption {
+              default = null;
+              example = "pkgs.cemu";
+              description = ''
+                The package to use for this runner, nix will try to find the executable for this package.
+                A more specific path can be set by using settings.runner.executable_path instead.
+              '';
+              type = types.nullOr types.package;
+            };
+            settings = mkOption {
+              default = { };
+              description = ''
+                Settings passed directly to lutris for this runner's config at XDG_CONFIG/lutris/runners.
+              '';
+              type = types.submodule {
+                options = {
+                  runner = mkOption {
+                    default = { };
+                    description = ''
+                      Runner specific options.
+                      For references, you must look for the file of said runner on lutris' source code.
+                    '';
+                    type = types.submodule {
+                      freeformType = settingsFormat.type;
+                      options = {
+                        executable_path = mkOption {
+                          type = types.either types.str types.path;
+                          default = "";
+                          description = ''
+                            Specific option to point to a runner executable directly, don't set runner.package if you set this.
+                          '';
+                        };
+                      };
+                    };
+                  };
+                  system = mkOption {
+                    default = { };
+                    description = ''
+                      Lutris system options for this runner.
+                      Reference for system options:
+                      https://github.com/lutris/lutris/blob/master/lutris/sysoptions.py#L78
+                    '';
+                    type = types.submodule { freeformType = settingsFormat.type; };
+                  };
+                };
+              };
+            };
+          };
+        }
+      );
     };
-
-    runners = mkOption { type = types.listOf (types.either types.package runnerType); };
   };
   config = mkIf cfg.enable {
-    # Add custom lutris to the home packages.
     home.packages =
       let
-        lutris-override = {
-          # All this does is add their own non-overridable steam to extraPkgs.
+        lutris-overrides = {
+          # This only adds pkgs.steam to the extraPkgs, I see no reason to ever enable it.
           steamSupport = false;
-          extraPkgs =
-            pkgs: cfg.defaultPackages ++ cfg.extraPkgs ++ optional (cfg.steamPackage != null) cfg.steamPackage;
+          extraPkgs = (prev: cfg.extraPackages ++ optional (cfg.steamPackage != null) cfg.steamPackage);
         };
       in
-      [ (cfg.package.override lutris-override) ];
-    # Link wine packages, for some reason it trips out if there's any caps on the name.
-    # Couldn't find a better way than linking the wine package to local/share.
-    xdg.dataFile =
-      let
-        mkWine = (
-          type: packages:
-          packages
-          |> map (
-            pkg:
-            let
-              name = toLower pkg.name;
-            in
-            (nameValuePair name {
-              target = "lutris/runners/${type}/${name}";
-              source = pkg;
-            })
-          )
-        );
-        proton-links = cfg.protonPackages |> map (pkg: pkg.steamcompattool) |> mkWine "proton";
-        wine-links = cfg.winePackages |> mkWine "wine";
-      in
-      proton-links ++ wine-links |> listToAttrs;
-    # Link other runners.
+      [ (cfg.package.override lutris-overrides) ];
+
     xdg.configFile =
       let
-        pkgToRunner = (
-          runner-package: {
-            name = runner-package.pname;
-            package = runner-package;
-            config.runner_executable = lib.getExe runner-package;
-            system = cfg.runnersDefaultConfig.system;
-          }
-        );
-        runnerToConfig = (
-          runner-config:
-          let
-            name = runner-config.name;
-            config = {
-              ${name} = runner-config.config;
-              inherit (runner-config) system;
-            };
-          in
+        buildRunnerConfig = (
+          runner_name: runner_config:
           {
-            "lutris-${name}" = {
-              target = "lutris/runners/${name}.yml";
-              text = builtins.toJSON config;
-            };
+            "${runner_name}" =
+              (optionalAttrs (runner_config.settings.runner != { }) runner_config.settings.runner)
+              // (optionalAttrs (runner_config.package != null) {
+                executable_path = getExe runner_config.package;
+              });
+          }
+          // optionalAttrs (runner_config.settings.system != { }) {
+            system = runner_config.settings.system;
           }
         );
       in
-      builtins.foldl' (
-        acc: runner:
-        acc
-        // (
-          runner
-          |> (runner: if (types.package.check runner) then (pkgToRunner runner) else runner)
-          |> runnerToConfig
-        )
-      ) { } cfg.runners;
+      mapAttrs' (
+        runner_name: runner_config:
+        nameValuePair "lutris/runners/${runner_name}.yml" {
+          source = settingsFormat.generate "${runner_name}.yml" (buildRunnerConfig runner_name runner_config);
+        }
+      ) cfg.runners;
+
+    xdg.dataFile =
+      let
+        buildWineLink =
+          type: packages:
+          map (
+            # lutris seems to not detect wine/proton if the name has some caps
+            package:
+            (nameValuePair "lutris/runners/${type}/${toLower package.name}" {
+              source = package;
+            })
+          ) packages;
+        steamcompattools = map (proton: proton.steamcompattool) cfg.protonPackages;
+      in
+      listToAttrs (buildWineLink "wine" cfg.winePackages ++ buildWineLink "proton" steamcompattools);
   };
 }
