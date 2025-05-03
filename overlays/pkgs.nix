@@ -16,29 +16,26 @@ final: prev: {
       text = ''steam-run ${protonhax_script}/protonhax "$@"'';
     };
   proton-gamemode = (import ./proton-gamemode-wrapper.nix prev);
-  wezterm = inputs.nixpkgs-old.legacyPackages.${system}.wezterm;
+
+  ###==================== Flex taped Packages ====================###
+
+  ### Date: ?? feb? 25
+  ### Reason: Ugly window border and drawing on new version.
+  ### https://github.com/wezterm/wezterm/issues/6578
+  wezterm = inputs.nixpkgs-wezterm.legacyPackages.${system}.wezterm;
   gnomeExtensions = prev.gnomeExtensions // {
-    # valent =
-    #   let
-    #     version = "1.0.0.alpha.46";
-    #   in
-    #   prev.gnomeExtensions.valent.overrideAttrs (attrs: {
-    #     src = prev.fetchFromGitHub {
-    #       owner = "andyholmes";
-    #       repo = "gnome-shell-extension-valent";
-    #       rev = "v${version}";
-    #       hash = "sha256-OY0fxO6IYg7xukYYuK0QM9YriaEAlM2dH6t8Wv3XKIs=";
-    #     };
-    #   });
+    ### Reason: KDE Connect updated the protocol, pkgs-unstable isn't updating for some reason.
     gsconnect = prev.gnomeExtensions.gsconnect.overrideAttrs (attrs: {
-      src = let
-        version = "62";
-      in prev.fetchFromGitHub {
-        owner = "GSConnect";
-        repo = "gnome-shell-extension-gsconnect";
-        rev = "v${version}";
-        hash = "sha256-HFm04XC61AjkJSt4YBc4dO9v563w+LsYDSaZckPYE14=";
-      };
+      src =
+        let
+          version = "62";
+        in
+        prev.fetchFromGitHub {
+          owner = "GSConnect";
+          repo = "gnome-shell-extension-gsconnect";
+          rev = "v${version}";
+          hash = "sha256-HFm04XC61AjkJSt4YBc4dO9v563w+LsYDSaZckPYE14=";
+        };
     });
   };
 }

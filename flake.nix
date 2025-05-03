@@ -7,7 +7,7 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-main";
     };
-    nixpkgs-old.url = "github:nixos/nixpkgs/edf04b75c13c2ac0e54df5ec5c543e300f76f1c9";
+    nixpkgs-wezterm.url = "github:nixos/nixpkgs/edf04b75c13c2ac0e54df5ec5c543e300f76f1c9";
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-main";
