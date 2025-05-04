@@ -10,12 +10,17 @@
   programs.lutris = {
     enable = true;
     steamPackage = osConfig.programs.steam.package;
-    extraPackages = with pkgs-unstable; [
-      mangohud
-      winetricks
-      umu-launcher
+    extraPackages =
+      with pkgs-unstable;
+      [
+        winetricks
+        umu-launcher
+      ]
+      ++ (with pkgs; [ mangohud ]);
+    winePackages = [
+      inputs.nix-gaming.packages.${pkgs.system}.wine-ge
+      pkgs-unstable.wineWowPackages.full
     ];
-    winePackages = [ inputs.nix-gaming.packages.${pkgs.system}.wine-ge ];
     protonPackages = [ pkgs-unstable.proton-ge-bin ];
     runners = {
       ryujinx.package = pkgs-unstable.ryubing;
