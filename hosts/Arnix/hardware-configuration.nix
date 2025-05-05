@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -15,7 +14,10 @@ let
   ];
 in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../../modules/system/usb-wakeup.nix
+  ];
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ahci"
@@ -27,7 +29,14 @@ in
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-
+  hardware.usb.wakeup = {
+    enable = true;
+    mode = "whitelist";
+    devices.keyboard = {
+      vendor = "413c";
+      product = "2003";
+    };
+  };
   fileSystems."/" = {
     device = "/dev/disk/by-label/NixOS";
     fsType = "ext4";
@@ -74,7 +83,7 @@ in
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.enableAllFirmware = true;
-  # Why the hell was this by default. Am I missing something?
+  # Why the hell was this off by default. Am I missing something?
   # And why knowing this is off by default had me going through a trail of options.
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

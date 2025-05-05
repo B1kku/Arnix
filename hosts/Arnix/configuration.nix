@@ -10,12 +10,15 @@
 }:
 {
   imports = [
-    ../../modules/system/usb-wakeup.nix
+    # Extra modules
     ../../modules/system/firewall-extra.nix
     ../../modules/powera-controller.nix
-    # Include the results of the hardware scan.
+    # Modularized configurations
     ./hardware-configuration.nix
+    ./nix-flake-paths.nix
     home-manager.nixosModules.home-manager
+    # User configurations
+    ../../users/bikku/configuration.nix
   ];
   nix = {
     settings = {
@@ -23,17 +26,11 @@
       # Extra store caches from inputs.
       substituters = flake-opts.extraCaches.substituters;
       trusted-public-keys = flake-opts.extraCaches.trusted-public-keys;
-      # Path to nixpkgs, to follow flake inputs.
-      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs-main";
     };
     package = pkgs.nix;
     # Enable pipes [1 2 3] |> map (e: e * 2)
     extraOptions = "experimental-features = nix-command flakes pipe-operators";
-    # Follow nixpkgs from inputs as NIX_PATH
-    registry.nixpkgs.flake = inputs.nixpkgs-main;
-    channel.enable = false;
   };
-  environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs-main}";
   # Use the systemd-boot EFI boot loader.
   boot = {
     # Enable SysRq to recover from freezes.
@@ -42,7 +39,6 @@
     kernelParams = [
       "quiet"
     ];
-    # plymouth = { enable = true; };
     loader = {
       systemd-boot = {
         enable = true;
@@ -69,18 +65,9 @@
   console = {
     font = "Lat2-Terminus16";
     keyMap = "es";
-    #  useXkbConfig = true; # use xkbOptions in tty.
   };
   # Disable everything but the keyboard from waking up the computer.
   # This is due to mouse sending wake up signals randomly.
-  hardware.usb.wakeup = {
-    enable = true;
-    mode = "whitelist";
-    devices.keyboard = {
-      vendor = "413c";
-      product = "2003";
-    };
-  };
   # XServer, DM & DE
   services = {
     libinput.mouse.accelProfile = "flat";
@@ -94,7 +81,6 @@
     };
     gnome.core-utilities.enable = false;
   };
-
   # Enable sound.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -112,32 +98,6 @@
     tealdeer
     nh
   ];
-  # This should take care of most game-related settings too.
-  programs.steam = {
-    enable = true;
-    extraCompatPackages = [ pkgs.proton-gamemode ];
-    extraPackages = with pkgs; [
-      gamescope
-      mangohud
-    ];
-  };
-  programs.gamemode.enable = true;
-
-  programs.zsh.enable = true;
-
-  users.users.bikku = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    initialPassword = "potato";
-  };
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = {
-      inherit pkgs-unstable inputs flake-opts;
-    };
-    users.bikku = import ../../users/bikku/home.nix;
-  };
   # Don't change randomly, used for internals.
   system.stateVersion = "23.05";
 }
