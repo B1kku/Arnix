@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 {
@@ -11,11 +10,10 @@
       exec "${lib.getExe config.programs.wezterm.package}" -e "$@"
     '')
   ];
-  xdg.configFile."wezterm" = {
+  xdg.configFile."wezterm/wezterm.lua" = {
     # Without this, it won't reload automatically.
     # Technically only the main file needs this (if I ever expand).
-    recursive = true;
-    source = ./wezterm;
+    source = config.lib.extra.mkFlakePath "/dotfiles/wezterm/wezterm.lua";
   };
   programs.wezterm.enable = true;
 }

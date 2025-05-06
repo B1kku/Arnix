@@ -106,7 +106,7 @@ in
     enable = true;
     # Home-manager checks maintainers exist... For some reason
     # And nixpkgs-unstable switched to using meta.teams
-    package = pkgs.lib.extra.bypassMaintainersCheck pkgs.neovim-unwrapped;
+    package = pkgs.lib.extra.bypassMaintainersCheck pkgs-unstable.neovim-unwrapped;
     # defaultEditor = true;
     vimAlias = true;
     extraLuaConfig = nixvars;
