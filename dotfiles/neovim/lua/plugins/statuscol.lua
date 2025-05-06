@@ -47,6 +47,27 @@ return {
       local function is_current_win(args) -- function used on condition
         return args.win == current_win
       end
+
+
+      local function get_signs(args, segment)
+        local ss = segment.sign
+        local wss = ss.wins[args.win]
+        local sss = wss.signs[args.lnum]
+        if not sss then return false end
+        return sss
+      end
+
+      local function git_signs(args, segment)
+        if (args.virtnum ~= 0) then
+          return "┇"
+        end
+        local line_signs = get_signs(args, segment)
+        if not line_signs then
+          return "│"
+        end
+        local sign = line_signs[1]
+        return "%#" .. sign.sign_hl_group .. "#" .. string.sub(sign.sign_text, 1, -2) .. "%*"
+      end
       require("statuscol").setup({
         segments = {
           {
@@ -70,6 +91,9 @@ return {
 
           },
           {
+            text = {
+              git_signs
+            },
             sign = {
               namespace = { "^gitsigns_signs_" },
               name = { "DummySign" },
@@ -84,5 +108,4 @@ return {
       })
     end
   }
-
 }

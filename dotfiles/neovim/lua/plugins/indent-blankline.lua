@@ -1,6 +1,7 @@
 return {
   -- Indent markers --
   "lukas-reineke/indent-blankline.nvim",
+  enabled = false,
   config = function()
     require("ibl").setup {
       -- space_char_blankline = " ",
