@@ -79,6 +79,10 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
+    -- Lazydev checks workspace by root dir from lua_ls
+    -- make sure lua_ls rootdir is neovim dotfiles when linking
+    -- or it will not detect it, and load both as duplicates.
+    -- If using lspconfig, an empty .luarc.json is enough
     opts = {
       library = {
         { path = "${3rd}/luv/library" }

@@ -17,7 +17,7 @@ function M.setup_lsps(lsp_list, default_config)
   vim.tbl_map(setup_lsp, lsp_list)
 end
 
----@alias simple_keymap [string, string, function|string, string]
+---@alias simple_keymap [string, string, function|string, string, vim.keymap.set.Opts?]
 -- Given a list of keymaps, setup an autocmd to attach them
 -- when the lsp is attached
 ---@param keymaps simple_keymap[]

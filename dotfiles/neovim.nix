@@ -7,7 +7,7 @@
   ...
 }:
 let
-  config-dir = "/dotfiles/neovim";
+  config-dir = "/dotfiles/nvim";
   nixvars =
     ''
       -- Code injected by Home Manager for NixOS --
@@ -96,9 +96,9 @@ in
     {
       "nvim/lua".source = mkFlakePath (config-dir + "/lua");
       "nvim/ftplugin".source = mkFlakePath (config-dir + "/ftplugin");
-      "nvim/init.lua".text = builtins.readFile ./neovim/init.lua;
+      "nvim/init.lua".text = builtins.readFile ./nvim/init.lua;
       "nvim/nvim-remote-wrapper.sh" = {
-        source = ./neovim/nvim-remote-wrapper.sh;
+        source = ./nvim/nvim-remote-wrapper.sh;
         executable = true;
       };
     };
