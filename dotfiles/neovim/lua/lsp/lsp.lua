@@ -1,38 +1,5 @@
-local function load_lsps(lsp_list, default_config)
-  -- TODO: Technically incorrect? It's language settings, as in, formatter and linter also go there.
-  -- Changing it does mean I might have to make a map of lsp -> language or language -> lsp so everyone can find their files.
-  local lsp_config_dir = "lsp.lsp-config."
-  local lspconfig = require("lspconfig")
-  local function load_lsp(lsp)
-    local config_found, language_config = pcall(require, lsp_config_dir .. lsp)
-    local lsp_config = config_found and language_config["lsp_setup"] or {}
-    lspconfig[lsp].setup(vim.tbl_deep_extend("force", default_config, lsp_config))
-  end
-  vim.tbl_map(load_lsp, lsp_list)
-end
-
--- Given a list of {mode, key, action, opts, (extra_opts)},
--- add said keymap when the lsp attaches.
-local function set_keymaps_on_attach(keymaps)
-  local function set_keymap(keymap)
-    local mode = keymap[1]
-    local key = keymap[2]
-    local action = keymap[3]
-    local opts = { buffer = true, desc = keymap[4] }
-    local extra_opts = keymap[5]
-    if extra_opts then
-      opts = vim.tbl_extend("force", opts, extra_opts)
-    end
-    vim.keymap.set(mode, key, action, opts)
-  end
-  vim.api.nvim_create_autocmd("LspAttach", {
-    desc = "LSP Keymaps",
-    callback = function()
-      vim.tbl_map(set_keymap, keymaps)
-    end
-  })
-end
 local nix_enabled = vim.g.nixvars ~= nil
+local mod = require("modules.lsp")
 return {
   {
     "williamboman/mason-lspconfig.nvim",
@@ -68,14 +35,8 @@ return {
         "ts_ls"
       }
       -- Set lsp borders
-      local borders = vim.g.border
-      -- DEPRECATED ON 0.11 --
       local default_config = {
         capabilities = capabilities,
-        handlers = {
-          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = borders }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, { border = borders })
-        },
         on_attach = function(client, bufnr)
           if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true, { bufnr })
@@ -93,12 +54,11 @@ return {
         severity_sort = true,
         virtual_lines = { current_line = true },
       }
-      vim.diagnostic.config(diagnostic_opts)
 
       local goto_next = function() vim.diagnostic.jump({ count = 1, float = true }) end
       local goto_prev = function() vim.diagnostic.jump({ count = -1, float = true }) end
+      ---@type simple_keymap[]
       local keymaps = {
-        -- { "n", "K",    vim.lsp.buf.hover,           "Display information of symbol" },
         { "n", "gd",   vim.lsp.buf.definition,      "Go to definition" },
         { "n", "gD",   vim.lsp.buf.declaration,     "Go to declaration" },
         { "n", "gi",   vim.lsp.buf.implementation,  "Get implementations" },
@@ -111,42 +71,25 @@ return {
         { "n", "[d",   goto_prev,                   "Previous diagnostic" },
         { "n", "]d",   goto_next,                   "Next diagnostic" },
       }
-
-      load_lsps(lsp_list, default_config)
-      set_keymaps_on_attach(keymaps)
+      vim.diagnostic.config(diagnostic_opts)
+      mod.setup_lsps(lsp_list, default_config)
+      mod.set_keymaps_on_attach(keymaps)
     end
   },
   {
     "folke/lazydev.nvim",
     ft = "lua",
-    config = function()
-      local util = require("util")
-      local function is_vim_workspace(root_dir)
-        if (not root_dir) then
-          root_dir = vim.fn.getcwd(0)
-        end
-        local nix_config_dir = vim.tbl_get(vim.g, "nixvars", "config_dir")
-        if (nix_config_dir and util.is_subdir(root_dir, nix_config_dir)) then
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library" }
+      },
+      enabled = function(root_dir)
+        if (vim.g.lazydev_enabled) then
           return true
         end
-        local config_dir = vim.fn.stdpath("config")
-        if (util.is_subdir(root_dir, config_dir)) then
-          return true
-        end
-        return false
+        return mod.is_vim_workspace(root_dir)
       end
-      require("lazydev").setup({
-        library = {
-          { path = "${3rd}/luv/library", words = { "vim%.uv" } }
-        },
-        enabled = function(root_dir)
-          if (vim.g.lazydev_enabled) then
-            return true
-          end
-          return is_vim_workspace(root_dir)
-        end
-      })
-    end
+    }
   },
   {
     -- Java lsp plugin. --
