@@ -3,7 +3,7 @@ local M = {}
 M.active_register = {
   function()
     if vim.fn.reg_recording() ~= "" then
-      return " " .. vim.fn.reg_recording():upper()
+      return " " .. vim.fn.reg_recording():upper()
     else
       return ""
     end
