@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 {
@@ -15,5 +16,8 @@
     # Technically only the main file needs this (if I ever expand).
     source = config.lib.extra.mkFlakePath "/dotfiles/wezterm/wezterm.lua";
   };
-  programs.wezterm.enable = true;
+  programs.wezterm = {
+    enable = true;
+    package = pkgs-unstable.wezterm;
+  };
 }

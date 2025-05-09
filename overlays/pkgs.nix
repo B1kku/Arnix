@@ -18,11 +18,6 @@ final: prev: {
   proton-gamemode = (import ./proton-gamemode-wrapper.nix prev);
 
   ###==================== Flex taped Packages ====================###
-
-  ### Date: ?? feb? 25
-  ### Reason: Ugly window border and drawing on new version.
-  ### https://github.com/wezterm/wezterm/issues/6578
-  wezterm = inputs.nixpkgs-wezterm.legacyPackages.${system}.wezterm;
   gnomeExtensions = prev.gnomeExtensions // {
     ### Reason: KDE Connect updated the protocol, pkgs-unstable isn't updating for some reason.
     gsconnect = prev.gnomeExtensions.gsconnect.overrideAttrs (attrs: {

@@ -8,17 +8,11 @@ local bg_color = "rgba(0,0,0," .. opacity .. ")"
 
 local local_config = {
   -- color_scheme = 'AdventureTime',
-  -- Temporary
   front_end = "WebGpu",
-  -- Fixes:
-  -- https://github.com/wez/wezterm/issues/5990
-  -- https://github.com/wez/wezterm/issues/5915
-  -- https://github.com/NixOS/nixpkgs/issues/336069
   automatically_reload_config = true,
   hide_mouse_cursor_when_typing = false,
   window_background_opacity = opacity,
   hide_tab_bar_if_only_one_tab = true,
-  window_decorations = "RESIZE", -- https://github.com/wez/wezterm/issues/4569
   font = wezterm.font 'FiraCode Nerd Font',
   use_dead_keys = false,
   window_frame = {
