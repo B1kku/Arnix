@@ -50,7 +50,7 @@ function M.is_vim_workspace(root_dir)
     root_dir = vim.fn.getcwd(0)
   end
   local nix_config_dir = vim.tbl_get(vim.g, "nixvars", "config_dir")
-  if (nix_config_dir and util.is_subdir(root_dir, nix_config_dir)) then
+  if (nix_config_dir and util.is_subdir(nix_config_dir, root_dir)) then
     return true
   end
   local config_dir = vim.fn.stdpath("config")

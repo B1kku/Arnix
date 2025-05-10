@@ -15,5 +15,5 @@ g.border = "rounded"
 g.theme = "nightfox" -- Global variable for other plugins to use if needed.
 
 I = function(arg)
-  vim.print(vim.inspect(arg))
+  vim.notify(vim.inspect(arg), 2)
 end
