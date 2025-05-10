@@ -58,6 +58,7 @@ let
   ];
   deps = with pkgs; [
     xclip # System clipboard x11 only.
+    wl-clipboard
     fzf # Telescope dependency
     ripgrep # Telescope softdep
     fd # Telescope dependency?
