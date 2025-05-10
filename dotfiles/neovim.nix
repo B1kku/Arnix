@@ -97,6 +97,8 @@ in
     {
       "nvim/lua".source = mkFlakePath (config-dir + "/lua");
       "nvim/ftplugin".source = mkFlakePath (config-dir + "/ftplugin");
+      "nvim/queries".source = mkFlakePath (config-dir + "/queries");
+
       "nvim/init.lua".text = builtins.readFile ./nvim/init.lua;
       "nvim/nvim-remote-wrapper.sh" = {
         source = ./nvim/nvim-remote-wrapper.sh;

@@ -17,3 +17,6 @@ g.theme = "nightfox" -- Global variable for other plugins to use if needed.
 I = function(arg)
   vim.notify(vim.inspect(arg), 2)
 end
+D = function(arg)
+  vim.notify_once(vim.inspect(arg), 2)
+end

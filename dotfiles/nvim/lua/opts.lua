@@ -54,6 +54,13 @@ opt.undofile = true                             -- Enable persistent undo.
 -- Misc --
 vim.o.clipboard = 'unnamedplus' --System clipboard integration.
 -- Folding
+require("modules.folds").setup_folds({
+  "(do_statement)",
+  "(while_statement)",
+  "(repeat_statement)",
+  "(if_statement)",
+  "(for_statement)",
+})
 function _G.FoldFunction()
   local foldstart = util.rstrip(vim.fn.getline(vim.v.foldstart))
   local foldend = util.lstrip(vim.fn.getline(vim.v.foldend))
