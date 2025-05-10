@@ -22,9 +22,8 @@ return {
 
       local virtnum_char = "┇"
       local padding_char = " "
-      local foldclosed_char = ""
-      local foldopen_char = ""
 
+      local fillchars = vim.opt.fillchars:get()
       local function num_column(args)
         if (args.virtnum ~= 0) then return virtnum_char .. aligner .. padding_char end
         if (args.relnum == 0) then
@@ -42,10 +41,10 @@ return {
         local foldinfo = C.fold_info(args.wp, args.lnum)
         local closed = foldinfo.lines > 0
         if closed then
-          return "%#CursorLineFold#" .. foldclosed_char .. padding_char .. reset_hl
+          return "%#CursorLineFold#" .. fillchars.foldclose .. padding_char .. reset_hl
         end
         if foldinfo.start == args.lnum then
-          return "%#CursorLineFold#" .. foldopen_char .. padding_char .. reset_hl
+          return "%#CursorLineFold#" .. fillchars.foldopen .. padding_char .. reset_hl
         end
         return " " .. padding_char
       end

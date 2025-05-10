@@ -1,5 +1,5 @@
 --[[ opts.lua ]]
---
+
 local opt = vim.opt
 local cmd = vim.api.nvim_command
 local util = require("util")
@@ -74,7 +74,9 @@ function _G.FoldFunction()
 end
 
 opt.fillchars = {
-  fold = " "
+  fold = " ",
+  foldopen = "",
+  foldclose = ""
 }
 opt.foldmethod = "expr"                     -- Use the option below
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- Treesitter formatting
