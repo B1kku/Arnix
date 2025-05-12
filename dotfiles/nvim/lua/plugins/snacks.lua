@@ -1,7 +1,9 @@
+-- require("snacks")
 return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
+  ---@type snacks.Config
   opts = {
     -- your configuration comes here
     -- or leave it empty to use the default settings
@@ -18,12 +20,19 @@ return {
         underline = true
       }
     },
-    scope = { enabled = true},
+    scope = { enabled = true },
     input = { enabled = true },
     picker = { enabled = true },
     notifier = { enabled = true },
     quickfile = { enabled = true },
-    scroll = { enabled = true },
+    scroll = {
+      enabled = true,
+      filter = function(buf)
+        return vim.g.snacks_scroll ~= false
+            and vim.b[buf].snacks_scroll ~= false
+            and vim.bo[buf].buftype == ""
+      end
+    },
     statuscolumn = {
       enabled = true,
       right = {},

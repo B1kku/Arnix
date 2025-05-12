@@ -12,7 +12,6 @@
     - Yazi isn't too well integrated (theming, and renaming).
     - Snippets and templates, never expanded them tbh.
     - Snacks
-        - Crashing when using blink sometimes, I assume due to animating and glitching the autocomplete window
         - General setup, I didn't do proper config yet.
         - Animations, if not enough then mini.animations has it.
         - Blink breaks because of animations sometimes
