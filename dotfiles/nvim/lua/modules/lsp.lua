@@ -43,14 +43,14 @@ end
 
 local util = require("util")
 -- Given a path, return whether or not it's a neovim config path
----@param root_dir string
+---@param root_dir? string
 ---@return boolean
 function M.is_vim_workspace(root_dir)
   if (not root_dir) then
     root_dir = vim.fn.getcwd(0)
   end
   local nix_config_dir = vim.tbl_get(vim.g, "nixvars", "config_dir")
-  if (nix_config_dir and util.is_subdir(nix_config_dir, root_dir)) then
+  if (nix_config_dir and util.is_subdir(root_dir, nix_config_dir)) then
     return true
   end
   local config_dir = vim.fn.stdpath("config")
@@ -58,6 +58,43 @@ function M.is_vim_workspace(root_dir)
     return true
   end
   return false
+end
+
+M.lazydev = {}
+--- Setup lazydev as a blink source, for providing
+--- autocomplete of plugins without loading them.
+---@param priority integer Priority to give this source
+---@param check_enabled fun(root_dir: string):boolean Should it be enabled for a buffer
+function M.lazydev.setup_blink_integration(priority, check_enabled)
+  -- Caches per-buffer whether lazydev is enabled
+  -- Sadly can't reuse lazydev's function call as it works
+  -- in a wonky way, calling the function on bufenter once
+  -- per existing client, even already called ones but only
+  -- providing the root_dir of the client and not the buf.
+  vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*.lua",
+    callback = function(args)
+      local buf = args.buf
+      if (vim.b[buf].lazydev ~= nil) then
+        return
+      end
+      local path = vim.api.nvim_buf_get_name(buf)
+      vim.b[buf].lazydev = check_enabled(path)
+    end
+  })
+
+  local blink = require("blink.cmp")
+
+  blink.add_source_provider("lazydev", {
+    name = "LazyDev",
+    module = "lazydev.integrations.blink",
+    score_offset = priority,
+    enabled = function()
+      return vim.b.lazydev
+    end
+  })
+
+  blink.add_filetype_source("lua", "lazydev")
 end
 
 return M

@@ -1,5 +1,6 @@
 local nix_enabled = vim.g.nixvars ~= nil
 local mod = require("modules.lsp")
+---@type LazyPluginSpec[]
 return {
   {
     "williamboman/mason-lspconfig.nvim",
@@ -83,17 +84,22 @@ return {
     -- make sure lua_ls rootdir is neovim dotfiles when linking
     -- or it will not detect it, and load both as duplicates.
     -- If using lspconfig, an empty .luarc.json is enough
-    opts = {
-      library = {
-        { path = "${3rd}/luv/library" }
-      },
-      enabled = function(root_dir)
+    config = function()
+      local function check_enabled(root_dir)
         if (vim.g.lazydev_enabled) then
           return true
         end
         return mod.is_vim_workspace(root_dir)
       end
-    }
+
+      require("lazydev").setup({
+        library = {
+          { path = "${3rd}/luv/library" }
+        },
+        enabled = check_enabled
+      })
+      mod.lazydev.setup_blink_integration(100, check_enabled)
+    end
   },
   {
     -- Java lsp plugin. --

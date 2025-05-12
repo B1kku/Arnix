@@ -1,5 +1,3 @@
-# Nixos
-    - Lutris runners are not well documented or set.
 # Wezterm
     - Tabs are not quite there, a picker would be nice
     - Theming isn't quite set yet
@@ -14,11 +12,11 @@
     - Yazi isn't too well integrated (theming, and renaming).
     - Snippets and templates, never expanded them tbh.
     - Snacks
+        - Crashing when using blink sometimes, I assume due to animating and glitching the autocomplete window
         - General setup, I didn't do proper config yet.
         - Animations, if not enough then mini.animations has it.
         - Blink breaks because of animations sometimes
         - Indent is cool because of animation, however it doesn't let me hide top level indent.
     - Proper theming based on nixos inputs (or just base16 in general).
     - Lazydev
-        - Seems to be loading from workspace and config, duplicate
         - Not automatically updating changes when writing to dotfiles
