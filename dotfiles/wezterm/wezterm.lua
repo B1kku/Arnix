@@ -1,13 +1,21 @@
 local wezterm = require("wezterm")
-
 local config = wezterm.config_builder()
 local mux = wezterm.mux
+local util = require("util")
+
+local tbl_merge = util.tbl_merge
+local merge_config = tbl_merge
+local hex_to_rgba = util.hex_to_rgba
 
 local opacity = 0.75
-local bg_color = "rgba(0,0,0," .. opacity .. ")"
-
+local color, _ = wezterm.color.load_base16_scheme(wezterm.config_dir .. "/colors/catpuccin-mocha.yml")
+local base16 = util.base16(color)
 local local_config = {
-  -- color_scheme = 'AdventureTime',
+  colors = tbl_merge(color, {
+    tab_bar = {
+      background = hex_to_rgba(opacity, base16.base00)
+    }
+  }),
   front_end = "WebGpu",
   automatically_reload_config = true,
   hide_mouse_cursor_when_typing = false,
@@ -15,32 +23,23 @@ local local_config = {
   hide_tab_bar_if_only_one_tab = true,
   font = wezterm.font 'FiraCode Nerd Font',
   use_dead_keys = false,
-  window_frame = {
-    border_top_height = 2,
-    border_top_color = bg_color
-  },
   window_padding = {
     left = 0,
     right = 0,
-    top = 0,
+    top = 5,
     bottom = 0
   },
 }
+config = merge_config(config, local_config)
+local background_color = hex_to_rgba(config.window_background_opacity, base16.base00)
+-- local background_color = base16.base00
 config.tab_max_width = 27
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.window_frame = {
   border_top_height = 5,
-  border_top_color = bg_color
+  border_top_color = background_color
 }
-
-config.colors = {
-  tab_bar = {
-    background = bg_color
-  }
-}
-
-
 -- Credit to https://github.com/MagicDuck
 local function tab_title(tab_info)
   local title = tab_info.tab_title
@@ -54,13 +53,13 @@ local function tab_title(tab_info)
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
-  local background = "#435ac6"
-  local foreground = "#b5b3b0"
-  local edge_background = bg_color
+  local background = base16.base01
+  local foreground = base16.base05
+  local edge_background = background_color
 
   if tab.is_active or hover then
-    background = "#5b9fff"
-    foreground = "#F0F2F5"
+    background = base16.base02
+    foreground = base16.base06
   end
   local edge_foreground = background
 
@@ -73,17 +72,31 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width
     title = wezterm.truncate_right(title, max) .. "…"
   end
 
+  local first_segment = {
+    { Background = { Color = edge_background   } },
+    { Foreground = {Color = edge_foreground} },
+    { Text = "" },
+
+  }
+  if tab.tab_index == 0 then
+    first_segment = {
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = " " }
+    }
+  end
+
   return {
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = " " },
+    first_segment[1],
+    first_segment[2],
+    first_segment[3],
     { Background = { Color = background } },
     { Foreground = { Color = foreground } },
     { Attribute = { Intensity = tab.is_active and "Bold" or "Normal" } },
-    { Text = " " .. (tab.tab_index + 1) .. ": " .. title .. " " },
+    { Text = " " .. (tab.tab_index + 1) .. " " .. title .. " " },
     { Background = { Color = edge_background } },
     { Foreground = { Color = edge_foreground } },
-    { Text = "" },
+    { Text = "" },
   }
 end)
 
@@ -97,12 +110,4 @@ wezterm.on('gui-attached', function(domain)
   end
 end)
 
--- Put every k in table2 on table1, overriding t1 with t2
-local function merge_tbl(table1, table2)
-  for k, v in pairs(table2) do
-    table1[k] = v
-  end
-  return table1
-end
-
-return merge_tbl(config, local_config)
+return config
