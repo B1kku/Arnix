@@ -29,6 +29,9 @@ in
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+
+  # Disable everything but the keyboard from waking up the computer.
+  # This is due to mouse sending wake up signals randomly.
   hardware.usb.wakeup = {
     enable = true;
     mode = "whitelist";
@@ -37,6 +40,7 @@ in
       product = "2003";
     };
   };
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/NixOS";
     fsType = "ext4";

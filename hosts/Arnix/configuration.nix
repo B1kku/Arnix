@@ -16,6 +16,7 @@
     # Modularized configurations
     ./hardware-configuration.nix
     ./nix-flake-paths.nix
+    ./quietboot.nix
     home-manager.nixosModules.home-manager
     # User configurations
     ../../users/bikku/configuration.nix
@@ -36,9 +37,6 @@
     # Enable SysRq to recover from freezes.
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_6_12;
-    kernelParams = [
-      "quiet"
-    ];
     loader = {
       systemd-boot = {
         enable = true;
@@ -66,8 +64,6 @@
     font = "Lat2-Terminus16";
     keyMap = "es";
   };
-  # Disable everything but the keyboard from waking up the computer.
-  # This is due to mouse sending wake up signals randomly.
   # XServer, DM & DE
   services = {
     libinput.mouse.accelProfile = "flat";
