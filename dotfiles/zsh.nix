@@ -43,17 +43,21 @@ in
     };
     initExtra =
       let
-        min_days = "7";
-        main_color = "069";
-        days_color = "196";
-        update_checker = ''
-          LAST_UPDATE=$(date -r "${flake-opts.flake-dir + "/flake.lock"}" +%s)
-          DAYS_SINCE_LAST_UPDATE=$((($(date +%s) - LAST_UPDATE) / 86400))
-          if [ "$DAYS_SINCE_LAST_UPDATE" -ge ${min_days} ]; then
-            print -Pn "%F{${main_color}}System hasn't been updated in %F{${days_color}}$DAYS_SINCE_LAST_UPDATE days%F{${main_color}}.\nConsider updating your flake.\n\n"
-          fi
-        '';
+        min_days = 7;
       in
-      update_checker;
+      ''
+        DAYS_COLOR=$(tput setaf 1)
+        NORMAL_COLOR=$(tput setaf 4)
+        BOLD=$(tput bold)
+        UNDERLINE=$(tput smul)
+        RESET=$(tput sgr0)
+                                                                                                                                                                                 
+        LAST_UPDATE=$(date -r "${flake-opts.flake-dir + "/flake.lock"}" +%s)
+        DAYS_SINCE_LAST_UPDATE=$((($(date +%s) - LAST_UPDATE) / 86400))
+        if [ $DAYS_SINCE_LAST_UPDATE -ge ${builtins.toString min_days} ]; then
+          echo -e "''${BOLD}''${NORMAL_COLOR}System hasn't been updated in ''${UNDERLINE}''${DAYS_COLOR}''${DAYS_SINCE_LAST_UPDATE} days''${RESET}''${NORMAL_COLOR}''${BOLD}.\n\
+        Consider updating your flake.\n"
+        fi
+      '';
   };
 }

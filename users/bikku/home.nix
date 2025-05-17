@@ -52,12 +52,17 @@ in
     let
       sudoWrap = (_: command: "pkexec ${command}");
       nixos-aliases =
-        {
-          rebuild = "nh os switch ${flake-dir} -R | tee ${flake-dir + "/rebuild.log"}";
-          update = "nh os switch ${flake-dir} -u -R | tee ${flake-dir + "/update.log"}";
-          clean = "nh clean all --keep-since 7d --keep 5 --ask";
-        }
-        |> builtins.mapAttrs sudoWrap;
+        (
+          {
+            rebuild = "nh os switch ${flake-dir} -R | tee ${flake-dir + "/rebuild.log"}";
+            update = "nh os switch ${flake-dir} -u -R | tee ${flake-dir + "/update.log"}";
+            clean = "nh clean all --keep-since 7d --keep 5 --ask";
+          }
+          |> builtins.mapAttrs sudoWrap
+        )
+        // {
+          repl = "nix repl -f '<nixpkgs>' --impure";
+        };
     in
     {
       neofetch = "fastfetch";
