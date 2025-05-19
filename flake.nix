@@ -38,8 +38,8 @@
       flake-opts = {
         # Some things just end up needing to know where the flake is.
         # Such as home manager for mkoutofstoresymlink or nvim for updating lazy.lock
-        # Controls whether to link from flake-dir or flake-dir-pure.
-        # Some things still need flake-dir.
+
+        # Controls whether to link directly to the flake directory
         pure = false;
         flake-dir = "/etc/nixos";
         # Centralize flake inputs substituters and public keys
