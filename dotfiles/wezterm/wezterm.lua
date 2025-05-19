@@ -7,8 +7,8 @@ local tbl_merge = util.tbl_merge
 local merge_config = tbl_merge
 local hex_to_rgba = util.hex_to_rgba
 
-local opacity = 0.75
-local color, _ = wezterm.color.load_base16_scheme(wezterm.config_dir .. "/colors/catpuccin-mocha.yml")
+local opacity = 0.90
+local color, _ = wezterm.color.load_base16_scheme(wezterm.config_dir .. "/colors/nightfox.yml")
 local base16 = util.base16(color)
 local local_config = {
   colors = tbl_merge(color, {
