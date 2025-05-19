@@ -38,11 +38,16 @@
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_6_12;
     loader = {
-      systemd-boot = {
+      grub = {
         enable = true;
-        configurationLimit = 5;
+        configurationLimit = 15;
+        # Also detect windows
+        useOSProber = true;
+        efiSupport = true;
+        device = "nodev";
+        gfxmodeEfi = "1920x1080,1024x768";
       };
-      timeout = 2;
+      timeout = 3;
       efi.canTouchEfiVariables = true;
     };
   };

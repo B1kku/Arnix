@@ -26,7 +26,6 @@ in
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
@@ -46,7 +45,10 @@ in
     fsType = "ext4";
     options = ssd-options;
   };
-
+  # Allow kernels/initrd to be kept on the main partition
+  # Only works on grub, allows keeping far more generations
+  # As these files can fill up the entire boot drive sometimes.
+  #boot.loader.efi.efiSysMountPoint = "/boot";
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
