@@ -64,6 +64,15 @@ return {
       end
       mod.setup_refresh_inactive_statuscolumns(50)
       require("statuscol").setup({
+        bt_ignore = {
+          "acwrite",
+          "help",
+          "nofile",
+          "nowrite",
+          "quickfix",
+          "terminal",
+          "prompt"
+        },
         segments = {
           {
             text = {
