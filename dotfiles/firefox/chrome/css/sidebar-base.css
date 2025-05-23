@@ -37,4 +37,6 @@
 #sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:hover {
   width: var(--sidebery-expanded-width) !important;
   margin-right: var(--sidebery-expanded-margin) !important;
+  clip-path: inset(0px -50px 0px 0px);
+  filter: drop-shadow(7px 0px 2px color-mix(in srgb, var(--toolbar-bgcolor) 100%, rgba(0, 0, 0, 1)));
 }

@@ -1,7 +1,4 @@
 /** Makes the toolbar (bar that pops up when you press alt) show below the urlbar as a small bar.  **/
-
-
-
 /* TODO: Old one broke, disabling for now */
 #toolbar-menubar {
   display: none;

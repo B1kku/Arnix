@@ -122,14 +122,6 @@ url-prefix(view-source:) {
   }
 }
 
-/* =============== Scrollbar =============== */
-
-* {
-  scrollbar-color: rgb(193, 103, 217) rgba(0, 0, 0, 0) !important;
-  scrollbar-width: thin !important;
-}
-
-
 /* =============== PDF Changes ================== */
 @-moz-document regexp(".*\\.(p|P)(d|D)(f|F).*") {
   :root {
