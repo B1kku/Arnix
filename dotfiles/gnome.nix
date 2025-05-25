@@ -139,9 +139,7 @@ in
       };
       "org/gnome/shell/app-switcher".current-workspace-only = true;
       "org/gnome/desktop/session".idle-delay = mkUint32 (minutes-to-turn-off-screen * 60);
-      "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-timeout = mkUint32 (
-        minutes-to-suspend * 60
-      );
+      "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-timeout = minutes-to-suspend * 60;
       "org/gnome/settings-daemon/plugins/color" = {
         night-light-enabled = true;
         night-light-temperature = mkUint32 3700;

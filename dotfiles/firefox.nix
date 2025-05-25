@@ -38,7 +38,7 @@ in
     enable = true;
     # package = pkgs-unstable.librewolf;
     profiles.${firefox-profile} = {
-      search.default = "DuckDuckGo";
+      search.default = "ddg";
       search.force = true;
       settings =
         let
@@ -69,7 +69,7 @@ in
           "privacy.fingerprintingProtection.overrides" = builtins.concatStringsSep "," RFPTargets;
 
         };
-      extensions = map maskFree extensions;
+      extensions.packages = map maskFree extensions;
     };
   };
 }

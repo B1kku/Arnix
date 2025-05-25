@@ -1,10 +1,10 @@
 {
   description = "Personal NixOS config.";
   inputs = {
-    nixpkgs-main.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-main.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-main";
     };
     firefox-addons = {
@@ -56,18 +56,19 @@
       formatter.x86_64-linux = pkgs-unstable.nixfmt-rfc-style;
       nixosConfigurations = {
         Arnix = nixpkgs-main.lib.nixosSystem {
-          inherit system;
           specialArgs = {
             inherit
               inputs
-              pkgs
               pkgs-unstable
               lib
-              home-manager
               flake-opts
               ;
           };
-          modules = [ ./hosts/Arnix/configuration.nix ];
+          modules = [
+            ./hosts/Arnix/configuration.nix
+            nixpkgs-main.nixosModules.readOnlyPkgs
+            { nixpkgs.pkgs = pkgs; }
+          ];
         };
       };
     };

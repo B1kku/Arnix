@@ -1,11 +1,8 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
-  home-manager,
   inputs,
   flake-opts,
-  lib,
   ...
 }:
 {
@@ -17,7 +14,7 @@
     ./hardware-configuration.nix
     ./nix-flake-paths.nix
     ./quietboot.nix
-    home-manager.nixosModules.home-manager
+    inputs.home-manager.nixosModules.home-manager
     # User configurations
     ../../users/bikku/configuration.nix
   ];
@@ -27,10 +24,13 @@
       # Extra store caches from inputs.
       substituters = flake-opts.extraCaches.substituters;
       trusted-public-keys = flake-opts.extraCaches.trusted-public-keys;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
     };
     package = pkgs.nix;
-    # Enable pipes [1 2 3] |> map (e: e * 2)
-    extraOptions = "experimental-features = nix-command flakes pipe-operators";
   };
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -80,10 +80,10 @@
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
     };
-    gnome.core-utilities.enable = false;
+    gnome.core-apps.enable = false;
   };
   # Enable sound.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

@@ -87,7 +87,6 @@ in
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp7s0.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.enableAllFirmware = true;
   # Why the hell was this off by default. Am I missing something?
   # And why knowing this is off by default had me going through a trail of options.

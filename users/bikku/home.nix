@@ -33,7 +33,6 @@ in
     ../../dotfiles/neovim.nix
     ../../dotfiles/gnome.nix
     ./dirs.nix
-    ../../modules/home-manager/lutris.nix
     # ../../dotfiles/alacritty.nix
   ];
   lib = {
@@ -84,7 +83,7 @@ in
       btop-rocm
       bitwarden
       fastfetch
-      fira-code-nerdfont # TODO: Move to a proper setting.
+      nerd-fonts.fira-code # TODO: Move to a proper setting.
       prismlauncher
       qbittorrent
       libnotify
