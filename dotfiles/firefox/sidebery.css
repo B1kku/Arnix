@@ -19,27 +19,49 @@
 }
 
 /* This removes the little leftover text when not hovered */
-#root.root:not(:hover) .Tab .body .t-box {
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-
-#root.root {
-  [data-class="space"] {
-    transition: flex-grow 0.2s ease;
+#root.root:not(:hover) .Tab .body {
+  .t-box {
+    opacity: 0;
+    transition: opacity 0.25s;
   }
 
+  .audio {
+    display: none;
+  }
+}
+/* Hide non-tab group items, when not hovered */
+/* So when collapsed we see the current  */
+#root.root {
+  .main-items>:not([data-active="true"]) {
+    transition: flex-grow 0.2s ease, width 0.2s ease, opacity 0.1s linear;
+  }
+  
   &:not(:hover) {
     .main-items {
-      grid-gap: unset;
+      grid-gap: 0px;
+      transition-delay: 0.2s;
     }
 
-    [data-class="space"] {
+    .main-items>:not([data-active="true"]) {
       flex-grow: 0;
+      width: 0px;
+      opacity: 0px;
+      pointer-events: none;
     }
   }
 }
 
+.main-items {
+
+  #search,
+  #settings {
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
 
 /* Container icon fill the tab and centered */
 .Tab[data-pin="false"] .ctx {

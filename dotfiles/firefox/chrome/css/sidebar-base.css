@@ -2,7 +2,7 @@
 /* Variables, redefine on userChrome if wanted */
 :root {
   --sidebery-expanded-width: 300px;
-  --sidebery-collapsed-width: 32px;
+  --sidebery-collapsed-width: 34px;
   --sidebery-expanded-margin: calc((var(--sidebery-expanded-width) - calc(var(--sidebery-collapsed-width))) * -1);
 }
 /* Hide tabs */

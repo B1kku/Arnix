@@ -7,3 +7,9 @@
 :root {
   
 }
+#statuspanel[type="overLink"] > #statuspanel-label {
+  background-color: rgba(0,0,0,.8) !important;
+  border-radius: 10px !important;
+  /*transition-delay: 1000ms;*/
+  
+}
