@@ -13,13 +13,14 @@
     extraPackages =
       with pkgs-unstable;
       [
-        winetricks
         umu-launcher
       ]
-      ++ (with pkgs; [ mangohud ]);
+      ++ (with pkgs; [
+        mangohud
+        winetricks
+      ]);
     winePackages = [
-      inputs.nix-gaming.packages.${pkgs.system}.wine-ge
-      pkgs-unstable.wineWowPackages.full
+      inputs.nix-gaming.packages.${pkgs.system}.wine-tkg
     ];
     protonPackages = [ pkgs-unstable.proton-ge-bin ];
     runners = {
