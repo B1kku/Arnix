@@ -34,6 +34,7 @@ function M.setup_refresh_inactive_statuscolumns(delay_ms)
     end
   })
 end
+
 -- Given args and the segment, returns the signs
 -- statuscolumn matched for this given line.
 ---@param args any
@@ -46,6 +47,58 @@ function M.get_signs(args, segment)
   local sss = wss.signs[args.lnum]
   if not sss then return nil end
   return sss
+end
+
+local C = require("statuscol.ffidef").C
+local aligner = "%="
+local reset_hl = "%*"
+
+local virtnum_char = "┇"
+local padding_char = " "
+
+local fillchars = vim.opt.fillchars:get()
+
+local segments = {}
+M.segments = segments
+
+function segments.num_column(args)
+  local linehl = "LineNr"
+  local curlinehl = "CursorLineNr"
+  if (args.virtnum ~= 0) then return "%#" .. linehl .. "#" .. virtnum_char .. aligner .. padding_char .. reset_hl end
+  if (args.relnum == 0) then
+    return "%=" .. "%#" .. curlinehl .. "#" .. tostring(args.lnum) .. padding_char .. reset_hl
+  end
+  return tostring(args.relnum) .. aligner .. padding_char .. reset_hl
+end
+
+function segments.info_column(args, segment)
+  if (args.virtnum ~= 0) then return " " .. padding_char end
+  local signs = M.get_signs(args, segment)
+  if signs then
+    local sign = signs[1]
+    return "%#" .. sign.sign_hl_group .. "#" .. string.sub(sign.sign_text, 1, -2) .. padding_char .. reset_hl
+  end
+  local foldinfo = C.fold_info(args.wp, args.lnum)
+  local closed = foldinfo.lines > 0
+  if closed then
+    return "%#CursorLineFold#" .. fillchars.foldclose .. padding_char .. reset_hl
+  end
+  if foldinfo.start == args.lnum then
+    return "%#CursorLineFold#" .. fillchars.foldopen .. padding_char .. reset_hl
+  end
+  return " " .. padding_char
+end
+
+function segments.separator_column(args, segment)
+  if (args.virtnum ~= 0) then
+    return virtnum_char
+  end
+  local line_signs = M.get_signs(args, segment)
+  if not line_signs then
+    return "│"
+  end
+  local sign = line_signs[1]
+  return "%#" .. sign.sign_hl_group .. "#" .. string.sub(sign.sign_text, 1, -2) .. "%*"
 end
 
 return M
