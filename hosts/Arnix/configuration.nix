@@ -46,6 +46,7 @@
         efiSupport = true;
         device = "nodev";
         gfxmodeEfi = "1920x1080,1024x768";
+        theme = "${pkgs.grub-yorha}/yorha-1920x1080";
       };
       timeout = 3;
       efi.canTouchEfiVariables = true;
