@@ -20,7 +20,7 @@ return {
         return args.win == args.actual_curwin
       end
       mod.setup_refresh_inactive_statuscolumns(50)
-      mod.setup_track_cursor_fold(100)
+      mod.setup_track_cursor_fold(50)
       require("statuscol").setup({
         bt_ignore = {
           "acwrite",

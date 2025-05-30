@@ -62,6 +62,7 @@ function M.setup_track_cursor_fold(delay_ms)
         buf = 0,
         window = 0
       }
+      prev_lnum = 0
       return
     end
     -- Window changed, refresh wp
@@ -78,6 +79,7 @@ function M.setup_track_cursor_fold(delay_ms)
         buf = 0,
         window = 0
       }
+      prev_lnum = 0
       return
     end
     local curline = vim.api.nvim_win_get_cursor(curwindow)[1]
@@ -93,7 +95,8 @@ function M.setup_track_cursor_fold(delay_ms)
   local refresh_curfold_throttled, _timer = util.throttle_trailing(refresh_curfold, delay_ms, false)
   -- Refresh the current fold info on cursor moved with a throttle
   vim.api.nvim_create_autocmd("BufEnter", {
-    callback = refresh_curfold_throttled })
+    callback = refresh_curfold_throttled
+  })
   vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
     callback = refresh_curfold_throttled
   })
