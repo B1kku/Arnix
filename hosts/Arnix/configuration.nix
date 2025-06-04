@@ -48,6 +48,32 @@
         device = "nodev";
         gfxmodeEfi = "1920x1080,1024x768";
         theme = "${pkgs.grub-yorha}/yorha-1920x1080";
+        splashImage = "${pkgs.grub-yorha}/yorha-1920x1080/background.png";
+        extraInstallCommands = ''
+          cat << EOF >> /boot/grub/grub.cfg
+          menuentry " " {
+          }
+          menuentry " " {
+          }
+          menuentry " " {
+          }
+          menuentry " " {
+          }
+          menuentry " " {
+          }
+          menuentry " " {
+          }
+          menuentry "Firmware Setup" {
+            fwsetup
+          }
+          menuentry "Shutdown" --class shutdown {
+            halt
+          }
+          menuentry "Reboot" --class restart{
+            reboot
+          }
+          EOF
+        '';
       };
       timeout = 3;
       efi.canTouchEfiVariables = true;

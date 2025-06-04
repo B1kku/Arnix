@@ -40,6 +40,7 @@ in
   # This is due to mouse sending wake up signals randomly.
   hardware.usb.wakeup = {
     enable = true;
+    refreshRules = true;
     mode = "whitelist";
     devices.keyboard = {
       vendor = "413c";
