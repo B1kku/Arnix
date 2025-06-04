@@ -31,7 +31,15 @@ in
 {
   options.hardware.usb.wakeup = {
     enable = mkEnableOption "USB wakeup rules";
-
+    refreshRules = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        When enabled, a refresh of all udev rules will be done
+        after a short while during the boot process to try and
+        combat race conditions and other things from overriding them.
+      '';
+    };
     mode = mkOption {
       type = types.enum [
         "whitelist"
@@ -64,14 +72,33 @@ in
       );
     };
   };
-
   config = mkIf (cfg.enable && (cfg.devices |> builtins.attrNames |> builtins.length) > 0) {
+    # Copied as much as possible from systemd-udev-trigger.service
+    systemd.services.udev-usb-refresh = mkIf cfg.refreshRules {
+      wantedBy = [ "basic.target" ];
+      after = [ "systemd-udev-trigger.service" ];
+      unitConfig = {
+        RequiresMountsFor = "/sys";
+        DefaultDependencies = "no";
+      };
+      # Idk how to fully disable environment.
+      environment = {
+        PATH = lib.mkForce null;
+        LOCALE_ARCHIVE = lib.mkForce null;
+        TZDIR = lib.mkForce null;
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "udevadm trigger --subsystem-match=usb";
+        RemainAfterExit = true;
+      };
+    };
     services.udev.packages =
       let
         baseRule = [
-          ''ACTION=="add"''
+          ''ACTION=="add|change"''
           ''SUBSYSTEM=="usb"''
-          ''ATTRS{removable}=="removable"''
+          ''DRIVERS=="usb"''
         ];
         deviceTarget = (
           name: device: [
@@ -105,7 +132,7 @@ in
           |> concatStringsSep "\n"
           #Append \n as EOL, writeTextDir did not seem to do this and I suspect that caused it to not work at times.
           |> (text: text + "\n")
-          |> pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules"
+          |> pkgs.writeTextDir "etc/udev/rules.d/99-usb-wakeup-configure.rules"
         )
       ];
   };
