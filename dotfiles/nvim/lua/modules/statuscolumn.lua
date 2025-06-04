@@ -50,19 +50,22 @@ function M.setup_track_cursor_fold(delay_ms)
   local error = nil
   local prev_lnum = 0
   local wp = ffi.C.find_window_by_handle(0, error)
+  local function clear_data()
+    curfold = {
+      start = 0,
+      level = 0,
+      buf = 0,
+      window = 0
+    }
+    prev_lnum = 0
+  end
   local function refresh_curfold()
     local curbuf = vim.api.nvim_get_current_buf()
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = curbuf })
     local curwindow = vim.api.nvim_get_current_win()
     -- Wrong buffer, don't even bother, wipe other settings too
     if buftype ~= "" then
-      curfold = {
-        start = 0,
-        level = 0,
-        buf = 0,
-        window = 0
-      }
-      prev_lnum = 0
+      clear_data()
       return
     end
     -- Window changed, refresh wp
@@ -71,15 +74,10 @@ function M.setup_track_cursor_fold(delay_ms)
       curfold.window = curwindow
       curfold.buf = curbuf
     end
-    -- Something went wrong, o.O
+    -- Still didn't find situations where this happens
+    -- but u never know
     if (wp == nil) then
-      curfold = {
-        start = 0,
-        level = 0,
-        buf = 0,
-        window = 0
-      }
-      prev_lnum = 0
+      clear_data()
       return
     end
     local curline = vim.api.nvim_win_get_cursor(curwindow)[1]
