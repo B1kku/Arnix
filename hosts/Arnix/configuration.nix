@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   inputs,
   flake-opts,
   ...
@@ -36,7 +37,7 @@
   boot = {
     # Enable SysRq to recover from freezes.
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPackages = pkgs.linuxPackages_6_14;
+    kernelPackages = pkgs-unstable.linuxPackages_zen;
     loader = {
       grub = {
         enable = true;

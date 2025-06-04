@@ -28,7 +28,14 @@ in
   ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-
+  boot.kernelParams = [];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  hardware.amdgpu = {
+    initrd.enable = true;
+  };
   # Disable everything but the keyboard from waking up the computer.
   # This is due to mouse sending wake up signals randomly.
   hardware.usb.wakeup = {
