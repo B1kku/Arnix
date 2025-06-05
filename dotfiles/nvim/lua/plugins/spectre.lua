@@ -1,10 +1,10 @@
 return {
   {
     "nvim-pack/nvim-spectre",
-    config = function()
-      require("spectre").setup()
-      vim.keymap.set("n", "<C-f>", '<cmd>lua require("spectre").toggle()<CR>')
-    end
+    keys = {
+      {"<C-f>", "<cmd>lua require('spectre').toggle()<CR>"}
+    },
+    opts = {}
   },
   { "nvim-lua/plenary.nvim", lazy = true },
 }

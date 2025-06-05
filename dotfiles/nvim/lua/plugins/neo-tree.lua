@@ -1,12 +1,10 @@
 return {
+  LazyDep("nvim-lua/plenary.nvim"),
+  LazyDep("nvim-tree/nvim-web-devicons"), -- not strictly required, but recommended
+  LazyDep("MunifTanjim/nui.nvim"),
   {
     "nvim-neo-tree/neo-tree.nvim",
     enabled = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      -- "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
     keys = {
       { "n", [[<cmd>Neotree float<CR>]], desc = "Open NeoTree" }
     },
@@ -34,8 +32,8 @@ return {
 
             symbols = {
               -- Change type
-              added     = "",  -- or "✚", but this is redundant info if you use git_status_colors on the name
-              modified  = "",  -- or "", but this is redundant info if you use git_status_colors on the name
+              added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+              modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
               deleted   = "✖", -- this can only be used in the git_status source
               renamed   = "󰁕", -- this can only be used in the git_status source
               -- Status type

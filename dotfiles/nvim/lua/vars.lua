@@ -12,7 +12,23 @@ g.background = "dark"
 g.borderchars = rounded
 g.border = "rounded"
 
-g.theme = "nightfox" -- Global variable for other plugins to use if needed.
+---@module "lazy"
+
+--- This actually does relatively nothing, it's just a way for me to mark
+--- a plugin as a dependency so it's not confused with a normal plugin spec.
+--- The reason for this existing is that the dependencies table on a lazyplugspec
+--- actually instantly loads said plugin before the parent is loaded, so far,
+--- haven't found a single plugin that requires this. Declaring a dependency as
+--- another plugin and setting it to lazy only loads it when the parent actually requires it.
+---@param plugin string
+---@param opts LazySpec?
+---@return LazySpec
+LazyDep = function(plugin, opts)
+  if not opts then
+    opts = {}
+  end
+  return vim.tbl_extend("force", {plugin, lazy = true}, opts)
+end
 
 I = function(arg)
   vim.notify(vim.inspect(arg), 2)

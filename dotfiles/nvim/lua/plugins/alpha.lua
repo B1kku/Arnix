@@ -1,5 +1,5 @@
 return {
-  { 'echasnovski/mini.sessions', lazy = true },
+  LazyDep("echasnovski/mini.sessions"),
   {
     "goolord/alpha-nvim",
     config = function()

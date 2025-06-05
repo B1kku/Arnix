@@ -2,6 +2,9 @@ local session_select = function ()
   require("mini.sessions").select()
 end
 return {
+  -- Picker module
+  LazyDep("nvim-telescope/telescope.nvim"),
+  {
   'echasnovski/mini.sessions',
   keys = {
     { "<leader>st", session_select, "n", silent = true, desc = "Session picker" }
@@ -33,4 +36,5 @@ return {
     minisessions.select = custom_picker.open
     session_select = minisessions.select
   end
+  }
 }

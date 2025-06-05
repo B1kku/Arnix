@@ -1,11 +1,7 @@
 local nix_enabled = vim.g.nixvars ~= nil
 local mod = require("modules.lsp")
----@type LazyPluginSpec[]
 return {
-  {
-    "williamboman/mason-lspconfig.nvim",
-    enabled = not nix_enabled
-  },
+  LazyDep("williamboman/mason-lspconfig.nvim", { enabled = not nix_enabled }),
   {
     "neovim/nvim-lspconfig",
     lazy = false,
@@ -79,6 +75,8 @@ return {
   },
   {
     "folke/lazydev.nvim",
+    ---@module 'lazydev'
+
     ft = "lua",
     -- Lazydev checks workspace by root dir from lua_ls
     -- make sure lua_ls rootdir is neovim dotfiles when linking
@@ -107,5 +105,15 @@ return {
     -- Instead it's loaded from ftplugin/java
     "mfussenegger/nvim-jdtls",
     ft = "java"
+  },
+  -- Markdown rendering
+  LazyDep("nvim-treesitter/nvim-treesitter"),
+  LazyDep("nvim-tree/nvim-web-devicons"),
+  {
+      "MeanderingProgrammer/render-markdown.nvim",
+      lazy = true,
+      ---@module "render-markdown"
+      ---@type render.md.UserConfig
+      opts = {},
   }
 }

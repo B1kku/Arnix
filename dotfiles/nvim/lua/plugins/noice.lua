@@ -1,6 +1,6 @@
 return {
-  { "MunifTanjim/nui.nvim", lazy = true },
-  { "folke/snacks.nvim",    lazy = true },
+  LazyDep("MunifTanjim/nui.nvim"),
+  LazyDep("folke/snacks.nvim"),
   {
     -- Still don't know why, but mapping ":w<cr>" shows double saving message until using :Noice, "<cmd>w<cr>" does not.
     "folke/noice.nvim",
