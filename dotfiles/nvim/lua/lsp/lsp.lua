@@ -107,13 +107,17 @@ return {
     ft = "java"
   },
   -- Markdown rendering
-  LazyDep("nvim-treesitter/nvim-treesitter"),
   LazyDep("nvim-tree/nvim-web-devicons"),
   {
-      "MeanderingProgrammer/render-markdown.nvim",
-      lazy = true,
-      ---@module "render-markdown"
-      ---@type render.md.UserConfig
-      opts = {},
+    "MeanderingProgrammer/render-markdown.nvim",
+    event = "BufEnter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ---@module "render-markdown"
+    ---@type render.md.UserConfig
+    opts = {
+      indent = {
+        enabled = true
+      }
+    }
   }
 }
