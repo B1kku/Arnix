@@ -8,7 +8,11 @@ M.pre_write = function()
 end
 M.pre_read = function()
   sessions_overseer.pre_read()
-  vim.cmd("LspStop")
+  local lsp_clients = vim.lsp.get_clients()
+  for _, client in pairs(lsp_clients) do
+    vim.lsp.stop_client(client)
+  end
+  -- vim.cmd("LspStop")
 end
 M.post_read = function()
   sessions_toggleterm.post_read()
