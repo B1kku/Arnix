@@ -13,7 +13,7 @@ let
     package = pkgs.papirus-icon-theme;
     name = "Papirus-Dark";
   };
-  minutes-to-suspend = 5;
+  minutes-to-suspend = 8;
   minutes-to-turn-off-screen = 3;
   gnome-extensions = (
     with pkgs.gnomeExtensions;

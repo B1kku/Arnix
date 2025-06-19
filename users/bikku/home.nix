@@ -55,7 +55,7 @@ in
           {
             rebuild = "nh os switch ${flake-dir} -R | tee ${flake-dir + "/rebuild.log"}";
             update = "nh os switch ${flake-dir} -u -R | tee ${flake-dir + "/update.log"}";
-            clean = "nh clean all --keep-since 7d --keep 5 --ask";
+            clean = "nh clean all --keep-since 7d --keep 15 --ask";
           }
           |> builtins.mapAttrs sudoWrap
         )
