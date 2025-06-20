@@ -70,5 +70,13 @@ return {
         win_opts = win_opts
       }
     })
+
+    local blink = require("blink.cmp")
+    blink.add_source_provider("overseer", {
+      name = "Overseer",
+      module = "modules.overseer_blink",
+      score_offset = 100,
+    })
+    blink.add_filetype_source("OverseerForm", "overseer")
   end
 }
