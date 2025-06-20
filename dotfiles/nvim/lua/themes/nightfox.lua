@@ -6,7 +6,8 @@ return {
     -- Must not load lazily and with highest priority, it's somewhat minor but otherwise Lazy might not get themed.
     priority = 1000,
     config = function()
-      -- vim.cmd[[set pumblend=0]]
+      local palette = "nightfox"
+
       require("nightfox").setup {
         options = {
           transparent = true,
@@ -22,25 +23,36 @@ return {
           },
         },
       }
-      vim.g.theme = "nightfox"
-      vim.api.nvim_command("colorscheme nightfox") -- Set the colorscheme
-    end
-  },
-  {
-    "olimorris/onedarkpro.nvim",
-    enabled = false,
-    priority = 1000,
-    config = function()
-      require("onedarkpro").setup({
-        options = {
-          transparency = true
+      vim.api.nvim_command("colorscheme " .. palette) -- Set the colorscheme
+
+      local palette_colors = require("nightfox.palette").load(palette)
+      local bg_color = palette_colors.bg0
+      -- User defined lualine theme overrides
+      -- in this case, restore bgcolor
+      local lualine_overrides = {
+        inactive = {
+          a = {
+            bg = bg_color
+          },
+          b = {
+            bg = bg_color
+          },
+          c = {
+            bg = bg_color
+          }
+        },
+        normal = {
+          c = {
+            bg = bg_color
+          }
         }
-      })
-      vim.cmd("colorscheme vaporwave")
+      }
+      -- Merge user lualine theme opts into default lualine theme
+      -- then modify the package path to return the new theme instead.
+      local nightfox_lualine = "lualine.themes." .. palette
+      local lualine_theme = require(nightfox_lualine)
+      lualine_theme = vim.tbl_deep_extend("force", lualine_theme, lualine_overrides)
+      package.loaded[nightfox_lualine] = lualine_theme
     end
-  },
-  {
-    "rktjmp/lush.nvim",
-    -- {dir = vim.fn.stdpath("config") .. "/lua/modules/colors.lua" }
-  },
+  }
 }
