@@ -9,6 +9,7 @@ return {
       if (vim.g.nixvars) then
         require('nvim-treesitter.install').compilers = { "gcc" }
       end
+---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         auto_install = true,
         highlight = {
