@@ -1,7 +1,4 @@
--- This is due to nix's jdtls package being called jdt-language-server, not jdtls like it should... ._.
 -- I'm half sure nix wrapper for jdtls doesn't give a crap about data directory.
-local util = require 'lspconfig.util'
-
 -- ps ax | grep java (somewhat debug startup command)
 
 local env = {
@@ -10,20 +7,20 @@ local env = {
   JDTLS_JVM_ARGS = os.getenv 'JDTLS_JVM_ARGS',
 }
 local function get_cache_dir()
-  return env.XDG_CACHE_HOME and env.XDG_CACHE_HOME or util.path.join(env.HOME, '.cache')
+  return env.XDG_CACHE_HOME and env.XDG_CACHE_HOME or vim.fs.joinpath(env.HOME, '.cache')
 end
 
 local function get_jdtls_cache_dir()
-  return util.path.join(get_cache_dir(), 'jdtls')
+  return vim.fs.joinpath(get_cache_dir(), 'jdtls')
 end
 
 local function get_jdtls_config_dir()
-  return util.path.join(get_jdtls_cache_dir(), 'config')
+  return vim.fs.joinpath(get_jdtls_cache_dir(), 'config')
 end
 
 local function get_jdtls_workspace_dir()
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-  return util.path.join(get_jdtls_cache_dir(), project_name)
+  return vim.fs.joinpath(get_jdtls_cache_dir(), project_name)
 end
 local function get_jdtls_jvm_args()
   local args = {}
@@ -51,6 +48,9 @@ local config = {
   },
   settings = {
     java = {
+      saveActions = {
+        organizeImports = true
+      },
       configuration = {
         runtimes = {
 
