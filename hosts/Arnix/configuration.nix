@@ -15,9 +15,8 @@
     ./hardware-configuration.nix
     ./nix-flake-paths.nix
     ./quietboot.nix
-    inputs.home-manager.nixosModules.home-manager
     # User configurations
-    ../../users/bikku/configuration.nix
+    ../../users/bikku/user.nix
   ];
   nix = {
     settings = {

@@ -18,9 +18,6 @@ let
   flake-dir = flake-opts.flake-dir;
 in
 {
-  programs.home-manager.enable = true;
-  home.username = "bikku";
-  home.homeDirectory = "/home/bikku";
   imports = [
     ../../dotfiles/colors.nix
     ../../dotfiles/games.nix
@@ -110,6 +107,4 @@ in
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
   };
-  # Don't change randomly, used for internals.
-  home.stateVersion = "23.11";
 }
