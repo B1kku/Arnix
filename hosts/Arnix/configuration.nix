@@ -41,7 +41,7 @@
     loader = {
       grub = {
         enable = true;
-        configurationLimit = 15;
+        configurationLimit = 10;
         # Also detect windows
         useOSProber = true;
         efiSupport = true;
