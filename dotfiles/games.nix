@@ -3,13 +3,16 @@
   pkgs,
   pkgs-unstable,
   lib,
-  osConfig,
   ...
 }@args:
+let
+  osSteamEnabled = args.osConfig.programs.steam.enable or false;
+  steamPackage = if !osSteamEnabled then args.osConfig.programs.steam.package else pkgs.steam;
+in
 {
   programs.lutris = {
     enable = true;
-    steamPackage = osConfig.programs.steam.package;
+    steamPackage = steamPackage;
     extraPackages =
       with pkgs-unstable;
       [
@@ -21,6 +24,8 @@
       ]);
     winePackages = [
       inputs.nix-gaming.packages.${pkgs.system}.wine-tkg
+      pkgs.wineWowPackages.stagingFull
+      pkgs.wineWowPackages.stableFull
     ];
     protonPackages = [ pkgs-unstable.proton-ge-bin ];
     runners = {
@@ -29,7 +34,7 @@
     };
   };
   # Allows starting up steam on the background on gnome.
-  xdg.desktopEntries.steam-background = lib.mkIf (args ? osConfig && osConfig.programs.steam.enable) {
+  xdg.desktopEntries.steam-background = lib.mkIf osSteamEnabled {
     name = "Steam Background";
     exec = "steam -silent %u";
     icon = "steam";
