@@ -23,13 +23,13 @@ final: prev: {
     gsconnect = prev.gnomeExtensions.gsconnect.overrideAttrs (attrs: {
       src =
         let
-          version = "62";
+          version = "66";
         in
         prev.fetchFromGitHub {
           owner = "GSConnect";
           repo = "gnome-shell-extension-gsconnect";
           rev = "v${version}";
-          hash = "sha256-HFm04XC61AjkJSt4YBc4dO9v563w+LsYDSaZckPYE14=";
+          hash = "sha256-QPvdSmt4aUkPvaOUonovrCxW4pxrgoopXGi3KSukVD8=";
         };
     });
   };
