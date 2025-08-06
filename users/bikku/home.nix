@@ -87,6 +87,7 @@ in
       gthumb # Image viewer
       vlc
       nh
+      pixi-editor
     ])
     # Gnome packages mainly
     # TODO: Move these to gnome.nix?
