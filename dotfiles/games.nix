@@ -33,6 +33,16 @@ in
       cemu.package = pkgs-unstable.cemu;
     };
   };
+  home.packages = [
+    (pkgs.prismlauncher.override {
+      jdks = with pkgs; [
+        openjdk21
+        openjdk24
+        openjdk8
+      ];
+    })
+
+  ];
   # Allows starting up steam on the background on gnome.
   xdg.desktopEntries.steam-background = lib.mkIf osSteamEnabled {
     name = "Steam Background";

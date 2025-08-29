@@ -77,13 +77,13 @@ in
       bitwarden
       fastfetch
       nerd-fonts.fira-code # TODO: Move to a proper setting.
-      prismlauncher
       qbittorrent
       libnotify
       gthumb # Image viewer
       vlc
       nh
       pixi-editor
+      p7zip
     ])
     # Gnome packages mainly
     # TODO: Move these to gnome.nix?
