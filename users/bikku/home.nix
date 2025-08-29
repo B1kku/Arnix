@@ -10,11 +10,7 @@
 }:
 let
   # Little wrapper around nix shell, shorthand and allows specifying a branch.
-  nix-shell-wrapper = pkgs.writeShellScriptBin "pkgs" ''
-    export IN_NIX_SHELL="impure"
-    nixpkgs="nixpkgs''${2:+"/nixos-$2"}"
-    NIXPKGS_ALLOW_UNFREE=1 nix shell "$nixpkgs#$1" --impure
-  '';
+  nix-shell-wrapper = pkgs.writeShellScriptBin "pkgs" (builtins.readFile ../../dotfiles/pkgs.sh);
   flake-dir = flake-opts.flake-dir;
 in
 {
