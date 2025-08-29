@@ -6,6 +6,8 @@
   programs.yazi = {
     enable = true;
     package = pkgs-unstable.yazi;
+    enableZshIntegration = true;
+    shellWrapperName = "y";
     settings = {
       manager = {
         sort_by = "alphabetical";
