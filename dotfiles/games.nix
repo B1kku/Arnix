@@ -3,13 +3,21 @@
   pkgs,
   pkgs-unstable,
   lib,
+  modulesPath,
   ...
 }@args:
 let
   osSteamEnabled = args.osConfig.programs.steam.enable or false;
   steamPackage = if !osSteamEnabled then args.osConfig.programs.steam.package else pkgs.steam;
+  defaultWine = pkgs-unstable.proton-ge-bin;
 in
 {
+  disabledModules = [
+    "${modulesPath}/programs/lutris.nix"
+  ];
+  imports = [
+    ../modules/home-manager/lutris.nix
+  ];
   programs.lutris = {
     enable = true;
     steamPackage = steamPackage;
@@ -22,12 +30,13 @@ in
         mangohud
         winetricks
       ]);
+    defaultWinePackage = defaultWine;
     winePackages = [
       inputs.nix-gaming.packages.${pkgs.system}.wine-tkg
       pkgs.wineWowPackages.stagingFull
       pkgs.wineWowPackages.stableFull
     ];
-    protonPackages = [ pkgs-unstable.proton-ge-bin ];
+    protonPackages = [ defaultWine ];
     runners = {
       ryujinx.package = pkgs-unstable.ryubing;
       cemu.package = pkgs-unstable.cemu;
