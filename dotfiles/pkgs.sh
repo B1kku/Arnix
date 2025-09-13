@@ -73,4 +73,4 @@ fi
 #Read by p10k
 export IN_NIX_SHELL="impure"
 
-nix "$verb" "${packages[@]}" "${extra[@]}"
+NIXPKGS_ALLOW_UNFREE=1 nix "$verb" "${packages[@]}" "${extra[@]}" --impure
