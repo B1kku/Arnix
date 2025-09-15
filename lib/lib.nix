@@ -33,12 +33,6 @@
               substituters = [ ];
               trusted-public-keys = [ ];
             };
-      bypassMaintainersCheck = (
-        pkg:
-        pkg.overrideAttrs (attrs: {
-          meta = attrs.meta // { maintainers = []; };
-        })
-      );
     };
   }
 )
