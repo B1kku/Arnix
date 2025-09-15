@@ -1,9 +1,6 @@
 {
   lib,
   pkgs,
-  pkgs-unstable,
-  config,
-  inputs,
   ...
 }:
 let
@@ -15,20 +12,17 @@ let
   };
   minutes-to-suspend = 8;
   minutes-to-turn-off-screen = 3;
-  gnome-extensions = (
-    with pkgs.gnomeExtensions;
-    [
-      blur-my-shell
-      just-perfection
-      alttab-mod
-      switch-workspace
-      color-picker
-      quick-settings-audio-panel
-      auto-move-windows
-      gsconnect
-      gamemode-shell-extension
-    ]
-  );
+  gnome-extensions = with pkgs.gnomeExtensions; [
+    blur-my-shell
+    just-perfection
+    alttab-mod
+    switch-workspace
+    color-picker
+    quick-settings-audio-panel
+    auto-move-windows
+    gsconnect
+    gamemode-shell-extension
+  ];
   num-workspaces = 4;
   workspace-actions = {
     move-to-workspace = "<Ctrl><Alt>";
@@ -91,6 +85,14 @@ in
       package = pkgs.gnome-themes-extra;
     };
   };
+  programs.gnome-shell = {
+    enable = true;
+    extensions =
+    gnome-extensions
+    |> map (extension_package: {
+      package = extension_package;
+    });
+  };
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings =
     let
@@ -118,10 +120,6 @@ in
       };
       # Transparent dock bar on overview
       "org/gnome/shell/extensions/blur-my-shell/overview".style-components = 3;
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
-        enabled-extensions = map (extension: "${extension.passthru.extensionUuid}") gnome-extensions;
-      };
       "org/gnome/desktop/interface" = {
         icon-theme = icon-theme.name;
         color-scheme = "prefer-dark";
@@ -146,7 +144,8 @@ in
       };
       "org/gnome/desktop/wm/keybindings" = {
         switch-applications = [ "<Alt>Tab" ];
-      } // (generateWorkspaceKeybinds num-workspaces workspace-actions);
+      }
+      // (generateWorkspaceKeybinds num-workspaces workspace-actions);
       "org/gnome/settings-daemon/plugins/media-keys" = {
         mic-mute = [ "<Alt>z" ];
         volume-up = [ "<Alt>KP_Up" ];
