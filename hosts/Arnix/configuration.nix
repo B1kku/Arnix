@@ -36,7 +36,7 @@
   boot = {
     # Enable SysRq to recover from freezes.
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPackages = pkgs-unstable.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_zen;
     loader = {
       grub = {
         enable = true;
