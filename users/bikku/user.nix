@@ -5,11 +5,19 @@
   flake-opts,
   lib,
   ...
-}:
+}@args:
 let
   username = "bikku";
 in
 {
+  imports =
+    let
+      user_args = args // {
+        inherit username;
+      };
+      user-system-modules = map (module: import module user_args) [ ./system/virt.nix ];
+    in
+    user-system-modules ++ [ inputs.home-manager.nixosModules.home-manager ];
   # This should take care of most game-related settings too.
   programs.steam = {
     enable = true;
@@ -26,10 +34,6 @@ in
     isNormalUser = true;
     initialPassword = "potato";
   };
-  # Home Manager setup
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
