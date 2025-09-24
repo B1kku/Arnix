@@ -23,10 +23,10 @@ in
     "wezterm/util.lua" = {
       source = config.lib.extra.mkFlakePath "/dotfiles/wezterm/util.lua";
     };
-     "wezterm/colors" = {
+    "wezterm/colors" = {
       source = config.lib.extra.mkFlakePath "/dotfiles/wezterm/colors";
     };
-   
+
   };
   programs.wezterm = {
     enable = true;

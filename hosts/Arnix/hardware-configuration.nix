@@ -28,7 +28,7 @@ in
   ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [];
+  boot.kernelParams = [ ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

@@ -88,10 +88,10 @@ in
   programs.gnome-shell = {
     enable = true;
     extensions =
-    gnome-extensions
-    |> map (extension_package: {
-      package = extension_package;
-    });
+      gnome-extensions
+      |> map (extension_package: {
+        package = extension_package;
+      });
   };
   # dconf watch / & dconf dump > ... for debugging
   dconf.settings =

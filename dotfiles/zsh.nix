@@ -32,7 +32,8 @@ in
         src = ./p10k;
         file = "p10k.zsh";
       }
-    ] ++ (map toZshPlugin (with pkgs; [ zsh-syntax-highlighting ]));
+    ]
+    ++ (map toZshPlugin (with pkgs; [ zsh-syntax-highlighting ]));
     localVariables = {
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=#${config.colorscheme.palette.base0C}";
     };

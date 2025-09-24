@@ -8,19 +8,18 @@
 }:
 let
   config-dir = "/dotfiles/nvim";
-  nixvars =
-    ''
-      -- Code injected by Home Manager for NixOS --
-    ''
-    + (lib.generators.toLua { asBindings = true; } {
-      "vim.g.nixvars" = {
-        config_dir = flake-opts.flake-dir + config-dir;
-        java_runtimes = {
-          "17" = "${pkgs.jdk17}";
-          "21" = "${pkgs.jdk21}";
-        };
+  nixvars = ''
+    -- Code injected by Home Manager for NixOS --
+  ''
+  + (lib.generators.toLua { asBindings = true; } {
+    "vim.g.nixvars" = {
+      config_dir = flake-opts.flake-dir + config-dir;
+      java_runtimes = {
+        "17" = "${pkgs.jdk17}";
+        "21" = "${pkgs.jdk21}";
       };
-    });
+    };
+  });
   jdtls = pkgs.writeShellScriptBin "jdtls" ''
     ${pkgs-unstable.jdt-language-server}/bin/jdtls \
     --jvm-arg=-javaagent:${pkgs-unstable.lombok}/share/java/lombok.jar
