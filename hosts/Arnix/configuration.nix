@@ -15,6 +15,7 @@
     ./hardware-configuration.nix
     ./nix-flake-paths.nix
     ./quietboot.nix
+    ./dns.nix
     # User configurations
     ../../users/bikku/user.nix
   ];
@@ -80,7 +81,6 @@
   };
   #Networking
   networking = {
-    nameservers = [ "1.1.1.1" ];
     hostName = "Arnix";
   };
   # Select internationalisation properties.
