@@ -14,6 +14,7 @@ let
     darkreader
     seventv
     violentmonkey
+    youtube-no-translation
   ];
   maskFree = (
     pkg:
