@@ -24,7 +24,11 @@ in
     extraPackages =
       with pkgs-unstable;
       [
-        umu-launcher
+        (umu-launcher.override {
+          extraProfile = ''
+            unset TZ
+          '';
+        })
       ]
       ++ (with pkgs; [
         mangohud
@@ -32,7 +36,6 @@ in
       ]);
     defaultWinePackage = defaultWine;
     winePackages = [
-      inputs.nix-gaming.packages.${pkgs.system}.wine-tkg
       pkgs.wineWowPackages.stagingFull
       pkgs.wineWowPackages.stableFull
     ];
