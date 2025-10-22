@@ -12,8 +12,6 @@ return {
           automatic_installation = true
         })
       end
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
       -- capabilities.textDocument.completion.completionItem.snippetSupport = true
       -- List of lsp to be loaded, if lsp_config_dir + lsp_name matches a file,
       -- it will override the default config.
@@ -33,7 +31,6 @@ return {
       }
       -- Set lsp borders
       local default_config = {
-        capabilities = capabilities,
         on_attach = function(client, bufnr)
           if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true, { bufnr })
@@ -89,7 +86,6 @@ return {
         end
         return mod.is_vim_workspace(root_dir)
       end
-
       require("lazydev").setup({
         library = {
           { path = "${3rd}/luv/library" }

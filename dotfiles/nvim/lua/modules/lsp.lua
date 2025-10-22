@@ -2,18 +2,18 @@ local M = {}
 -- Given a list of lsp names and a default config
 -- Load them using lspconfig and a global config if one exists
 ---@param lsp_list string[]
----@param default_config table
-function M.setup_lsps(lsp_list, default_config)
+---@param global_config table
+function M.setup_lsps(lsp_list, global_config)
   -- TODO: Technically incorrect? It's language settings, as in, formatter and linter also go there.
   -- Changing it does mean I might have to make a map of lsp -> language or language -> lsp so everyone can find their files.
   local lsp_config_dir = "lsp.lsp-config."
-  local lspconfig = require("lspconfig")
   local function setup_lsp(lsp)
     local config_found, language_config = pcall(require, lsp_config_dir .. lsp)
     local lsp_config = config_found and language_config["lsp_setup"] or {}
-    lspconfig[lsp].setup(vim.tbl_deep_extend("force", default_config, lsp_config))
+    local final_config = vim.tbl_deep_extend("force", global_config, lsp_config)
+    vim.lsp.config(lsp, final_config)
+    vim.lsp.enable(lsp)
   end
-
   vim.tbl_map(setup_lsp, lsp_list)
 end
 
