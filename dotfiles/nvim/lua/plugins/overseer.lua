@@ -77,6 +77,6 @@ return {
       module = "modules.overseer_blink",
       score_offset = 100,
     })
-    blink.add_filetype_source("OverseerForm", "overseer")
+    require("modules.lsp").blink.add_filetype_source("OverseerForm", "overseer")
   end
 }

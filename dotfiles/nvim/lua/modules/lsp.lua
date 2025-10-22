@@ -60,6 +60,25 @@ function M.is_vim_workspace(root_dir)
   return false
 end
 
+M.blink = {}
+--- Add a provider for a specific filetype on blink.
+--- Their current add_filetype_source does not allow specifying
+--- inherit_defaults and will always end up setting it to false.
+---@param filetype string The filetype add this source for.
+---@param provider_id string The provider_id for this source.
+---@param inherit_defaults? boolean Whether to preserve default providers. Defaults to true
+function M.blink.add_filetype_source(filetype, provider_id, inherit_defaults)
+  if (inherit_defaults == nil) then
+    inherit_defaults = true
+  end
+  local per_filetype = require("blink.cmp.config").sources.per_filetype
+  if (per_filetype[filetype] == nil) then
+    per_filetype[filetype] = { inherit_defaults = inherit_defaults }
+  end
+  ---@diagnostic disable-next-line: param-type-mismatch
+  table.insert(per_filetype[filetype], provider_id)
+end
+
 M.lazydev = {}
 --- Setup lazydev as a blink source, for providing
 --- autocomplete of plugins without loading them.
@@ -93,8 +112,7 @@ function M.lazydev.setup_blink_integration(priority, check_enabled)
       return vim.b.lazydev
     end
   })
-
-  blink.add_filetype_source("lua", "lazydev")
+  M.blink.add_filetype_source("lua", "lazydev")
 end
 
 return M
