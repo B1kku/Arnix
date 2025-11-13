@@ -1,101 +1,59 @@
 <<< /run/current-system
->>> /tmp/nh-os5BHJmf/result
+>>> /tmp/nh-osCyt4uQ/result
 Version changes:
-[C.]  #01  abseil-cpp                  20210324.2, 20250127.1 x2 -> 20210324.2, 20250127.1, 20250814.0
-[C.]  #02  audit                       4.1.0-bin, 4.1.0-lib x2, 4.1.1-unstable-2025-08-01-lib x2 -> 4.1.0-bin, 4.1.0-lib x2, 4.1.2-unstable-2025-09-06-lib x2
-[C.]  #03  aws-c-auth                  0.8.1, 0.9.0 -> 0.8.1, 0.9.1
-[C.]  #04  aws-c-event-stream          0.5.0, 0.5.5 -> 0.5.0, 0.5.7
-[C.]  #05  aws-c-io                    0.15.3, 0.21.2 -> 0.15.3, 0.22.0
-[C.]  #06  aws-c-s3                    0.7.1, 0.8.6 -> 0.7.1, 0.8.7
-[C.]  #07  aws-crt-cpp                 0.29.4, 0.33.1 -> 0.29.4, 0.34.3
-[C.]  #08  aws-sdk-cpp                 1.11.448, 1.11.612 -> 1.11.448, 1.11.647
-[C.]  #09  chromaprint                 1.5.1 x3 -> 1.5.1 x2, 1.6.0
-[C.]  #10  cjson                       1.7.18 x3 -> 1.7.18 x2, 1.7.19
-[U*]  #11  cpupower                    6.16.9 -> 6.17.1
-[C.]  #12  cups                        2.4.11 x2, 2.4.11-lib x2, 2.4.11-man, 2.4.12-lib -> 2.4.11 x2, 2.4.11-lib x2, 2.4.11-man, 2.4.14-lib
-[C*]  #13  curl                        8.14.1 x5, 8.14.1-bin x3, 8.14.1-man -> 8.14.1 x3, 8.14.1-bin x2, 8.14.1-man, 8.16.0 x2, 8.16.0-bin
-[C.]  #14  editline                    1.17.1 x2 -> 1.17.1, 1.17.1-unstable-2025-05-24
-[C.]  #15  electron                    36.9.2, 37.6.0 -> 36.9.4, 38.2.2
-[C.]  #16  electron-unwrapped          36.9.2, 37.6.0 -> 36.9.4, 38.2.2
-[C.]  #17  ell                         0.76 x2, 0.78 -> 0.76 x2, 0.79
-[C.]  #18  expat                       2.7.1 x4, 2.7.1-dev -> 2.7.1 x2, 2.7.1-dev, 2.7.2 x2
-[C.]  #19  fluidsynth                  2.4.4 x2, 2.4.4-man, 2.4.7 -> 2.4.4 x2, 2.4.4-man, 2.4.8
-[C*]  #20  fontconfig                  2.16.0 x2, 2.16.0-bin, 2.16.0-lib x2, 2.16.2, 2.16.2-lib -> 2.16.0 x2, 2.16.0-bin, 2.16.0-lib x2, 2.17.1, 2.17.1-lib
-[C.]  #21  fzf                         0.62.0, 0.65.2 -> 0.62.0, 0.66.0
-[U.]  #22  gamescope                   3.16.9 -> 3.16.17
-[C.]  #23  gdbm                        1.25-lib x3 -> 1.25-lib x2, 1.26-lib
-[C.]  #24  gperftools                  2.15, 2.17 -> 2.15, 2.17.2
-[C.]  #25  gsm                         1.0.22 x3 -> 1.0.22 x2, 1.0.23
-[C.]  #26  hwdata                      0.393 x2, 0.398 x2 -> 0.393 x2, 0.399 x2
-[U.]  #27  imagemagick                 7.1.2-3 x2 -> 7.1.2-5, 7.1.2-6
-[U.]  #28  initrd-linux-zen            6.16.9 -> 6.17.1
-[C.]  #29  jansson                     2.14 x4 -> 2.14 x2, 2.14.1 x2
-[U.]  #30  jdt-language-server         1.49.0 -> 1.51.0
-[C.]  #31  jemalloc                    5.3.0 x3 -> 5.3.0 x2, 5.3.0-unstable-2025-09-12
-[C.]  #32  json-glib                   1.10.6 x3 -> 1.10.6 x2, 1.10.8
-[C*]  #33  kbd                         2.7.1 x2, 2.8.0-unstable-2025-08-12 x4 -> 2.7.1 x2, 2.9.0 x4
-[C.]  #34  libXNVCtrl                  390.157, 570.153.02 -> 390.157, 570.195.03
-[C.]  #35  libXScrnSaver               1.2.4 x3 -> 1.2.4 x2, 1.2.5
-[C.]  #36  libapparmor                 4.1.1 x4 -> 4.1.1 x2, 4.1.2 x2
-[C.]  #37  libcbor                     0.12.0 x4 -> 0.12.0 x2, 0.13.0 x2
-[C.]  #38  libffi                      3.4.8 x2, 3.4.8-dev, 3.5.1 x2 -> 3.4.8 x2, 3.4.8-dev, 3.5.2 x2
-[C.]  #39  libgcrypt                   1.10.3-bin, 1.10.3-lib x2, 1.11.1-lib x2 -> 1.10.3-bin, 1.10.3-lib x2, 1.11.2-lib x2
-[C.]  #40  libheif                     1.19.8 x2 -> 1.19.8, 1.20.2
-[C.]  #41  libjpeg-turbo               3.0.4 x2, 3.0.4-bin, 3.0.4-man, 3.1.1 -> 3.0.4 x2, 3.0.4-bin, 3.0.4-man, 3.1.2
-[C.]  #42  libopenmpt                  0.7.15 x2, 0.8.2 -> 0.7.15 x2, 0.8.3
-[C.]  #43  libpng                      1.6.46, 1.6.49 -> 1.6.46, 1.6.50
-[C.]  #44  libpng-apng                 1.6.46 x2, 1.6.46-man, 1.6.49 x2 -> 1.6.46 x2, 1.6.46-man, 1.6.50 x2
-[U*]  #45  libressl                    4.0.0, 4.0.0-man, 4.0.0-nc -> 4.1.1, 4.1.1-man, 4.1.1-nc
-[U.]  #46  librewolf                   143.0.3-1 -> 143.0.4-1
-[U.]  #47  librewolf-unwrapped         143.0.3-1 -> 143.0.4-1
-[C.]  #48  librsvg                     2.60.0 x3 -> 2.60.0 x2, 2.61.1
-[C.]  #49  libssh                      0.11.2 x3 -> 0.11.2 x2, 0.11.3
-[C.]  #50  libtiff                     4.7.0 x3, 4.7.0-bin, 4.7.0-man -> 4.7.0 x2, 4.7.0-bin, 4.7.0-man, 4.7.1
-[C.]  #51  libunwind                   1.8.1 x2, 1.8.2 -> 1.8.1 x2, 1.8.3
-[C.]  #52  libxml2                     2.13.8 x2, 2.13.8-bin, 2.14.5 x2 -> 2.13.8 x2, 2.13.8-bin, 2.14.6 x2
-[C.]  #53  libxmlb                     0.3.22-lib x2, 0.3.23-lib -> 0.3.22-lib x2, 0.3.24-lib
-[U.]  #54  linux-firmware              20250917-zstd -> 20251011-zstd
-[U.]  #55  linux-zen                   6.16.9, 6.16.9-modules, 6.16.9-modules-shrunk -> 6.17.1, 6.17.1-modules, 6.17.1-modules-shrunk
-[C.]  #56  llvm                        19.1.7, 19.1.7-lib x3 -> 19.1.7, 19.1.7-lib x2, 21.1.1-lib
-[C*]  #57  lvm2                        2.03.31, 2.03.31-bin, 2.03.31-lib x2, 2.03.31-man, 2.03.33-lib x2 -> 2.03.31, 2.03.31-bin, 2.03.31-lib x2, 2.03.31-man, 2.03.35-lib x2
-[C.]  #58  nftables                    1.1.3 x2, 1.1.4 x2 -> 1.1.3 x2, 1.1.5 x2
-[C.]  #59  nghttp2                     1.65.0-lib x2, 1.66.0-lib x2 -> 1.65.0-lib x2, 1.67.1-lib x2
-[C.]  #60  ocl-icd                     2.3.2 x2, 2.3.3 -> 2.3.2 x2, 2.3.4
-[C*]  #61  openresolv                  3.13.2 x2, 3.16.5 x2 -> 3.13.2 x2, 3.17.0 x2
-[C.]  #62  openssl                     3.4.2 x2, 3.4.2-bin, 3.4.2-dev, 3.5.1 x2, 3.5.1-bin, 3.5.1-dev -> 3.4.2 x2, 3.4.2-bin, 3.4.2-dev, 3.5.2 x2, 3.5.2-bin, 3.5.2-dev
-[C.]  #63  pcre2                       10.44 x4 -> 10.44 x2, 10.46 x2
-[C*]  #64  pipewire                    1.4.7 x3, 1.4.7-doc, 1.4.7-man -> 1.4.7 x2, 1.4.7-doc, 1.4.7-man, 1.4.8
-[C.]  #65  pixman                      0.44.2 x2, 0.46.2 -> 0.44.2 x2, 0.46.4
-[U.]  #66  proton-ge-bin-GE-Proton10   17-steamcompattool -> 19-steamcompattool
-[C.]  #67  publicsuffix-list           0-unstable-2025-03-12 x2, 0-unstable-2025-07-22 x2 -> 0-unstable-2025-03-12 x2, 0-unstable-2025-08-28 x2
-[U.]  #68  python3.13-pyzstd           0.17.0 -> 0.18.0
-[U.]  #69  python3.13-requests         2.32.4 -> 2.32.5
-[U.]  #70  ryubing                     1.3.2 -> 1.3.3
-[C.]  #71  s2n-tls                     1.5.17, 1.5.24 -> 1.5.17, 1.5.26
-[C.]  #72  sdl3                        3.2.20-lib x3 -> 3.2.20-lib x2, 3.2.22-lib
-[C.]  #73  source                      <none> x6 -> <none> x7
-[C.]  #74  sqlite                      3.48.0 x2, 3.48.0-bin, 3.48.0-dev, 3.48.0-man, 3.50.2, 3.50.2-bin, 3.50.2-dev -> 3.48.0 x2, 3.48.0-bin, 3.48.0-dev, 3.48.0-man, 3.50.4, 3.50.4-bin, 3.50.4-dev
-[C.]  #75  svt-av1                     2.3.0 x2, 3.0.2 -> 2.3.0 x2, 3.1.2
-[C*]  #76  systemd                     <none>, 257.8 x2, 257.9 x2, 257.9-man -> <none>, 257.9 x4, 257.9-man
-[C.]  #77  systemd-minimal             257.8 x2, 257.9 x2 -> 257.9 x4
-[C.]  #78  systemd-minimal-libs        257.8 x2, 257.9 x2 -> 257.9 x4
-[C.]  #79  tbb                         2021.11.0, 2021.11.0-dev, 2022.2.0 -> 2021.11.0, 2021.11.0-dev
-[U.]  #80  typescript                  5.9.2 -> 5.9.3
-[U.]  #81  typescript-language-server  5.0.0 -> 5.0.1
-[C.]  #82  unbound                     1.23.1-lib x4 -> 1.23.1-lib x2, 1.24.0-lib x2
-[U.]  #83  utf8proc                    2.10.0 -> 2.11.0
-[C.]  #84  vid.stab-unstable           2022-05-30 x3 -> 2022-05-30 x2
-[C.]  #85  vulkan-headers              1.4.313.0 x2, 1.4.321.0 -> 1.4.313.0 x2
-[C.]  #86  webkitgtk                   2.50.0+abi=4.0, 2.50.0+abi=4.1 x2, 2.50.0+abi=6.0 -> 2.50.0+abi=4.0, 2.50.0+abi=4.1, 2.50.0+abi=6.0, 2.50.1+abi=4.1
-[U.]  #87  wezterm                     0-unstable-2025-08-14 -> 0-unstable-2025-10-05
-Added packages:
-[A.]  #1  extra-utils  <none>
-[A.]  #2  nghttp3      1.11.0 x2
-[A.]  #3  ngtcp2       1.15.1 x2
-[A.]  #4  onetbb       2022.2.0
-[A.]  #5  vid.stab     1.1.1-unstable-2025-08-21
-Removed packages:
-[R.]  #1  initrd-fsinfo  <none>
-[R.]  #2  link-units     <none>
-[R.]  #3  mdadm.conf     <none>
-Closure size: 3064 -> 3066 (866 paths added, 864 paths removed, delta +2, disk usage +1.4GiB).
+[U.]  #01  c-grammar-neovim                    0.11.4 -> 0.11.5
+[C.]  #02  chafa                               1.16.2 x2, 1.16.2-bin -> 1.16.2, 1.18.0, 1.18.0-bin
+[U*]  #03  cpupower                            6.17.2 -> 6.17.7
+[C.]  #04  cups                                2.4.11 x2, 2.4.11-lib x2, 2.4.11-man, 2.4.14-lib -> 2.4.14 x2, 2.4.14-lib x3, 2.4.14-man
+[U.]  #05  darkreader                          4.9.112 -> 4.9.113
+[C.]  #06  electron                            36.9.5, 38.4.0 -> 36.9.5, 38.6.0
+[C.]  #07  electron-unwrapped                  36.9.5, 38.4.0 -> 36.9.5, 38.6.0
+[C.]  #08  expat                               2.7.1 x2, 2.7.1-dev, 2.7.3 x2 -> 2.7.3 x4, 2.7.3-dev
+[U.]  #09  go                                  1.24.6 -> 1.24.9
+[U.]  #10  initrd-linux-zen                    6.17.2 -> 6.17.7
+[C.]  #11  jansson                             2.14 x2, 2.14.1 x2 -> 2.14.1 x4
+[U.]  #12  jdt-language-server                 1.51.0 -> 1.52.0
+[C.]  #13  libapparmor                         4.1.1 x2, 4.1.2 x2 -> 4.1.2 x4
+[C.]  #14  libarchive                          3.8.0-lib x2, 3.8.1-lib x2 -> 3.8.1-lib x2, 3.8.2-lib x2
+[C.]  #15  libopenmpt                          0.7.15 x2, 0.8.3 -> 0.7.16 x2, 0.8.3
+[U.]  #16  librewolf                           144.0-1 -> 144.0.2-1
+[U.]  #17  librewolf-unwrapped                 144.0-1 -> 144.0.2-1
+[C.]  #18  libssh                              0.11.2 x2, 0.11.3 -> 0.11.3 x3
+[U.]  #19  linux-zen                           6.17.2, 6.17.2-modules, 6.17.2-modules-shrunk -> 6.17.7, 6.17.7-modules, 6.17.7-modules-shrunk
+[U.]  #20  lua-grammar-neovim                  0.11.4 -> 0.11.5
+[U.]  #21  luajit2.1-mpack                     1.0.12-0 -> 1.0.13-0
+[U.]  #22  markdown-grammar-neovim             0.11.4 -> 0.11.5
+[U.]  #23  markdown_inline-grammar-neovim      0.11.4 -> 0.11.5
+[U.]  #24  neovim                              0.11.4 -> 0.11.5
+[U.]  #25  neovim-unwrapped                    0.11.4 -> 0.11.5
+[C.]  #26  nodejs                              22.19.0, 22.20.0 -> 22.20.0 x2
+[C.]  #27  openjdk                             8u442-b06, 8u442-b06-jre, 17.0.16+8, 21.0.8+9, 21.0.9+8, 24.0.2+12 -> 8u442-b06, 8u442-b06-jre, 17.0.17+8, 21.0.9+8 x2, 24.0.2+12
+[C.]  #28  openssl                             3.4.2 x2, 3.4.2-bin, 3.4.2-dev, 3.6.0 x2, 3.6.0-bin, 3.6.0-dev -> 3.4.3 x2, 3.4.3-bin, 3.4.3-dev, 3.6.0 x2, 3.6.0-bin, 3.6.0-dev
+[U.]  #29  proton-ge-bin-GE-Proton10           24-steamcompattool -> 25-steamcompattool
+[U.]  #30  proton-ge-bin-gamemode-GE-Proton10  21-steamcompattool -> 25-steamcompattool
+[C.]  #31  python3                             3.12.11 x4, 3.12.11-env x7, 3.13.8 -> 3.12.12 x4, 3.12.12-env x7, 3.13.8
+[U.]  #32  python3.12-markdown                 3.7 x2 -> 3.8.2 x2
+[U.]  #33  python3.12-tkinter                  3.12.11 -> 3.12.12
+[U.]  #34  qt5compat                           6.9.2 -> 6.9.3
+[C.]  #35  qtbase                              5.15.17, 5.15.17-bin, 6.9.2, 6.9.2-only-plugins-qml -> 5.15.17, 5.15.17-bin, 6.9.3, 6.9.3-only-plugins-qml
+[C.]  #36  qtdeclarative                       5.15.17, 5.15.17-bin, 6.9.2 -> 5.15.17, 5.15.17-bin, 6.9.3
+[U.]  #37  qtnetworkauth                       6.9.2 -> 6.9.3
+[U.]  #38  qtshadertools                       6.9.2 -> 6.9.3
+[C.]  #39  qtsvg                               5.15.17, 5.15.17-bin, 6.9.2 -> 5.15.17, 5.15.17-bin, 6.9.3
+[U.]  #40  qttools                             6.9.2 -> 6.9.3
+[C.]  #41  qttranslations                      5.15.17, 6.9.2 -> 5.15.17, 6.9.3
+[C.]  #42  qtwayland                           5.15.17, 5.15.17-bin, 6.9.2, 6.9.2-only-plugins-qml -> 5.15.17, 5.15.17-bin, 6.9.3, 6.9.3-only-plugins-qml
+[U.]  #43  query-grammar-neovim                0.11.4 -> 0.11.5
+[U.]  #44  sidebery                            5.3.3 -> 5.4.0
+[C.]  #45  source                              <none> x8 -> <none> x7
+[U*]  #46  strace                              6.16, 6.16-man -> 6.17, 6.17-man
+[C*]  #47  systemd                             <none>, 257.9 x2, 257.9-man, 258 x2 -> <none>, 257.10 x2, 257.10-man, 258 x2
+[C.]  #48  systemd-minimal                     257.9 x2, 258 x2 -> 257.10 x2, 258 x2
+[C.]  #49  systemd-minimal-libs                257.9 x2, 258 x2 -> 257.10 x2, 258 x2
+[U.]  #50  typescript-language-server          5.0.1 -> 5.1.1
+[U.]  #51  vesktop                             1.6.0 -> 1.6.1
+[U.]  #52  vim-grammar-neovim                  0.11.4 -> 0.11.5
+[U.]  #53  vimdoc-grammar-neovim               0.11.4 -> 0.11.5
+[U.]  #54  xwayland                            24.1.8 -> 24.1.9
+[U.]  #55  youtube-no-translation              2.17.1 -> 2.18.1
+Closure size: 3232 -> 3231 (2442 paths added, 2443 paths removed, delta -1, disk usage -1.3GiB).
