@@ -17,12 +17,16 @@ in
       };
       user-system-modules = map (module: import module user_args) [
         ./system/virt.nix
+        ../../modules/sunshine.nix
       ];
       system-modules = [
         inputs.home-manager.nixosModules.home-manager
       ];
     in
     user-system-modules ++ system-modules;
+  environment.systemPackages = with pkgs; [
+    gparted
+  ];
   # This should take care of most game-related settings too.
   programs.steam = {
     enable = true;
