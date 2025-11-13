@@ -15,9 +15,14 @@ in
       user_args = args // {
         inherit username;
       };
-      user-system-modules = map (module: import module user_args) [ ./system/virt.nix ];
+      user-system-modules = map (module: import module user_args) [
+        ./system/virt.nix
+      ];
+      system-modules = [
+        inputs.home-manager.nixosModules.home-manager
+      ];
     in
-    user-system-modules ++ [ inputs.home-manager.nixosModules.home-manager ];
+    user-system-modules ++ system-modules;
   # This should take care of most game-related settings too.
   programs.steam = {
     enable = true;
