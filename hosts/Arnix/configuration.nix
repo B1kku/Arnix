@@ -80,9 +80,7 @@
     };
   };
   #Networking
-  networking = {
-    hostName = "Arnix";
-  };
+  networking.hostName = "Arnix";
   # Select internationalisation properties.
   time.timeZone = "Europe/Brussels";
   i18n = {

@@ -85,7 +85,6 @@ in
       pixi-editor
       p7zip
     ])
-    ++ (with pkgs-unstable; [ grayjay ])
     # Gnome packages mainly
     # TODO: Move these to gnome.nix?
     ++ (with pkgs; [

@@ -50,6 +50,7 @@ in
       jdks = with pkgs; [
         openjdk21
         openjdk24
+        openjdk17
         openjdk8
       ];
     })

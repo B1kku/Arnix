@@ -39,7 +39,7 @@ in
         text = rebind-protection;
       };
       static = {
-        ctrld.stamp = "sdns://AgcAAAAAAAAACjc2Ljc2LjIuMTEAFGZyZWVkbnMuY29udHJvbGQuY29tFC9uby1hZHMtbWFsd2FyZS10eXBv";
+        ctrld.stamp = "sdns://AgcAAAAAAAAACjc2Ljc2LjIuMTEAFGZyZWVkbnMuY29udHJvbGQuY29tGS9uby1wb3JuLWFkcy1tYWx3YXJlLXR5cG8";
       };
     };
   };
