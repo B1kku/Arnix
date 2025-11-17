@@ -1,7 +1,7 @@
 local nix_enabled = vim.g.nixvars ~= nil
 local mod = require("modules.lsp")
 return {
-  LazyDep("williamboman/mason-lspconfig.nvim", { enabled = not nix_enabled }),
+  LazyDep("williamboman/mason-lspconfig.nvim" ),
   {
     "neovim/nvim-lspconfig",
     lazy = false,
