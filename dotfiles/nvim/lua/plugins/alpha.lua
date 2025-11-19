@@ -41,10 +41,15 @@ return {
         mini_sessions.read(mini_sessions.get_latest())
       end
 
+      local pick_session = function()
+        local mini_sessions = require("mini.sessions").select()
+      end
+
       dashboard.section.buttons.val = {
         dashboard.button("f", "󰱼  Find file", ":Telescope find_files <CR>"),
         dashboard.button("e", "󰈔  New file", ":ene <BAR> startinsert <CR>"),
         dashboard.button("r", "󰁫  Restore last session", restore_latest),
+        dashboard.button("s", "S  Pick session", pick_session),
         dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
         dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
         dashboard.button("l", "Lazy", "<cmd>Lazy<CR>")
