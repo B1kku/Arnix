@@ -45,6 +45,7 @@ let
     nodePackages.prettier
     shellharden
     rustfmt
+    kdlfmt
   ];
   linters = with pkgs; [
     # checkstyle

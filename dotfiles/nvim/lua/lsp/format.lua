@@ -19,7 +19,8 @@ return {
         nix = { "nixos" },
         yaml = { "prettier" },
         python = { "autopep8" },
-        sh = { "shellharden" }
+        sh = { "shellharden" },
+        kdl = { "kdlfmt" }
       },
       stop_after_first = true,
     })
