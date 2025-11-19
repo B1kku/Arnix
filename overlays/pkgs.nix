@@ -39,5 +39,6 @@ final: prev: {
     rev = "4d9cd37baf56c4f5510cc4ff61be278f11077c81";
     sha256 = "sha256-XVzYDwJM7Q9DvdF4ZOqayjiYpasUeMhAWWcXtnhJ0WQ=";
   };
+  silent-sddm = prev.callPackage ./silentSDDM.nix {};
   pixi-editor = prev.callPackage ./pixi-editor/package.nix { };
 }
