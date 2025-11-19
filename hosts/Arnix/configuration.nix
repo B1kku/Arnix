@@ -6,6 +6,11 @@
   flake-opts,
   ...
 }:
+let
+  sddm-theme = pkgs.silent-sddm.override {
+    theme = "ken";
+  };
+in
 {
   imports = [
     # Extra modules
@@ -97,16 +102,32 @@
   # XServer, DM & DE
   services = {
     libinput.mouse.accelProfile = "flat";
-    displayManager.defaultSession = "gnome";
+    displayManager = {
+      defaultSession = "niri";
+      sddm = {
+        package = pkgs.kdePackages.sddm;
+        enable = true;
+        autoNumlock = true;
+        theme = "silent";
+        extraPackages = sddm-theme.propagatedBuildInputs;
+        settings = {
+          # required for styling the virtual keyboard
+          General = {
+            GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+            InputMethod = "qtvirtualkeyboard";
+          };
+        };
+      };
+    };
     xserver = {
       enable = true;
       xkb.layout = "${config.console.keyMap}";
       excludePackages = [ pkgs.xterm ];
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
     };
-    gnome.core-apps.enable = false;
+    # gnome.core-apps.enable = false;
   };
+  programs.niri.enable = true;
+
   # Enable sound.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -123,6 +144,7 @@
     git
     tealdeer
     nh
+    sddm-theme
   ];
   # Don't change randomly, used for internals.
   system.stateVersion = "23.05";
