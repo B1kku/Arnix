@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   config,
   ...
 }:
@@ -12,7 +13,7 @@
   services.swayidle.enable = true; # idle management daemon
   services.polkit-gnome.enable = true; # polkit
   home.packages = with pkgs; [
-    swaybg # wallpaper
+    pkgs-unstable.swww
     xwayland-satellite
   ];
 }
