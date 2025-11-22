@@ -126,7 +126,10 @@ in
     };
     # gnome.core-apps.enable = false;
   };
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-unstable;
+  };
 
   # Enable sound.
   services.pulseaudio.enable = false;

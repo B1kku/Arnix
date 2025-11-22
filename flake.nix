@@ -15,6 +15,10 @@
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-main";
+    };
   };
   outputs =
     {
@@ -28,7 +32,7 @@
       pkgs = import nixpkgs-main {
         inherit system;
         config.allowUnfree = true;
-        overlays = [ ((import ./overlays/pkgs.nix) { inherit inputs system; }) ];
+        overlays = [ ((import ./overlays/pkgs.nix) { inherit inputs system; }) ] ++ [ inputs.niri.overlays.niri ];
       };
       lib = pkgs.lib;
       pkgs-unstable = import nixpkgs-unstable {
@@ -48,6 +52,10 @@
           nix-gaming = {
             substituters = [ "https://nix-gaming.cachix.org" ];
             trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+          };
+          niri = {
+            substituters = [ "https://niri.cachix.org" ];
+            trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
           };
         };
       };
