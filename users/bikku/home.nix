@@ -24,6 +24,7 @@ in
     ../../dotfiles/wezterm.nix
     ../../dotfiles/firefox.nix
     ../../dotfiles/neovim.nix
+    ../../dotfiles/desktop.nix
     # ../../dotfiles/gnome.nix
     ../../dotfiles/niri.nix
     ./dirs.nix

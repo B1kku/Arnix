@@ -6,10 +6,6 @@
 let
   # Variables to modify the gnome config
   # For things that often need changing, besides dconf specifics.
-  icon-theme = {
-    package = pkgs.papirus-icon-theme;
-    name = "Papirus-Dark";
-  };
   minutes-to-suspend = 8;
   minutes-to-turn-off-screen = 3;
   gnome-extensions = with pkgs.gnomeExtensions; [
@@ -58,33 +54,8 @@ in
 {
   home.packages = gnome-extensions;
   # This should be more of a general config, tells apps what to use.
-  qt = {
-    enable = true;
-    style.name = "adwaita-dark";
-  };
 
-  home.pointerCursor = {
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    gtk.enable = true;
-    size = 24;
-  };
 
-  # Icon theme generation.
-  home.file = {
-    ${icon-theme.name} = {
-      source = "${icon-theme.package}/share/icons/${icon-theme.name}";
-      target = ".icons/${icon-theme.name}";
-    };
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-  };
   programs.gnome-shell = {
     enable = true;
     extensions =
@@ -121,8 +92,6 @@ in
       # Transparent dock bar on overview
       "org/gnome/shell/extensions/blur-my-shell/overview".style-components = 3;
       "org/gnome/desktop/interface" = {
-        icon-theme = icon-theme.name;
-        color-scheme = "prefer-dark";
         enable-hot-corners = true;
       };
       "org/gnome/desktop/peripherals/mouse".accel-profile = "flat";
