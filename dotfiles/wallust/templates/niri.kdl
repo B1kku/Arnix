@@ -1,0 +1,34 @@
+// {% set light_color = color4  %}
+// {% set dark_color = color2   %}
+// {% set bg_color = dark_color | blend(color1) | darken(0.25) | saturate(0.25) %}
+// {% set accent_light = color6 | darken(0.1) %}
+// {% set alert = color7 | saturate(1) | lighten(0.25) %}
+// {% set ahexa = alpha | alpha_hexa %}
+layout {
+    focus-ring {
+        inactive-color "{{ background }}{{ ahexa }}"
+        active-gradient from="{{ dark_color }}{{ ahexa }}" to="{{ light_color }}{{ ahexa }}"
+    }
+    border {
+        // width 10
+        inactive-color "{{ bg_color }}{{ ahexa }}"
+        urgent-color "{{ alert }}"
+        active-gradient from="{{ dark_color }}{{ ahexa }}" to="{{ light_color }}{{ ahexa }}"
+    }
+    tab-indicator {
+        inactive-color "{{ bg_color }}{{ ahexa }}"
+        urgent-color "{{ alert }}"
+        active-color "{{ accent_light }}{{ ahexa }}"
+    }
+    insert-hint {
+        gradient from="{{ dark_color }}{{ ahexa }}" to="{{ light_color }}{{ ahexa }}"
+    }
+    background-color "{{light_color}}"
+}
+
+recent-windows {
+    highlight {
+        active-color "{{ dark_color }}{{ ahexa }}"
+        urgent-color "{{ alert }}"
+    }
+}

@@ -1,0 +1,12 @@
+# Let's keep good old pywal look and feel
+backend = "wal"
+color_space = "lch"
+# threshold = 50 # neither about this, since I read wallust does it automagically..
+# classic look
+saturation = 20
+palette = "dark"
+# let's keep the contrast very very very clear.
+# check_contrast = true
+alpha=80
+[templates]
+niri = { src = 'niri.kdl', dst = '~/.config/niri/colors.kdl' }

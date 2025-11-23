@@ -1,0 +1,52 @@
+layout {
+    gaps 5
+    focus-ring {
+        off
+        // width 2
+    }
+    border {
+        on
+        width 5
+    }
+    shadow {
+        // on
+        // matches the CSS box-shadow properties.
+        // color "#0007"
+        // Softness controls the shadow blur radius.
+        softness 5
+        // Spread expands the shadow.
+        spread 1
+        offset x=-2 y=2
+    }
+    // Gaps shrink full width by this ammount, that way other windows will peek on the sides
+    struts {
+        left 4
+        right 4
+    }
+    tab-indicator {
+        // position "top"
+        corner-radius 25
+        gap -6
+        width 7
+        // gaps-between-tabs 20
+    }
+}
+// Speed un animations a tiny bit
+animations {
+    slowdown 0.8
+}
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+    // draw-border-with-background
+}
+recent-windows {
+    highlight {
+        corner-radius 25
+        padding 25
+    }
+    previews {
+        max-scale 0.75
+        max-height 400
+    }
+}

@@ -1,0 +1,44 @@
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+window-rule {
+    match app-id="org.wezfurlong.wezterm"
+    default-column-width { proportion 1.0; }
+}
+window-rule {
+    match app-id="librewolf"
+    open-on-workspace "general"
+    default-column-width { proportion 1.0; }
+}
+window-rule {
+    match app-id="vesktop"
+    open-on-workspace "discord"
+    default-column-width { proportion 1.0; }
+}
+
+window-rule {
+    match app-id="net.lutris.Lutris"
+    match app-id="steam"
+    open-on-workspace "games"
+    default-column-width { proportion 1.0; }
+}
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    match app-id="librewolf" title="^Picture-in-Picture$"
+    match app-id="firefox" title="^Picture-in-Picture$"
+    open-floating true
+}
+// Blocked from screen-capture
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+    match app-id="Bitwarden"
+    match app-id="com.obsproject.Studio"
+    match app-id="vesktop"
+    block-out-from "screen-capture"
+}
+// Example, fix the stupid background border
+window-rule {
+    match app-id="org.nickvision.cavalier"
+    draw-border-with-background false
+}

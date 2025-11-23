@@ -1,0 +1,34 @@
+// 
+// 
+// 
+// 
+// 
+// 
+layout {
+    focus-ring {
+        inactive-color "#1E1F20CC"
+        active-gradient from="#323497CC" to="#4B5295CC"
+    }
+    border {
+        // width 10
+        inactive-color "#191B56CC"
+        urgent-color "#4040E2"
+        active-gradient from="#323497CC" to="#4B5295CC"
+    }
+    tab-indicator {
+        inactive-color "#191B56CC"
+        urgent-color "#4040E2"
+        active-color "#7E7EAECC"
+    }
+    insert-hint {
+        gradient from="#323497CC" to="#4B5295CC"
+    }
+    background-color "#4B5295"
+}
+
+recent-windows {
+    highlight {
+        active-color "#323497CC"
+        urgent-color "#4040E2"
+    }
+}

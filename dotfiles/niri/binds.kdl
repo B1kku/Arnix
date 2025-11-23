@@ -1,0 +1,160 @@
+// wev helps figure out keys
+binds {
+    Mod+E hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+    Mod+Q hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+B hotkey-overlay-title="Random Background" { spawn "~/Pictures/choose_wallpaper.sh"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+    // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+    Mod+Z               allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    Mod+KP_UP           allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    Mod+KP_Down         allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    Mod+KP_Begin        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    Mod+KP_Left         allow-when-locked=true { spawn-sh "playerctl previous"; }
+    Mod+KP_Right        allow-when-locked=true { spawn-sh "playerctl next"; }
+    
+    // Waiting for the day I can bind toggle overview to Super
+    Super+O repeat=false { toggle-overview; }
+    Super+Q repeat=false { close-window; }
+    Alt+F4 repeat=false { close-window; }
+
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-or-workspace-down; }
+    Mod+Up    { focus-window-or-workspace-up; }
+    Mod+Right { focus-column-right; }
+
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Down  { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+Up    { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Right { move-column-right; }
+
+
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+
+    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+
+    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
+    // Moving a whole workspace to another monitor might be cool
+    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+
+    Mod+Page_Down      { focus-workspace-down; }
+    Mod+Page_Up        { focus-workspace-up; }
+    Mod+U              { focus-workspace-up; }
+    Mod+I              { focus-workspace-down; }
+    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+U         { move-column-to-workspace-down; }
+    Mod+Ctrl+I         { move-column-to-workspace-up; }
+
+    // Alternatively, there are commands to move just a single window:
+    // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
+    // ...
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+    Mod+Shift+U         { move-workspace-down; }
+    Mod+Shift+I         { move-workspace-up; }
+    // Window jumping and movement
+    // NOTE: Fucking wow fucks this up, I need to inhibit keys per app or something
+    // Mod+WheelScrollDown      cooldown-ms=150 { focus-column-right; }
+    // Mod+WheelScrollUp        cooldown-ms=150 { focus-column-left; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+Shift+WheelScrollDown { move-column-right; }
+    Mod+Shift+WheelScrollUp { move-column-left; }
+
+    // Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
+    // Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
+    
+    // Workspace movement
+    Mod+1 { focus-workspace "general"; }
+    Mod+2 { focus-workspace "discord"; }
+    Mod+3 { focus-workspace "games"; }
+    Mod+4 { focus-workspace "misc"; }
+    // Mod+5 { focus-workspace 5; }
+    // Mod+6 { focus-workspace 6; }
+    // Mod+7 { focus-workspace 7; }
+    // Mod+8 { focus-workspace 8; }
+    // Mod+9 { focus-workspace 9; }
+    Mod+Ctrl+1 { move-column-to-workspace "general"; }
+    Mod+Ctrl+2 { move-column-to-workspace "discord"; }
+    Mod+Ctrl+3 { move-column-to-workspace "games"; }
+    Mod+Ctrl+4 { move-column-to-workspace "misc"; }
+    // Mod+Ctrl+5 { move-column-to-workspace 5; }
+    // Mod+Ctrl+6 { move-column-to-workspace 6; }
+    // Mod+Ctrl+7 { move-column-to-workspace 7; }
+    // Mod+Ctrl+8 { move-column-to-workspace 8; }
+    // Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+
+    // Mod+BracketLeft  { consume-or-expel-window-left; }
+    // Mod+BracketRight { consume-or-expel-window-right; }
+
+    // Consume one window from the right to the bottom of the focused column.
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { maximize-window-to-edges; }
+    Mod+F11 { fullscreen-window; }
+
+    Mod+C { center-column; }
+
+    // Center all fully visible columns on screen.
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Plus { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Plus { set-window-height "+10%"; }
+
+    // Move the focused window between the floating and the tiling layout.
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    // Toggle tabbed column display mode.
+    // Windows in this column will appear as vertical tabs,
+    // rather than stacked on top of each other.
+    Mod+W { toggle-column-tabbed-display; }
+
+    // Actions to switch layouts.
+    // Note: if you uncomment these, make sure you do NOT have
+    // a matching layout switch hotkey configured in xkb options above.
+    // Having both at once on the same hotkey will break the switching,
+    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
+    // Mod+Space       { switch-layout "next"; }
+    // Mod+Shift+Space { switch-layout "prev"; }
+
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // The allow-inhibiting=false property can be applied to other binds as well,
+    // which ensures niri always processes them, even when an inhibitor is active.
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Ctrl+Alt+Delete { quit; }
+
+    // Powers off the monitors. To turn them back on, do any input like
+    // moving the mouse or pressing any other key.
+    Mod+Shift+P { power-off-monitors; }
+}
+recent-windows {
+    binds {
+        Mod+Tab             { next-window     scope="workspace"; }
+        Mod+Shift+Tab       { previous-window scope="workspace"; }
+        Mod+masculine       { next-window     scope="output" filter="app-id"; }
+        Mod+Shift+masculine { previous-window scope="output" filter="app-id"; }
+    }
+}
