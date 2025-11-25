@@ -84,7 +84,6 @@ in
       gthumb # Image viewer
       vlc
       nh
-      pixi-editor
       p7zip
     ])
     # Gnome packages mainly
