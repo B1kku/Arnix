@@ -7,7 +7,7 @@ local tbl_merge = util.tbl_merge
 local merge_config = tbl_merge
 local hex_to_rgba = util.hex_to_rgba
 
-local opacity = 0.90
+local opacity = 0.80
 local color, _ = wezterm.color.load_base16_scheme(wezterm.config_dir .. "/colors/nightfox.yml")
 local base16 = util.base16(color)
 local local_config = {
@@ -24,9 +24,9 @@ local local_config = {
   font = wezterm.font 'FiraCode Nerd Font',
   use_dead_keys = false,
   window_padding = {
-    left = 0,
-    right = 0,
-    top = 5,
+    left = 3,
+    right = 3,
+    top = 0,
     bottom = 0
   },
 }
@@ -100,14 +100,14 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width
   }
 end)
 
-wezterm.on('gui-attached', function(domain)
-  -- maximize all displayed windows on startup
-  local workspace = mux.get_active_workspace()
-  for _, window in ipairs(mux.all_windows()) do
-    if window:get_workspace() == workspace then
-      window:gui_window():maximize()
-    end
-  end
-end)
+-- wezterm.on('gui-attached', function(domain)
+--   -- maximize all displayed windows on startup
+--   local workspace = mux.get_active_workspace()
+--   for _, window in ipairs(mux.all_windows()) do
+--     if window:get_workspace() == workspace then
+--       window:gui_window():maximize()
+--     end
+--   end
+-- end)
 
 return config

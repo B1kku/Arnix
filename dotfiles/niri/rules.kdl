@@ -2,7 +2,8 @@
 // by setting an empty default-column-width.
 window-rule {
     match app-id="org.wezfurlong.wezterm"
-    default-column-width { proportion 1.0; }
+    default-column-width { proportion 0.5; }
+    draw-border-with-background true
 }
 window-rule {
     match app-id="librewolf"
@@ -20,6 +21,11 @@ window-rule {
     match app-id="steam"
     open-on-workspace "games"
     default-column-width { proportion 1.0; }
+}
+
+window-rule {
+    match app-id="org.qbittorrent.qBittorrent"
+    open-on-workspace "misc"
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
@@ -40,5 +46,5 @@ window-rule {
 // Example, fix the stupid background border
 window-rule {
     match app-id="org.nickvision.cavalier"
-    draw-border-with-background false
+    // draw-border-with-background true
 }
