@@ -18,5 +18,6 @@
     pkgs-unstable.swww
     xwayland-satellite
     playerctl
-  ] ++ [pkgs-unstable.quickshell];
+    quickshell
+  ];
 }

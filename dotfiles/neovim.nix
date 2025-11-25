@@ -26,10 +26,6 @@ let
   '';
 
   # https://github.com/NixOS/nixpkgs/issues/337502
-  wrapQTQS = (name: pkgs.writeShellScriptBin name ''
-    ${pkgs-unstable.kdePackages.qtdeclarative}/bin/${name} \
-    "$@" -I ${pkgs-unstable.kdePackages.qtdeclarative}/lib/qt-6/qml/ -I ${pkgs-unstable.quickshell}/lib/qt-6/qml/
-    '');
   lsps =
     (with pkgs; [
       lua-language-server
@@ -40,7 +36,7 @@ let
       clang-tools
       rust-analyzer
       vscode-langservers-extracted
-      (wrapQTQS "qmlls")
+      qmlls
     ])
     ++ [
       jdtls
