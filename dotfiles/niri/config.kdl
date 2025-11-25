@@ -39,7 +39,8 @@ layout {
 
 
 //TODO: Move this to systemd, it's unreliable here.
-spawn-at-startup "waybar"
+spawn-at-startup "qs"
+
 spawn-sh-at-startup "swww-daemon"
 spawn-sh-at-startup "swww-daemon -n overview"
 spawn-sh-at-startup "~/Pictures/choose_wallpaper.sh"

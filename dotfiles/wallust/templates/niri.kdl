@@ -23,12 +23,12 @@ layout {
     insert-hint {
         gradient from="{{ dark_color }}{{ ahexa }}" to="{{ light_color }}{{ ahexa }}"
     }
-    background-color "{{light_color}}"
+    background-color "{{ light_color }}"
 }
 
 recent-windows {
     highlight {
-        active-color "{{ dark_color }}{{ ahexa }}"
+        active-color "{{ light_color }}{{ ahexa }}"
         urgent-color "{{ alert }}"
     }
 }
