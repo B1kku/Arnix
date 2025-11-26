@@ -22,5 +22,4 @@ final: prev: {
         qtimageformats
       ]);
   });
-  qmlls = (import ./qmlls.nix { inherit prev pkgs-unstable; });
 }
