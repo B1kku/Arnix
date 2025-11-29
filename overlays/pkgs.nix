@@ -22,4 +22,5 @@ final: prev: {
         qtimageformats
       ]);
   });
+  wooz = prev.callPackage ./wooz.nix {};
 }

@@ -24,7 +24,7 @@ layout {
         right 4
     }
     tab-indicator {
-        // position "top"
+        position "top"
         corner-radius 25
         gap -6
         width 7

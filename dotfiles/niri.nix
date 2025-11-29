@@ -19,5 +19,6 @@
     xwayland-satellite
     playerctl
     quickshell
+    wooz
   ];
 }

@@ -36,7 +36,7 @@ let
       clang-tools
       rust-analyzer
       vscode-langservers-extracted
-      kdePackages.qtdeclarative
+      pkgs-unstable.kdePackages.qtdeclarative
     ])
     ++ [
       jdtls

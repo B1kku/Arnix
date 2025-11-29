@@ -1,10 +1,23 @@
-import QtQuick
-// import QtQuick.Layouts
-// import QtQuick.Controls
-// import QtQuick.Effects
-// import Quickshell
-// import Quickshell.Widgets
-ImageSvgHelper {
-  source: "./power.svg"
-  color: "#644bef"
+import qs
+import QtQuick.Effects
+
+ColoredSVG {
+  id: sourceItem
+  source: "assets/svg/power.svg"
+  color: "green"
+  // MultiEffect {
+  //   source: sourceItem
+  //   anchors.fill: sourceItem
+  //   // Example effects:
+  //   brightness: 0.3
+  //   colorization: 0.6
+  //   colorizationColor: "red"
+  //   shadowEnabled: true
+  //   shadowBlur: 10
+  //   shadowColor: "blue"
+  //   shadowOpacity: 0.5
+  // }
+  eff.colorizationColor: "green"
+  // eff.
+
 }

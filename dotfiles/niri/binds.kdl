@@ -5,7 +5,7 @@ binds {
     Mod+B hotkey-overlay-title="Random Background" { spawn "~/Pictures/choose_wallpaper.sh"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-    // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+    Super+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill wooz || exec wooz --invert-scroll"; }
     Mod+Z               allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
     Mod+KP_UP           allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
     Mod+KP_Down         allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }

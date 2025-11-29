@@ -36,6 +36,7 @@ in
       mangohud
     ];
   };
+  boot.supportedFilesystems.exfat = true;
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
   users.users.${username} = {
