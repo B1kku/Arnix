@@ -1,16 +1,19 @@
 import QtQuick
 import QtQuick.Effects
 import Quickshell.Services.Pipewire
+import qs.utils
 
 Item {
   id: root
   property PwNode node: Pipewire.defaultAudioSource
-  // PwObjectTracker {
-  //   objects: [root.node]
-  // }
+  
   PwNodeLinkTracker {
     id: linkTracker
     node: root.node
+  }
+  PwObjectTracker {
+    id: tracker
+    objects: [Pipewire.defaultAudioSource]
   }
   property real volume_percent: {
     if (node?.audio?.volume) {
@@ -21,7 +24,7 @@ Item {
   }
   property bool muted: node?.audio?.muted ?? false
 
-  visible: linkTracker.linkGroups.length > 0
+  // visible: linkTracker.linkGroups.length > 0
   MouseArea {
     anchors.fill: root
     onWheel: wheel => {
