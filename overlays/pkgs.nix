@@ -13,14 +13,14 @@ final: prev: {
   };
   silent-sddm = prev.callPackage ./silentSDDM.nix { };
   ###==================== Flex taped Packages ====================###
-  quickshell = pkgs-unstable.quickshell.overrideAttrs (old: {
-    nativeBuildInputs =
-      old.nativeBuildInputs
-      ++ (with pkgs-unstable.kdePackages; [
-        qt5compat
-        qtmultimedia
-        qtimageformats
-      ]);
-  });
-  wooz = prev.callPackage ./wooz.nix {};
+  quickshell = inputs.quickshell.packages.${system}.default.withModules (
+    with pkgs-unstable.kdePackages;
+    [
+      qt5compat
+      qtmultimedia
+      qtimageformats
+    ]
+  );
+
+  wooz = prev.callPackage ./wooz.nix { };
 }
