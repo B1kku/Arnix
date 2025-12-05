@@ -4,7 +4,7 @@ import Quickshell.Services.Pipewire
 import qs.utils
 Item {
   id: root
-  property var node: PipewireManager.defaultSink
+  property var node: PipewireManager.defaultOutput
   property real volume_percent: {
     if (node?.audio?.volume) {
       return Math.round(node.audio.volume * 100);

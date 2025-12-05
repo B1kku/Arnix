@@ -5,16 +5,13 @@ import qs.utils
 
 Item {
   id: root
-  property PwNode node: Pipewire.defaultAudioSource
+  property PwNode node: PipewireManager.defaultInput
   
   PwNodeLinkTracker {
     id: linkTracker
     node: root.node
   }
-  PwObjectTracker {
-    id: tracker
-    objects: [Pipewire.defaultAudioSource]
-  }
+
   property real volume_percent: {
     if (node?.audio?.volume) {
       return Math.round(node.audio.volume * 100);

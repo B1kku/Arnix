@@ -5,144 +5,97 @@ import Quickshell
 
 Singleton {
   id: root
-  property PwNode defaultSink
-  property alias tracker: tracker
-  Component.onCompleted: {
-    var node = Pipewire.defaultAudioSink;
-    defaultSink = node;
-    tracker.track(node);
+  property PwNode defaultOutput: output.node
+  property PwNode defaultInput: input.node
+
+  PwStableTracker {
+    id: output
+    trackedNode: Pipewire.defaultAudioSink
+  }
+  PwStableTracker {
+    id: input
+    trackedNode: Pipewire.defaultAudioSource
   }
 
-  // When the default sink changes, to something non-null
-  // register it, then wait for it to be ready, once ready
-  // set it as the new default
-  Connections {
-    target: Pipewire
-    function onDefaultAudioSinkChanged() {
-      var node = Pipewire["defaultAudioSink"];
-      console.log("New node: " + node);
-      console.log("Old node: " + root.defaultSink);
-      console.log(node);
-      if (node == null) {
-        return;
-      }
-      var oldNode = root.defaultSink;
-      // Register node
-      tracker.track(node);
-      // Logic for setting a node
-      // Because the node might be ready the same cycle
-      // but properties apparently are not, we need to
-      // delay it an entire cycle
-      var setSink = () => {
+  // The whole idea of this is to solve the issue where if the default sink
+  // is changed it might be null, undefined, not ready or wtv for
+  // a while, setting our effective volume (and other properties) to
+  // undefined, then popping back as the value which is quite ugly.
+  //
+  // This essentially tracks a property and exposes a node, the node will
+  // remain unchanged until the new property is valid and ready, which is
+  // not to say it will never be null (such as when no device available)
+  // or readying Pipewire
+  component PwStableTracker: Item {
+    readonly property var node: _node
+    required property var trackedNode 
+    property var _node: null
+    // Things to note about this tracker, a shared/global tracker
+    // is a NIGHTMARE, objects can be removed from your list without a sign,
+    // duplicates can pile up, so it's best to keep it simple, track only my
+    // object when I say so at most keep the old one while the new is not ready.
+    PwObjectTracker {
+      id: tracker
+    }
+
+    Component.onCompleted: {
+      _node = trackedNode;
+      tracker.objects = [trackedNode];
+    }
+    // Pair of:
+    // - NodeObject
+    // - Function
+    // Waiting for a ready signal to be fired
+    // this is so we can cancel them waiting
+    // if a new device is set while the previous
+    // is not ready yet (extremely unlikely).
+    property var readyCheckers: []
+
+    function nodeSetter(newNode) {
+      return () => {
         Qt.callLater(() => {
-          console.log(node.ready);
-          root.defaultSink = node;
-          tracker.untrack(oldNode);
+          _node = newNode;
+          // Clear old objects from being tracked
+          tracker.objects = [newNode];
         });
       };
-
+    }
+    function attachOnReady(newNode, cb) {
       var checkReady = () => {
-        if (node.ready) {
-          setSink();
-          node.readyChanged.disconnect(checkReady);
+        if (newNode.ready) {
+          cb();
+          readyCheckers = [];
+          newNode.readyChanged.disconnect(checkReady);
         }
       };
-      // Change the our sink when the node is ready
-      if (node.ready) {
-        setSink();
+      readyCheckers = [newNode, checkReady];
+      newNode.readyChanged.connect(checkReady);
+    }
+
+    onTrackedNodeChanged: {
+      var newNode = trackedNode;
+      if (newNode == null) {
+        return;
+      }
+      // In case someone was already waiting for a ready, disconnect it
+      if (readyCheckers.length >= 1) {
+        let object = readyCheckers[0];
+        let checker = readyCheckers[1];
+        object.readyChanged.disconnect(checker);
+        readyCheckers = [];
+      }
+      // It's a proper sink, tell qs to start readying it
+      tracker.objects.push(newNode);
+
+      var setNode = nodeSetter(newNode);
+
+      // If it's already ready (probably won't happen), set it as the new sink
+      // otherwise, wait for a ready signal, and once it is, attach as the new node
+      if (newNode.ready) {
+        setNode();
       } else {
-        node.readyChanged.connect(checkReady);
+        attachOnReady(newNode, setNode);
       }
     }
-    function delayBy(delayTime, callback) {
-      var timer = Qt.createQmlObject('import QtQuick 2.0; Timer {}', root);
-      timer.interval = delayTime;
-      timer.repeat = false;
-      timer.triggered.connect(function () {
-        callback();
-        timer.destroy();
-      });
-      timer.start();
-    }
-  }
-  Item {
-    id: tracker
-    PwObjectTracker {
-      id: nodeTracker
-    }
-    property var map: new Map()
-
-    function track(node) {
-      // console.log("Map, track, " + node);
-      // console.log("Objects: ");
-      // console.log(nodeTracker.objects);
-
-      var value = map.get(node);
-      if (value == null) {
-        // Actually insert into the nodeTracker?
-        // console.log("Adding " + node);
-        map.set(node, 1);
-        nodeTracker.objects.push(node);
-      } else {
-        map.set(node, value + 1);
-      }
-    // console.log("Map, track, " + node + " current: " + value + 1);
-    // console.log("Objects: ");
-    // console.log(nodeTracker.objects);
-    }
-
-    function untrack(node) {
-      // console.log("Map, untrack, " + node);
-      // console.log("Objects: ");
-      // console.log(nodeTracker.objects);
-
-      var value = map.get(node);
-      if (value == null)
-      // throw new Error("IPwObjectTracker tried untracking an untracked node: " + node);
-      {}
-      value = value - 1;
-      if (value == 0) {
-        // console.log("Kicking " + node);
-        map.delete(node);
-        clearTracker(node);
-      } else if (value < 0)
-      // throw new Error("IpwObjectTracker the following node was untracked more than possible: " + node);
-      {} else {
-        map.set(node, value);
-      }
-    // console.log("Map, untrack, " + node + " current: " + value);
-    // console.log("Objects: ");
-    // console.log(nodeTracker.objects);
-    }
-    // You'd wish this didn't cause issues :)
-    // But this re-registers the fucking thing when it's changed, therefore
-    // we get fucked as it goes back to being null
-    function clearTracker(node) {
-      filterInPlace(nodeTracker.objects, (eNode => {
-          if (eNode == null) {
-            return false;
-          }
-          if (eNode === node) {
-            return false;
-          }
-          return true;
-        }));
-    }
-
-    function filterInPlace(a, condition) {
-      let i = 0, j = 0;
-
-      while (i < a.length) {
-        const val = a[i];
-        if (condition(val, i, a))
-          a[j++] = val;
-        i++;
-      }
-
-      a.length = j;
-      return a;
-    }
-
-    // Run code at interval idk wtf is happening here
   }
 }
