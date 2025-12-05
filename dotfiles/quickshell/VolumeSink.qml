@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Effects
+import Quickshell.Services.Pipewire
 import qs.utils
-
 Item {
   id: root
   property var node: PipewireManager.defaultSink
@@ -10,17 +10,6 @@ Item {
       return Math.round(node.audio.volume * 100);
     } else {
       return 0;
-    }
-  }
-
-  Timer {
-    id: delayTimer
-    interval: 1000
-    repeat: true
-    // running: true
-    onTriggered: {
-      console.log("Timer");
-      console.log(root.node?.audio?.volume);
     }
   }
 
@@ -53,7 +42,7 @@ Item {
       id: fg
       height: bg.height
       width: bg.width
-      y: fg.height - (fg.height * (root.volume_percent / 100))
+      x:  -fg.width + (fg.width * (root.volume_percent / 100))
       color: "purple"
     }
     Text {

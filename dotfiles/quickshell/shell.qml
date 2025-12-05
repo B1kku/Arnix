@@ -11,12 +11,11 @@ Scope {
   //   id: board
   //   title: "Drawing Board"
   //   color: "#1d1d20"
-  //   // Power {}
   //   Rectangle {
   //     color: "gray"
   //     implicitHeight: 800
   //     implicitWidth: 800
-  //     
+  //
   //     anchors.centerIn: parent
   //     Power {
   //       anchors.centerIn: parent
@@ -58,12 +57,12 @@ Scope {
           Layout.fillWidth: true
         }
         VolumeSink {
-          Layout.preferredHeight: bar_root.implicitHeight - 6
-          Layout.preferredWidth: bar_root.implicitHeight - 6
+          Layout.preferredHeight: bar_root.implicitHeight - 10
+          Layout.preferredWidth: bar_root.implicitHeight + 10 - 6
         }
         MicSink {
           Layout.preferredHeight: bar_root.implicitHeight - 6
-          Layout.preferredWidth: bar_root.implicitHeight - 6
+          Layout.preferredWidth: bar_root.implicitHeight + 10 - 6
         }
         Power {
           Layout.preferredHeight: bar_root.implicitHeight - 6

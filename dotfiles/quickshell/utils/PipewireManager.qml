@@ -26,7 +26,7 @@ Singleton {
       if (node == null) {
         return;
       }
-      var oldNode = root.defaultSink
+      var oldNode = root.defaultSink;
       // Register node
       tracker.track(node);
       // Logic for setting a node

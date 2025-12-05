@@ -24,7 +24,7 @@ Item {
   }
   property bool muted: node?.audio?.muted ?? false
 
-  // visible: linkTracker.linkGroups.length > 0
+  visible: linkTracker.linkGroups.length > 0
   MouseArea {
     anchors.fill: root
     onWheel: wheel => {
@@ -52,7 +52,7 @@ Item {
       id: fg
       height: bg.height
       width: bg.width
-      y: fg.height - (fg.height * (root.volume_percent / 100))
+      x:  -fg.width + (fg.width * (root.volume_percent / 100))
       color: root.muted ? "red" : "green"
     }
     Text {
