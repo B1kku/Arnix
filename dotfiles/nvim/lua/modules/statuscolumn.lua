@@ -136,11 +136,18 @@ function segments.num_column(args)
   return tostring(args.relnum) .. aligner .. padding_char .. reset_hl
 end
 
+local function get_highest_prio(signs)
+  table.sort(signs, function(sign, next_sign)
+    return sign.priority < next_sign.priority
+  end)
+  return signs[1]
+end
+
 function segments.info_column(args, segment)
   if (args.virtnum ~= 0) then return " " .. padding_char end
   local signs = M.get_signs(args, segment)
   if signs then
-    local sign = signs[1]
+    local sign = get_highest_prio(signs)
     return "%#" .. sign.sign_hl_group .. "#" .. string.sub(sign.sign_text, 1, -2) .. padding_char .. reset_hl
   end
   local foldinfo = C.fold_info(args.wp, args.lnum)

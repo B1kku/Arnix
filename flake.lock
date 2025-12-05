@@ -193,6 +193,26 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764482797,
+        "narHash": "sha256-ynV90KoBrPe38YFlKAHtPFk4Ee3IANUsIFGxRaq7H/s=",
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "rev": "d24e8e9736287d01ee73ef9d573d2bc316a62d5c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "firefox-addons": "firefox-addons",
@@ -200,7 +220,8 @@
         "nix-colors": "nix-colors",
         "nix-gaming": "nix-gaming",
         "nixpkgs-main": "nixpkgs-main",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "quickshell": "quickshell"
       }
     }
   },
