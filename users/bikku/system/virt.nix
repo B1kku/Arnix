@@ -9,11 +9,6 @@
     libvirtd = {
       qemu = {
         package = pkgs.qemu_full;
-        ovmf.packages = [
-          pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd # AAVMF
-          pkgs.OVMF.fd
-          pkgs.OVMFFull
-        ];
       };
       enable = true;
     };
