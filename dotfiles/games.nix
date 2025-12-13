@@ -49,7 +49,7 @@ in
     (pkgs.prismlauncher.override {
       jdks = with pkgs; [
         openjdk21
-        openjdk24
+        # openjdk24
         openjdk17
         openjdk8
       ];

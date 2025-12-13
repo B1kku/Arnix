@@ -76,7 +76,7 @@ in
       rsync
       rclone
       btop-rocm
-      bitwarden
+      bitwarden-desktop
       fastfetch
       nerd-fonts.fira-code # TODO: Move to a proper setting.
       qbittorrent
