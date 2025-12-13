@@ -2,9 +2,6 @@ import Quickshell
 import qs
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell.Services.Pipewire
-import Quickshell.Widgets
 
 Scope {
   // FloatingWindow {
@@ -23,6 +20,36 @@ Scope {
   //     }
   //   }
   // }
+// PanelWindow {
+//   anchors {
+//     top: true
+//     left: true
+//     right: true
+//   }
+//
+//   implicitHeight: 30
+//
+//   Rectangle {
+//     id: test
+//     implicitWidth: 20
+//     implicitHeight: 20
+//     color: "red"
+//     anchors.right: parent.right
+//     anchors.verticalCenter: parent.verticalCenter
+//
+//     PopupWindow {
+//       anchor.item: test
+//       implicitWidth: 100
+//       implicitHeight: 100
+//       visible: true
+//       anchor.edges: Edges.Bottom | Edges.Right
+//       anchor.gravity: Edges.Bottom | Edges.Left
+//       anchor.adjustment: PopupAdjustment.FlipY
+//       color: "blue"
+//     }
+//   }
+// }
+  ReloadPopup {}
   Variants {
     model: Quickshell.screens
     PanelWindow {
@@ -61,7 +88,7 @@ Scope {
           Layout.preferredWidth: bar_root.implicitHeight + 10 - 6
         }
         MicSink {
-          Layout.preferredHeight: bar_root.implicitHeight - 6
+          Layout.preferredHeight: bar_root.implicitHeight - 10
           Layout.preferredWidth: bar_root.implicitHeight + 10 - 6
         }
         Power {
