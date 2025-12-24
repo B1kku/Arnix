@@ -42,6 +42,7 @@ let
       jdtls
       pkgs-unstable.nixd
       pkgs-unstable.typescript-language-server
+      pkgs-unstable.kdePackages.qtdeclarative
     ];
   formatters = with pkgs; [
     # google-java-format
