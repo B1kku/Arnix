@@ -36,7 +36,7 @@
       pkgs = import nixpkgs-main {
         inherit system;
         config.allowUnfree = true;
-        overlays = [ ((import ./overlays/pkgs.nix) { inherit inputs system; }) ] ++ [ inputs.niri.overlays.niri ];
+        overlays = [ ((import ./overlays/pkgs.nix) { inherit inputs; }) ] ++ [ inputs.niri.overlays.niri ];
       };
       lib = pkgs.lib;
       pkgs-unstable = import nixpkgs-unstable {
