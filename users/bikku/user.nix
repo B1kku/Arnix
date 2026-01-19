@@ -24,9 +24,12 @@ in
       ];
     in
     user-system-modules ++ system-modules;
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
   environment.systemPackages = with pkgs; [
     gparted
   ];
+  services.flatpak.enable = true;
   # This should take care of most game-related settings too.
   programs.steam = {
     enable = true;
