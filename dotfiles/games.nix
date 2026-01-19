@@ -9,7 +9,7 @@
 let
   osSteamEnabled = args.osConfig.programs.steam.enable or false;
   steamPackage = if !osSteamEnabled then args.osConfig.programs.steam.package else pkgs.steam;
-  defaultWine = pkgs-unstable.proton-ge-bin;
+  defaultWine = pkgs.proton-ge-bin;
 in
 {
   disabledModules = [
@@ -39,17 +39,17 @@ in
       pkgs.wineWowPackages.stagingFull
       pkgs.wineWowPackages.stableFull
     ];
-    protonPackages = [ defaultWine ];
+    protonPackages = [ defaultWine pkgs-unstable.proton-ge-bin ];
     runners = {
       ryujinx.package = pkgs-unstable.ryubing;
-      cemu.package = pkgs-unstable.cemu;
+      cemu.package = pkgs.cemu;
     };
   };
   home.packages = [
     (pkgs.prismlauncher.override {
       jdks = with pkgs; [
         openjdk21
-        # openjdk24
+        openjdk25
         openjdk17
         openjdk8
       ];

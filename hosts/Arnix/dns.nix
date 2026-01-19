@@ -26,7 +26,7 @@ in
     networkmanager.dns = "none";
   };
 
-  services.dnscrypt-proxy2 = {
+  services.dnscrypt-proxy = {
     enable = true;
     settings = {
       server_names = [ "ctrld" ];

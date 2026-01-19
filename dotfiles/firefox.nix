@@ -8,7 +8,7 @@
 }:
 let
   firefox-profile = "weasel";
-  extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+  extensions = with inputs.firefox-addons.packages.${pkgs.stdenv.system}; [
     ublock-origin
     sidebery
     darkreader

@@ -1,8 +1,12 @@
-{ inputs, system }:
+{ inputs }:
+final: prev:
 let
+  system = final.stdenv.hostPlatform.system;
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
 in
-final: prev: {
+
+{
+
   lib = prev.lib // (import ../lib/lib.nix final prev);
   proton-gamemode = (import ./proton-gamemode-wrapper.nix prev);
   grub-yorha = prev.fetchFromGitHub {
