@@ -41,7 +41,12 @@ in
   };
   # Same case as enabling bash, let home manager add variables to it.
   xsession.enable = true;
-
+  services.gammastep = {
+    enable = true;
+    provider = "manual";
+    latitude = 40.0;
+    longitude = -3.0;
+  };
   home.shellAliases =
     let
       sudoWrap = (_: command: "pkexec ${command}");
