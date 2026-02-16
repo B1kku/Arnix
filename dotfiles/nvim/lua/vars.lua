@@ -1,16 +1,19 @@
 --[[ vars.lua ]]
---
--- local single = { "┌", "─", "┐", "│", "┘", "─", "└", "│" }
-local rounded = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
--- local double = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }
+
+local borderchars = {
+  single = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+  rounded = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  double = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+}
 local g = vim.g
 --  Theme  --
 g.t_co = 256
 g.background = "dark"
 -- NOTE: Should keep an eye on this, neovim finally has an standard
 -- vim.o.winborder
-g.borderchars = rounded
-g.border = "rounded"
+local border = "rounded"
+g.borderchars = borderchars[border]
+g.border = border
 
 ---@module "lazy"
 
@@ -27,7 +30,7 @@ LazyDep = function(plugin, opts)
   if not opts then
     opts = {}
   end
-  return vim.tbl_extend("force", {plugin, lazy = true}, opts)
+  return vim.tbl_extend("force", { plugin, lazy = true }, opts)
 end
 
 I = function(arg)

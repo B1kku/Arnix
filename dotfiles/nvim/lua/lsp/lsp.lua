@@ -28,7 +28,8 @@ return {
         "cssls",
         "jsonls",
         "ts_ls",
-        "qmlls"
+        "qmlls",
+        "denols",
       }
       -- Set lsp borders
       local default_config = {

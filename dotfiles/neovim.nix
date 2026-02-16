@@ -37,6 +37,7 @@ let
       rust-analyzer
       vscode-langservers-extracted
       pkgs-unstable.kdePackages.qtdeclarative
+      deno
     ])
     ++ [
       jdtls
