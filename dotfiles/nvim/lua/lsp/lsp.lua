@@ -27,7 +27,8 @@ return {
         "html",
         "cssls",
         "jsonls",
-        "ts_ls"
+        "denols",
+        "ts_ls",
       }
       -- Set lsp borders
       local default_config = {

@@ -34,6 +34,7 @@ let
       clang-tools
       rust-analyzer
       vscode-langservers-extracted
+      deno
     ])
     ++ [
       jdtls
