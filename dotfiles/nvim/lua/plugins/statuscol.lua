@@ -13,7 +13,10 @@ return {
   {
     "luukvbaal/statuscol.nvim",
     event = "BufEnter",
+    enabled = true,
     config = function()
+      -- We rely on the signs showing on the column
+      vim.opt.signcolumn = "auto:1"
       local mod = require("modules.statuscolumn")
       local segments = mod.segments
       local function is_current_win(args)
@@ -45,7 +48,7 @@ return {
               segments.info_column
             },
             sign = {
-              namespace = { "^nvim%.vim%.lsp%.[^%.]+%.%d+%.diagnostic%.signs$" },
+              namespace = { ".*diagnostic%.signs.*" },
               foldclosed = true,
             },
             condition = {

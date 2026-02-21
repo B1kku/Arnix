@@ -3,7 +3,6 @@
     - Theming isn't quite set yet
 # Neovim
     - Default lsp settings changed on newest update
-    - Statuscol not getting diagnostics after update
     - Luabar visuals made it non-transparent after last update.
     - Direnv (prob gotta fork or make my own, don't lsp until it loads, etc...)
     - LSP docs have no borders
