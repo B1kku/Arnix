@@ -2,11 +2,12 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Services.Pipewire
 import qs.utils
 import QtQml.Models
 
-Item {
+Rectangle {
   id: root
   property var node: PipewireManager.defaultOutput
   property real volume_percent: {
@@ -16,7 +17,9 @@ Item {
       return 0;
     }
   }
-
+  color: "transparent"
+  // implicitWidth: 30 + 10 - 6
+  // implicitHeight: 30 - 10
   MouseArea {
     anchors.fill: root
     onWheel: wheel => {
@@ -135,7 +138,7 @@ Item {
             Layout.preferredWidth: text.width
             Text {
               id: text
-              color: rect.modelData.id == Pipewire.defaultAudioSink.id ? "gray" : "gray"
+              color: rect.modelData.id == Pipewire.defaultAudioSink.id ? "white" : "gray"
               font.pointSize: 10.5
               anchors.centerIn: rect
               text: rect.modelData.nickname + " " + rect.modelData.id
