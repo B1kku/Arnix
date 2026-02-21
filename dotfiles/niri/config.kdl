@@ -5,7 +5,7 @@ include "colors.kdl"
 include "binds.kdl"
 include "rules.kdl"
 input {
-    mod-key "Alt"
+    mod-key "Super"
     keyboard {
         xkb {
             // For more information, see xkeyboard-config(7).
