@@ -10,6 +10,18 @@ let
   osSteamEnabled = args.osConfig.programs.steam.enable or false;
   steamPackage = if !osSteamEnabled then args.osConfig.programs.steam.package else pkgs.steam;
   defaultWine = pkgs.proton-ge-bin;
+  lutrisPackage = pkgs-unstable.lutris.override (prev: {
+    buildFHSEnv =
+      args:
+      prev.buildFHSEnv (
+        args
+        // {
+          profile = ''
+            export TZ=${args.osConfig.time.timeZone or "Europe/Brussels"}
+          '';
+        }
+      );
+  });
 in
 {
   disabledModules = [
@@ -20,15 +32,12 @@ in
   ];
   programs.lutris = {
     enable = true;
+    package = lutrisPackage;
     steamPackage = steamPackage;
     extraPackages =
       with pkgs-unstable;
       [
-        (umu-launcher.override {
-          extraProfile = ''
-            unset TZ
-          '';
-        })
+        umu-launcher
       ]
       ++ (with pkgs; [
         mangohud
@@ -42,7 +51,19 @@ in
     protonPackages = [ defaultWine pkgs-unstable.proton-ge-bin ];
     runners = {
       ryujinx.package = pkgs-unstable.ryubing;
+      yuzu.package = pkgs-unstable.eden;
       cemu.package = pkgs.cemu;
+      wine = {
+        packages = with pkgs; [
+          wineWow64Packages.stagingFull
+          wineWow64Packages.stableFull
+          pkgs.proton-ge-bin
+        ];
+        defaultPackage = defaultWine;
+        settings.system.env = {
+          PROTON_NO_WM_DECORATION = 1;
+        };
+      };
     };
   };
   home.packages = [
