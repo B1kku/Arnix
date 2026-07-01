@@ -42,6 +42,8 @@ in
   boot = {
     # Enable SysRq to recover from freezes.
     kernel.sysctl."kernel.sysrq" = 1;
+    # copy.fail mitigation, until we're on a kernel that has it patched
+    extraModprobeConfig = "install algif_aead /bin/false";
     kernelPackages = pkgs.linuxPackages_zen;
     loader = {
       grub = {
