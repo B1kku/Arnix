@@ -27,6 +27,7 @@ in
     ../../dotfiles/desktop.nix
     # ../../dotfiles/gnome.nix
     ../../dotfiles/niri.nix
+    ../../dotfiles/hyprland.nix
     ./dirs.nix
     # ../../dotfiles/alacritty.nix
   ];

@@ -23,6 +23,10 @@
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      # inputs.nixpkgs.follows = "nixpkgs"; # MESA/OpenGL HW workaround
+    };
   };
   outputs =
     {
@@ -60,6 +64,11 @@
           niri = {
             substituters = [ "https://niri.cachix.org" ];
             trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+          };
+          hyprland = {
+            substituters = [ "https://hyprland.cachix.org" ];
+            trusted-substituters = [ "https://hyprland.cachix.org" ]; # Gotta research tf this is
+            trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
           };
         };
       };
