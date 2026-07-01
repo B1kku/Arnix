@@ -27,4 +27,23 @@ in
   );
 
   wooz = prev.callPackage ./wooz.nix { };
+  kdePackages = prev.kdePackages.overrideScope (
+    kdeFinal: kdePrev: {
+      # ark =
+      #   let
+      #     extraTools = with prev; [ unar ];
+      #   in
+      #   kdePrev.ark.overrideAttrs (oldAttrs: {
+      #     qtWrapperArgs = oldAttrs.qtWrapperArgs ++ [
+      #       "--prefix"
+      #       "PATH"
+      #       ":"
+      #       (prev.lib.makeBinPath extraTools)
+      #     ];
+      #   });
+      ark-wrapped = prev.callPackage ./ark-wrapped.nix {
+        ark = kdePrev.ark;
+      };
+    }
+  );
 }

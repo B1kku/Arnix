@@ -77,6 +77,13 @@ in
   };
   fonts.fontconfig.enable = true;
   home.packages =
+    let
+      extraTools = with pkgs; [
+        unrar
+        rar
+        unar
+      ];
+    in
     (with pkgs; [
       mlocate
       rsync
@@ -90,7 +97,11 @@ in
       gthumb # Image viewer
       vlc
       nh
-      p7zip
+      imhex
+      (kdePackages.ark-wrapped.override
+      {
+        extraTools = [ unar ];
+      })
     ])
     # Gnome packages mainly
     # TODO: Move these to gnome.nix?
@@ -105,7 +116,9 @@ in
       gnome-tweaks
       gnome-calendar
     ])
-    ++ [ nix-shell-wrapper ];
+    ++ [
+      nix-shell-wrapper
+    ];
 
   programs.obs-studio = {
     enable = true;

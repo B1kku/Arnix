@@ -24,6 +24,11 @@ in
     dhcpcd.extraConfig = "nohook resolv.conf";
     # If using NetworkManager:
     networkmanager.dns = "none";
+
+    firewall = {
+      rejectPackets = false;
+      allowPing = false;
+    };
   };
 
   services.dnscrypt-proxy = {

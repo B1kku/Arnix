@@ -12,9 +12,9 @@
       inputs.nixpkgs.follows = "nixpkgs-main";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-    };
+    # nix-gaming = {
+    #   url = "github:fufexan/nix-gaming";
+    # };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs-main";
@@ -57,10 +57,10 @@
         # Centralize flake inputs substituters and public keys
         # to pass to configs and tie them if the input is removed.
         extraCaches = lib.extra.getCachesFromInputs inputs {
-          nix-gaming = {
-            substituters = [ "https://nix-gaming.cachix.org" ];
-            trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
-          };
+          # nix-gaming = {
+          #   substituters = [ "https://nix-gaming.cachix.org" ];
+          #   trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+          # };
           niri = {
             substituters = [ "https://niri.cachix.org" ];
             trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
@@ -74,7 +74,7 @@
       };
     in
     {
-      formatter.x86_64-linux = pkgs-unstable.nixfmt-rfc-style;
+      formatter.x86_64-linux = pkgs-unstable.nixfmt;
       nixosConfigurations = {
         Arnix = nixpkgs-main.lib.nixosSystem {
           specialArgs = {

@@ -61,6 +61,8 @@ in
           "browser.startup.page" = 3; # Restore session on startup.
           "general.autoScroll" = true; # Enable middle click to free scroll.
           "devtools.debugger.remote-enabled" = false; # Enable to debug CSS with <C-S-M>i
+          # Disable WebRTC
+          "media.peerconnection.enabled" = false;
           # Finally found a workaround for this stupid issue where if you drag
           # on sidebery it stops counting as :hover (gnome only, ofc)
           # https://bugzilla.mozilla.org/show_bug.cgi?id=1818517

@@ -20,7 +20,7 @@ in
     ./hardware-configuration.nix
     ./nix-flake-paths.nix
     ./quietboot.nix
-    ./dns.nix
+    ./network.nix
     # User configurations
     ../../users/bikku/user.nix
   ];
@@ -101,6 +101,18 @@ in
   };
   # XServer, DM & DE
   services = {
+    kmscon = {
+      enable = true;
+      package = pkgs-unstable.kmscon;
+      # hwRender = true;
+      useXkbConfig = true;
+      fonts = [
+        {
+          name = "FiraCode Nerd Font";
+          package = pkgs.nerd-fonts.fira-code;
+        }
+      ];
+    };
     libinput.mouse.accelProfile = "flat";
     displayManager = {
       defaultSession = "niri";

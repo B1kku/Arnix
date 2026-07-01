@@ -28,7 +28,9 @@ in
   ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ ];
+  boot.kernelParams = [
+    "amdgpu.gpu_recovery=1"
+  ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

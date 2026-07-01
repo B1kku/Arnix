@@ -4,6 +4,7 @@
   inputs,
   flake-opts,
   lib,
+  config,
   ...
 }@args:
 let
@@ -26,6 +27,10 @@ in
     user-system-modules ++ system-modules;
   services.udisks2.enable = true;
   services.gvfs.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = [ pkgs.networkmanager-openvpn ];
+  };
   environment.systemPackages = with pkgs; [
     gparted
   ];
