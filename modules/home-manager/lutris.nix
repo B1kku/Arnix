@@ -11,17 +11,10 @@ let
     mkIf
     types
     optional
-    optionalAttrs
-    optionalString
     nameValuePair
     mapAttrs'
-    filter
-    filterAttrs
     filterAttrsRecursive
-    attrNames
-    concatStringsSep
     toLower
-    recursiveUpdate
     listToAttrs
     getExe
     ;
@@ -51,104 +44,121 @@ in
       '';
       type = types.listOf types.package;
     };
-    defaultWinePackage = mkOption {
-      default = null;
-      example = "pkgs.proton-ge-bin";
-      description = ''
-        The wine/proton package to set as the default for lutris.
-        It must still be set under proton/winePackages.
-      '';
-      type = types.nullOr types.package;
-    };
-
-    protonPackages = mkOption {
-      default = [ ];
-      example = "[ pkgs.proton-ge-bin ]";
-      description = ''
-        List of proton packages to be added for lutris to use with umu-launcher.
-      '';
-      type = types.listOf types.package;
-    };
-    winePackages = mkOption {
-      default = [ ];
-      example = "[ pkgs.wineWow64Packages.full ]";
-      description = ''
-        List of wine packages to be added for lutris to use.
-      '';
-      type = types.listOf types.package;
-    };
-    runners = mkOption {
-      default = { };
-      example = ''
-        runners = {
-          cemu.package = pkgs.cemu;
-          pcsx2.config = {
-            system.disable_screen_saver = true;
-            runner.runner_executable = "$\{pkgs.pcsx2}/bin/pcsx2-qt";
-          };
-        };
-      '';
-      description = ''
-        Attribute set of Lutris runners along with their configurations.
-        Each runner must be named exactly as lutris expects on `lutris --list-runners`.
-        Note that runners added here won't be configurable through Lutris using the GUI.
-      '';
-      type = types.attrsOf (
-        types.submodule {
-          options = {
-            package = mkOption {
-              default = null;
-              example = "pkgs.cemu";
-              description = ''
-                The package to use for this runner, nix will try to find the executable for this package.
-                A more specific path can be set by using settings.runner.runner_executable instead.
-                Uncompatible with certain runners, such as wine.
-              '';
-              type = types.nullOr types.package;
-            };
-            settings = mkOption {
-              default = { };
-              description = ''
-                Settings passed directly to lutris for this runner's config at XDG_CONFIG/lutris/runners.
-              '';
-              type = types.submodule {
-                options = {
-                  runner = mkOption {
-                    default = { };
-                    description = ''
-                      Runner specific options.
-                      For references, you must look for the file of said runner on lutris' source code.
-                    '';
-                    type = types.submodule {
-                      freeformType = settingsFormat.type;
-                      options = {
-                        runner_executable = mkOption {
-                          type = types.either types.str types.path;
-                          default = "";
-                          description = ''
-                            Specific option to point to a runner executable directly, don't set runner.package if you set this.
-                            Uncompatible with certain runners such as wine.
-                          '';
-                        };
-                      };
+    runners =
+      let
+        runnerSettings = mkOption {
+          default = { };
+          description = ''
+            Settings passed directly to lutris for this runner's config at XDG_CONFIG/lutris/runners.
+          '';
+          type = types.submodule {
+            options = {
+              runner = mkOption {
+                default = { };
+                description = ''
+                  Runner specific options.
+                  For references, you must look for the file of said runner on lutris' source code.
+                '';
+                type = types.submodule {
+                  freeformType = settingsFormat.type;
+                  options = {
+                    runner_executable = mkOption {
+                      type = types.either types.str types.path;
+                      default = "";
+                      description = ''
+                        Specific option to point to a runner executable directly, don't set runner.package if you set this.
+                        Uncompatible with certain runners such as wine.
+                      '';
                     };
-                  };
-                  system = mkOption {
-                    default = { };
-                    description = ''
-                      Lutris system options for this runner.
-                      Reference for system options:
-                      https://github.com/lutris/lutris/blob/master/lutris/sysoptions.py#L78
-                    '';
-                    type = types.submodule { freeformType = settingsFormat.type; };
                   };
                 };
               };
+              system = mkOption {
+                default = { };
+                description = ''
+                  Lutris system options for this runner.
+                  Reference for system options:
+                  https://github.com/lutris/lutris/blob/master/lutris/sysoptions.py#L78
+                '';
+                type = types.submodule { freeformType = settingsFormat.type; };
+              };
             };
           };
-        }
-      );
-    };
+        };
+        genericRunner =
+          { config, ... }:
+          {
+            options = {
+              package = mkOption {
+                default = null;
+                example = "pkgs.cemu";
+                description = ''
+                  The package to use for this runner, nix will try to find the executable for this package.
+                  A more specific path can be set by using settings.runner.runner_executable instead.
+                '';
+                type = types.nullOr types.package;
+              };
+              settings = runnerSettings;
+            };
+            config.settings.runner.runner_executable = mkIf (config.package != null) (
+              lib.mkDefault (getExe config.package)
+            );
+          };
+        wineRunner =
+          { config, ... }:
+          {
+            options = {
+              packages = mkOption {
+                default = [ ];
+                example = "[ pkgs.wineWow64Packages.full pkgs.proton-ge-bin ]";
+                type = types.listOf types.package;
+                description = ''
+                  List of wine (and proton) packages to add to lutris.
+                '';
+              };
+              defaultPackage = mkOption {
+                default = null;
+                example = "pkgs.proton-ge-bin";
+                type = types.nullOr types.package;
+                description = ''
+                  Wine (or proton) package to use by default for lutris.
+                  Do not add this to packages.
+                '';
+              };
+              settings = runnerSettings;
+            };
+            config = {
+              settings.runner.version = mkIf (config.defaultPackage != null) (
+                lib.mkDefault (formatWineName config.defaultPackage)
+              );
+            };
+          };
+      in
+      mkOption {
+        default = { };
+        example = ''
+          runners = {
+            cemu.package = pkgs.cemu;
+            pcsx2.config = {
+              system.disable_screen_saver = true;
+              runner.runner_executable = "$\{pkgs.pcsx2}/bin/pcsx2-qt";
+            };
+          };
+        '';
+        description = ''
+          Attribute set of Lutris runners along with their configurations.
+          Each runner must be named exactly as lutris expects on `lutris --list-runners`.
+          Note that runners added here won't be configurable through Lutris using the GUI.
+        '';
+
+        type = types.submodule {
+          freeformType = types.attrsOf (types.submodule genericRunner);
+          options.wine = mkOption {
+            default = { };
+            type = types.submodule wineRunner;
+          };
+        };
+      };
   };
   meta.maintainers = [ lib.hm.maintainers.bikku ];
   config = mkIf cfg.enable {
@@ -156,33 +166,6 @@ in
       (lib.hm.assertions.assertPlatform "programs.lutris" pkgs lib.platforms.linux)
       (lib.hm.assertions.assertPlatform "programs.lutris" pkgs lib.platforms.x86_64)
     ];
-    warnings =
-      let
-        redundantRunners = attrNames (
-          filterAttrs (
-            _: runner_config:
-            runner_config.package != null && runner_config.settings.runner.runner_executable != ""
-          ) cfg.runners
-        );
-      in
-      filter (e: e != "") [
-        (optionalString (redundantRunners != [ ]) ''
-          Under programs.lutris.runners, the following lutris runners had both a
-          <runner>.package and <runner>.settings.runner.runner_executable options set:
-            - ${concatStringsSep ", " redundantRunners}
-          Note that runner_executable overrides package, setting both is pointless.
-        '')
-        (optionalString ((cfg.runners.wine.package or null) != null) ''
-          Setting programs.lutris.runners.wine.package does nothing.
-          Use the respective options, proton/winePackages and defaultWinePackage.
-        '')
-        (optionalString ((cfg ? runners.wine.settings.runner.version) && (cfg.defaultWinePackage != null))
-          ''
-            Found conflicting options under programs.lutris, both runners.wine.settings.version and defaultWinePackage
-            were set.
-          ''
-        )
-      ];
     home.packages =
       let
         lutris-overrides = {
@@ -199,46 +182,43 @@ in
           runner_name: runner_config:
           # Remove the unset values so they don't end up on the final config.
           filterAttrsRecursive (name: value: value != { } && value != null && value != "") {
-            "${runner_name}" =
-              runner_config.settings.runner
-              # If set translate .package to runner_executable
-              // (optionalAttrs (runner_config.package != null) {
-                runner_executable = getExe runner_config.package;
-              });
+            "${runner_name}" = runner_config.settings.runner;
             inherit (runner_config.settings) system;
           }
         );
-        # Extra default config for wine if defaultWinePackage was set
-        wine_extra = optionalAttrs (cfg.defaultWinePackage != null) {
-          wine = {
-            package = null;
-            settings = {
-              runner.version = formatWineName cfg.defaultWinePackage;
-              system = { };
-            };
-          };
-        };
       in
       mapAttrs' (
         runner_name: runner_config:
         nameValuePair "lutris/runners/${runner_name}.yml" {
           source = settingsFormat.generate "${runner_name}.yml" (buildRunnerConfig runner_name runner_config);
         }
-      ) (recursiveUpdate wine_extra cfg.runners);
+      ) cfg.runners;
 
     xdg.dataFile =
       let
-        buildWineLink =
-          type: packages:
-          map (
-            # lutris seems to not detect wine/proton if the name has some caps
-            package:
-            (nameValuePair "lutris/runners/${type}/${formatWineName package}" {
-              source = package;
-            })
-          ) packages;
-        steamcompattools = map (proton: proton.steamcompattool) cfg.protonPackages;
+        differentiatesWine = lib.versionOlder cfg.package.version "0.5.20";
+        winePackageTypes = map (
+          e:
+          if e ? steamcompattool then
+            {
+              type = if differentiatesWine then "proton" else "wine";
+              package = e.steamcompattool;
+            }
+          else
+            {
+              type = "wine";
+              package = e;
+            }
+        ) (cfg.runners.wine.packages ++ [ cfg.runners.wine.defaultPackage ]);
       in
-      listToAttrs (buildWineLink "wine" cfg.winePackages ++ buildWineLink "proton" steamcompattools);
+      listToAttrs (
+        map (
+          # lutris seems to not detect wine/proton if the name has some caps
+          { type, package }:
+          (nameValuePair "lutris/runners/${type}/${formatWineName package}" {
+            source = package;
+          })
+        ) winePackageTypes
+      );
   };
 }

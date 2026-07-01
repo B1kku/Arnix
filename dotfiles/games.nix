@@ -9,7 +9,7 @@
 let
   osSteamEnabled = args.osConfig.programs.steam.enable or false;
   steamPackage = if !osSteamEnabled then args.osConfig.programs.steam.package else pkgs.steam;
-  defaultWine = pkgs.proton-ge-bin;
+  defaultWine = pkgs-unstable.proton-ge-bin;
   lutrisPackage = pkgs-unstable.lutris.override (prev: {
     buildFHSEnv =
       args:
@@ -43,12 +43,6 @@ in
         mangohud
         winetricks
       ]);
-    defaultWinePackage = defaultWine;
-    winePackages = [
-      pkgs.wineWowPackages.stagingFull
-      pkgs.wineWowPackages.stableFull
-    ];
-    protonPackages = [ defaultWine pkgs-unstable.proton-ge-bin ];
     runners = {
       ryujinx.package = pkgs-unstable.ryubing;
       yuzu.package = pkgs-unstable.eden;
